@@ -1,0 +1,29 @@
+# Portfolio 4: local NoSQL stack
+#   docker compose up -d
+#   MongoDB:  mongodb://localhost:27017
+#   Neo4j:    http://localhost:7474  (user neo4j / password terracyber-demo)
+services:
+  mongo:
+    image: mongo:7.0
+    container_name: tc-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+      - ./mongo:/scripts:ro
+
+  neo4j:
+    image: neo4j:5-community
+    container_name: tc-neo4j
+    environment:
+      NEO4J_AUTH: neo4j/terracyber-demo
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    volumes:
+      - neo4j-data:/data
+      - ./graph:/scripts:ro
+
+volumes:
+  mongo-data:
+  neo4j-data:
