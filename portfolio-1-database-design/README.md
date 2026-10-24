@@ -17,13 +17,13 @@
 
 ## 2. Case study in brief
 
-TerraCyber Consulting is a multi-site cybersecurity consultancy serving NGOs, public bodies and private firms. It runs three service lines: compliance and data protection, advisory and resilience, and training and security awareness.
+TerraCyber Consulting is a Nigerian cybersecurity consultancy serving NGOs, public bodies and private firms in all six geopolitical zones. It works from three sites, Lagos (headquarters), Abuja and Port Harcourt; [../docs/site-selection.md](../docs/site-selection.md) explains why. It runs three service lines: compliance and data protection, advisory and resilience, and training and security awareness. Engagements are budgeted and invoiced in naira (NGN).
 
 The EAD supports these operations:
 
 - open an engagement for a client and staff it with consultants;
 - record client assets and log vulnerability findings against them;
-- assess a client against ISO/IEC 27001:2022, GDPR or NIST CSF 2.0 controls;
+- assess a client against ISO/IEC 27001:2022, the Nigeria Data Protection Act 2023 (NDPA) or NIST CSF 2.0;
 - deliver training sessions and record attendance and quiz scores;
 - invoice engagements and record payments;
 - keep an audit trail of every change to a finding.
@@ -33,6 +33,9 @@ The EAD supports these operations:
 ```mermaid
 erDiagram
     OFFICE ||--o{ CONSULTANT : employs
+    OFFICE ||--o{ STATE : serves
+    STATE ||--o{ CLIENT : located_in
+    STATE ||--o{ CLIENT_SITE : located_in
     CLIENT ||--|{ CLIENT_SITE : has
     CLIENT_SITE ||--o{ ASSET : hosts
     CLIENT ||--o{ ENGAGEMENT : commissions
@@ -52,11 +55,23 @@ erDiagram
     ENGAGEMENT ||--o{ INVOICE : billed_by
     INVOICE ||--o{ PAYMENT : settled_by
 
+    OFFICE {
+        int office_id PK
+        char office_code UK "LOS ABV PHC"
+        text city
+        text db_role
+    }
+    STATE {
+        char state_code PK
+        text state_name UK
+        text geopolitical_zone
+        int serving_office_id FK
+    }
     CLIENT {
         int client_id PK
         text name UK
         text sector
-        text data_residency
+        char state_code FK
     }
     ENGAGEMENT {
         int engagement_id PK
@@ -66,7 +81,7 @@ erDiagram
         date start_date
         date end_date
         text status
-        numeric budget_eur
+        numeric budget_ngn
     }
     ENGAGEMENT_STAFF {
         int engagement_id PK, FK
@@ -91,22 +106,22 @@ erDiagram
     INVOICE {
         int invoice_id PK
         int engagement_id FK
-        numeric amount_eur
+        numeric amount_ngn
     }
     PAYMENT {
         int payment_id PK
         int invoice_id FK
-        numeric amount_eur
+        numeric amount_ngn
     }
 ```
 
-The full attribute list for all 17 tables is in `erd.dbml`. Export it from dbdiagram.io as `erd.png` and commit the image.
+The full attribute list for all 18 tables is in `erd.dbml`. Export it from dbdiagram.io as `erd.png` and commit the image.
 
 `audit_log` has no foreign key on purpose. It must keep its history even after the row it describes is deleted.
 
 ## 4. Keys and constraints
 
-**17 tables.** Every table has a primary key. Two tables use composite keys:
+**18 tables.** Every table has a primary key; `state` uses a natural key (the two-letter state code). Two tables use composite keys:
 
 | Table | Primary key | Why composite |
 | --- | --- | --- |
@@ -118,7 +133,7 @@ The full attribute list for all 17 tables is in `erd.dbml`. Export it from dbdia
 | Type | Examples | Business reason |
 | --- | --- | --- |
 | `UNIQUE` | consultant.email, invoice.invoice_no, (framework_id, ref_code) | No duplicate staff logins, invoice numbers or control codes |
-| `FOREIGN KEY` | 19 references, `ON DELETE CASCADE` for child rows such as sites and attendance | Referential integrity |
+| `FOREIGN KEY` | 22 references, `ON DELETE CASCADE` for child rows such as sites and attendance | Referential integrity |
 | `CHECK` (domain) | sector, status, rating, role, asset_type | Only known values are stored |
 | `CHECK` (range) | cvss_score 0 to 10, quiz_score 0 to 100, amounts > 0 | Rejects impossible numbers |
 | `CHECK` (row rule) | end_date >= start_date; status `fixed` if and only if fixed_on is set | Keeps dates and status consistent |
@@ -126,7 +141,7 @@ The full attribute list for all 17 tables is in `erd.dbml`. Export it from dbdia
 | Generated column | finding.severity from cvss_score | Severity cannot disagree with the score |
 | Triggers | asset must belong to the engagement's client; payments cannot exceed invoice; audit of finding changes | Rules spanning several tables, which CHECK cannot express |
 
-**Test evidence:** run `test_constraints.sql`. Each of its 11 statements breaks one rule and must fail.
+**Test evidence:** run `test_constraints.sql`. Each of its 12 statements breaks one rule and must fail.
 
 ```bash
 psql -d ead -f test_constraints.sql 2>&1 | tee constraint-test-output.txt
@@ -138,11 +153,11 @@ psql -d ead -f test_constraints.sql 2>&1 | tee constraint-test-output.txt
 
 Before a database, an engagement tracker in a spreadsheet often looks like this:
 
-| Engagement | Client | Client country | Service | Staff | Findings |
+| Engagement | Client | Client state | Zone | Serving office | Staff | Findings |
 | --- | --- | --- | --- | --- | --- |
-| E-12 | Rhine Relief Network | DE | Compliance | Lena Weber (lead, 40h); Kofi Eze (analyst, 80h) | fw-01: TLS 1.0 (5.3, medium); srv-02: Log4Shell CVE-2021-44228 (10.0, critical) |
+| E-2 | Sahel Water Alliance | Borno | North East | Abuja | Ngozi Eze (lead, 40h); Musa Bello (analyst, 80h) | fw-01: TLS 1.0 (5.3, medium); srv-02: Log4Shell CVE-2021-44228 (10.0, critical) |
 
-Problems: several staff and findings are packed in one cell, the client country repeats on every engagement row, and severity can contradict the score.
+Problems: several staff and findings are packed in one cell; the client's state, zone and serving office repeat on every engagement row; and severity can contradict the score.
 
 ### First normal form (1NF)
 
@@ -156,7 +171,8 @@ No non-key attribute depends on only part of a composite key. In `engagement_sta
 
 No non-key attribute depends on another non-key attribute:
 
-- client name, sector and country depend on the client, not the engagement, so they live in `client`;
+- client name, sector and state depend on the client, not the engagement, so they live in `client`;
+- **geopolitical zone and serving office depend on the state, not on the client.** Keeping them in `client` would create the transitive dependency client_id -> state_code -> geopolitical_zone. They live in the `state` table, so moving a state to another office is a one-row update;
 - the service name depends on `service_id`, so it lives in `service_line`;
 - a site's city depends on the site, and the asset only references `site_id`;
 - `severity` depends on `cvss_score`. Storing it as a normal column would break 3NF. It is a **generated column**, so the DBMS derives it and nobody can update it on its own.
@@ -182,8 +198,9 @@ Seed data volumes (deterministic, `setseed(0.42)`):
 | client / client_site / asset | 20 / 50 / 850 |
 | engagement / engagement_staff | 60 / 180 |
 | finding | 66,240 |
-| control / control_assessment | 124 / 2,196 |
-| training_session / attendance | 60 / 1,200 |
+| office / state | 3 / 37 |
+| control / control_assessment | 128 / 2,340 |
+| training_session / attendance | 60 / 960 |
 | invoice / payment | 120 / 114 |
 
 All names, organisations, hostnames and IP addresses in the seed data are fictitious. The CVE identifiers are real, public vulnerabilities used as realistic examples.
@@ -191,6 +208,6 @@ All names, organisations, hostnames and IP addresses in the seed data are fictit
 ## 7. Evidence checklist
 
 - [ ] `erd.png` exported from `erd.dbml`
-- [ ] Screenshot of `\dt ead.*` listing the 17 tables
+- [ ] Screenshot of `\dt ead.*` listing the 18 tables
 - [ ] Screenshot of the seed row counts
-- [ ] `constraint-test-output.txt` showing the 11 expected errors
+- [ ] `constraint-test-output.txt` showing the 12 expected errors

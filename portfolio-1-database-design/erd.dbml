@@ -8,11 +8,18 @@ Project terracyber_ead {
 
 Table office {
   office_id int [pk, increment]
+  office_code char(3) [not null, unique, note: 'LOS | ABV | PHC']
   office_name text [not null]
-  city text [not null]
-  country_code char(2) [not null]
-  region text [not null, note: 'EU | AFRICA | OTHER']
-  indexes { (city, country_code) [unique] }
+  city text [not null, unique]
+  site_role text [not null, note: 'headquarters | regional']
+  db_role text [not null, note: 'primary | standby | public_sector_shard']
+}
+
+Table state {
+  state_code char(2) [pk, note: '36 states + FCT']
+  state_name text [not null, unique]
+  geopolitical_zone text [not null, note: 'six zones']
+  serving_office_id int [not null, ref: > office.office_id]
 }
 
 Table consultant {
@@ -22,15 +29,14 @@ Table consultant {
   email text [not null, unique]
   role text [not null, note: 'analyst | lead | manager | trainer']
   hire_date date [not null]
-  hourly_rate_eur numeric(8,2) [not null]
+  hourly_rate_ngn numeric(10,2) [not null]
 }
 
 Table client {
   client_id int [pk, increment]
   name text [not null, unique]
   sector text [not null, note: 'ngo | public | private']
-  country_code char(2) [not null]
-  data_residency text [not null, note: 'EU | AFRICA | OTHER']
+  state_code char(2) [not null, ref: > state.state_code]
   created_at date
 }
 
@@ -39,7 +45,7 @@ Table client_site {
   client_id int [not null, ref: > client.client_id]
   site_name text [not null]
   city text [not null]
-  country_code char(2) [not null]
+  state_code char(2) [not null, ref: > state.state_code]
   indexes { (client_id, site_name) [unique] }
 }
 
@@ -57,7 +63,7 @@ Table engagement {
   start_date date [not null]
   end_date date
   status text [not null]
-  budget_eur numeric(12,2) [not null]
+  budget_ngn numeric(14,2) [not null]
 }
 
 Table engagement_staff {
@@ -135,7 +141,7 @@ Table invoice {
   invoice_id int [pk, increment]
   engagement_id int [not null, ref: > engagement.engagement_id]
   invoice_no text [not null, unique]
-  amount_eur numeric(12,2) [not null]
+  amount_ngn numeric(14,2) [not null]
   issued_on date [not null]
   due_on date [not null]
   status text [not null]
@@ -144,7 +150,7 @@ Table invoice {
 Table payment {
   payment_id int [pk, increment]
   invoice_id int [not null, ref: > invoice.invoice_id]
-  amount_eur numeric(12,2) [not null]
+  amount_ngn numeric(14,2) [not null]
   paid_on date [not null]
   method text [not null]
 }

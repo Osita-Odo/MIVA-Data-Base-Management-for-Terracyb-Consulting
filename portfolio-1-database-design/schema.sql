@@ -9,15 +9,30 @@ CREATE SCHEMA ead;
 SET search_path TO ead;
 
 -- ---------------------------------------------------------------------
--- 1. Organisation: offices and consultants
+-- 1. Geography and organisation: states, offices and consultants
+--    TerraCyber operates from three Nigerian sites (Lagos, Abuja,
+--    Port Harcourt). See docs/site-selection.md for why these were chosen.
 -- ---------------------------------------------------------------------
 CREATE TABLE office (
     office_id     SERIAL PRIMARY KEY,
+    office_code   CHAR(3)     NOT NULL UNIQUE,        -- IATA city code: LOS, ABV, PHC
     office_name   TEXT        NOT NULL,
-    city          TEXT        NOT NULL,
-    country_code  CHAR(2)     NOT NULL,
-    region        TEXT        NOT NULL CHECK (region IN ('EU', 'AFRICA', 'OTHER')),
-    CONSTRAINT uq_office_city UNIQUE (city, country_code)
+    city          TEXT        NOT NULL UNIQUE,
+    site_role     TEXT        NOT NULL CHECK (site_role IN ('headquarters', 'regional')),
+    -- Role of the office's data centre in the distributed design (Portfolio 5)
+    db_role       TEXT        NOT NULL CHECK (db_role IN ('primary', 'standby', 'public_sector_shard'))
+);
+
+-- Nigeria's 36 states and the FCT. Zone and serving office depend on the
+-- STATE, not on the client, so they live here (3NF: no transitive dependency
+-- client -> state -> zone inside the client table).
+CREATE TABLE state (
+    state_code         CHAR(2)  PRIMARY KEY,           -- e.g. LA, FC, RI
+    state_name         TEXT     NOT NULL UNIQUE,
+    geopolitical_zone  TEXT     NOT NULL CHECK (geopolitical_zone IN
+                           ('North Central', 'North East', 'North West',
+                            'South East', 'South South', 'South West')),
+    serving_office_id  INT      NOT NULL REFERENCES office (office_id)
 );
 
 CREATE TABLE consultant (
@@ -27,27 +42,28 @@ CREATE TABLE consultant (
     email            TEXT         NOT NULL UNIQUE,
     role             TEXT         NOT NULL CHECK (role IN ('analyst', 'lead', 'manager', 'trainer')),
     hire_date        DATE         NOT NULL,
-    hourly_rate_eur  NUMERIC(8,2) NOT NULL CHECK (hourly_rate_eur > 0)
+    hourly_rate_ngn  NUMERIC(10,2) NOT NULL CHECK (hourly_rate_ngn > 0)   -- naira per hour
 );
 
 -- ---------------------------------------------------------------------
 -- 2. Clients and their sites
 -- ---------------------------------------------------------------------
 CREATE TABLE client (
-    client_id       SERIAL PRIMARY KEY,
-    name            TEXT    NOT NULL UNIQUE,
-    sector          TEXT    NOT NULL CHECK (sector IN ('ngo', 'public', 'private')),
-    country_code    CHAR(2) NOT NULL,
-    data_residency  TEXT    NOT NULL CHECK (data_residency IN ('EU', 'AFRICA', 'OTHER')),
-    created_at      DATE    NOT NULL DEFAULT CURRENT_DATE
+    client_id    SERIAL PRIMARY KEY,
+    name         TEXT    NOT NULL UNIQUE,
+    sector       TEXT    NOT NULL CHECK (sector IN ('ngo', 'public', 'private')),
+    -- State of the client's head office; it decides which TerraCyber office
+    -- serves the client (state.serving_office_id)
+    state_code   CHAR(2) NOT NULL REFERENCES state (state_code),
+    created_at   DATE    NOT NULL DEFAULT CURRENT_DATE
 );
 
 CREATE TABLE client_site (
-    site_id       SERIAL PRIMARY KEY,
-    client_id     INT     NOT NULL REFERENCES client (client_id) ON DELETE CASCADE,
-    site_name     TEXT    NOT NULL,
-    city          TEXT    NOT NULL,
-    country_code  CHAR(2) NOT NULL,
+    site_id     SERIAL PRIMARY KEY,
+    client_id   INT     NOT NULL REFERENCES client (client_id) ON DELETE CASCADE,
+    site_name   TEXT    NOT NULL,
+    city        TEXT    NOT NULL,
+    state_code  CHAR(2) NOT NULL REFERENCES state (state_code),   -- a site can be in another state
     CONSTRAINT uq_site_name UNIQUE (client_id, site_name)
 );
 
@@ -68,7 +84,7 @@ CREATE TABLE engagement (
     start_date          DATE          NOT NULL,
     end_date            DATE,
     status              TEXT          NOT NULL CHECK (status IN ('planned', 'active', 'closed', 'cancelled')),
-    budget_eur          NUMERIC(12,2) NOT NULL CHECK (budget_eur >= 0),
+    budget_ngn          NUMERIC(14,2) NOT NULL CHECK (budget_ngn >= 0),
     CONSTRAINT ck_engagement_dates CHECK (end_date IS NULL OR end_date >= start_date)
 );
 
@@ -174,7 +190,7 @@ CREATE TABLE invoice (
     invoice_id     SERIAL PRIMARY KEY,
     engagement_id  INT           NOT NULL REFERENCES engagement (engagement_id),
     invoice_no     TEXT          NOT NULL UNIQUE,
-    amount_eur     NUMERIC(12,2) NOT NULL CHECK (amount_eur > 0),
+    amount_ngn     NUMERIC(14,2) NOT NULL CHECK (amount_ngn > 0),
     issued_on      DATE          NOT NULL,
     due_on         DATE          NOT NULL,
     status         TEXT          NOT NULL DEFAULT 'issued' CHECK (status IN ('issued', 'part_paid', 'paid', 'void')),
@@ -184,9 +200,9 @@ CREATE TABLE invoice (
 CREATE TABLE payment (
     payment_id  SERIAL PRIMARY KEY,
     invoice_id  INT           NOT NULL REFERENCES invoice (invoice_id),
-    amount_eur  NUMERIC(12,2) NOT NULL CHECK (amount_eur > 0),
+    amount_ngn  NUMERIC(14,2) NOT NULL CHECK (amount_ngn > 0),
     paid_on     DATE          NOT NULL,
-    method      TEXT          NOT NULL CHECK (method IN ('bank_transfer', 'card', 'mobile_money'))
+    method      TEXT          NOT NULL CHECK (method IN ('bank_transfer', 'card', 'ussd'))
 );
 
 -- ---------------------------------------------------------------------
@@ -206,6 +222,8 @@ CREATE TABLE audit_log (
 -- Foreign key columns are not indexed automatically in PostgreSQL.
 -- Index the ones used for joins and cascades.
 CREATE INDEX idx_consultant_office    ON consultant (office_id);
+CREATE INDEX idx_state_office         ON state (serving_office_id);
+CREATE INDEX idx_client_state         ON client (state_code);
 CREATE INDEX idx_site_client          ON client_site (client_id);
 CREATE INDEX idx_engagement_client    ON engagement (client_id);
 CREATE INDEX idx_staff_consultant     ON engagement_staff (consultant_id);
@@ -252,22 +270,22 @@ LANGUAGE plpgsql
 SET search_path = ead     -- fixed path: works from any session and blocks search_path hijacking
 AS $$
 DECLARE
-    v_amount  NUMERIC(12,2);
-    v_paid    NUMERIC(12,2);
+    v_amount  NUMERIC(14,2);
+    v_paid    NUMERIC(14,2);
 BEGIN
     -- Lock the invoice row so two concurrent payments cannot both pass the check.
-    SELECT amount_eur INTO v_amount FROM invoice WHERE invoice_id = NEW.invoice_id FOR UPDATE;
+    SELECT amount_ngn INTO v_amount FROM invoice WHERE invoice_id = NEW.invoice_id FOR UPDATE;
 
-    SELECT COALESCE(SUM(amount_eur), 0) INTO v_paid
+    SELECT COALESCE(SUM(amount_ngn), 0) INTO v_paid
     FROM payment WHERE invoice_id = NEW.invoice_id;
 
-    IF v_paid + NEW.amount_eur > v_amount THEN
-        RAISE EXCEPTION 'Payment of % EUR would exceed invoice % (amount %, already paid %)',
-            NEW.amount_eur, NEW.invoice_id, v_amount, v_paid;
+    IF v_paid + NEW.amount_ngn > v_amount THEN
+        RAISE EXCEPTION 'Payment of % NGN would exceed invoice % (amount %, already paid %)',
+            NEW.amount_ngn, NEW.invoice_id, v_amount, v_paid;
     END IF;
 
     UPDATE invoice
-    SET status = CASE WHEN v_paid + NEW.amount_eur = v_amount THEN 'paid' ELSE 'part_paid' END
+    SET status = CASE WHEN v_paid + NEW.amount_ngn = v_amount THEN 'paid' ELSE 'part_paid' END
     WHERE invoice_id = NEW.invoice_id;
 
     RETURN NEW;
@@ -305,11 +323,13 @@ CREATE TRIGGER trg_audit_finding
 -- 10. Reporting view used in later portfolios
 -- ---------------------------------------------------------------------
 CREATE VIEW v_open_findings AS
-SELECT c.client_id, c.name AS client_name, s.site_name, a.hostname,
+SELECT c.client_id, c.name AS client_name, o.office_code AS serving_office, s.site_name, a.hostname,
        f.finding_id, f.title, f.cvss_score, f.severity, f.status, f.found_on,
        CURRENT_DATE - f.found_on AS days_open
 FROM finding f
 JOIN asset a       ON a.asset_id  = f.asset_id
 JOIN client_site s ON s.site_id   = a.site_id
 JOIN client c      ON c.client_id = s.client_id
+JOIN state st      ON st.state_code = c.state_code        -- client's home state
+JOIN office o      ON o.office_id   = st.serving_office_id -- office responsible for the client
 WHERE f.status IN ('open', 'in_progress');

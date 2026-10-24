@@ -10,19 +10,57 @@ SELECT setseed(0.42);   -- same data on every run
 BEGIN;
 
 -- ---------------------------------------------------------------------
--- Offices (multi-site)
+-- Offices: the three Nigerian sites chosen in docs/site-selection.md
+--   LOS  Lagos          headquarters, primary database
+--   ABV  Abuja          public-sector shard (NITDA cloud policy, regulators)
+--   PHC  Port Harcourt  disaster-recovery standby (second subsea route)
 -- ---------------------------------------------------------------------
-INSERT INTO office (office_name, city, country_code, region) VALUES
-    ('TerraCyber Bonn',    'Bonn',    'DE', 'EU'),
-    ('TerraCyber Lagos',   'Lagos',   'NG', 'AFRICA'),
-    ('TerraCyber Nairobi', 'Nairobi', 'KE', 'AFRICA');
+INSERT INTO office (office_code, office_name, city, site_role, db_role) VALUES
+    ('LOS', 'TerraCyber Lagos',         'Lagos',         'headquarters', 'primary'),
+    ('ABV', 'TerraCyber Abuja',         'Abuja',         'regional',     'public_sector_shard'),
+    ('PHC', 'TerraCyber Port Harcourt', 'Port Harcourt', 'regional',     'standby');
+
+-- ---------------------------------------------------------------------
+-- States: 36 states and the FCT with their geopolitical zones.
+-- Serving office by zone: South West -> Lagos; North Central, North East
+-- and North West -> Abuja; South South and South East -> Port Harcourt.
+-- ---------------------------------------------------------------------
+INSERT INTO state (state_code, state_name, geopolitical_zone, serving_office_id)
+SELECT v.code, v.name, v.zone,
+       (SELECT office_id FROM office WHERE office_code =
+            CASE v.zone WHEN 'South West'  THEN 'LOS'
+                        WHEN 'South South' THEN 'PHC'
+                        WHEN 'South East'  THEN 'PHC'
+                        ELSE 'ABV' END)
+FROM (VALUES
+    ('AB', 'Abia',        'South East'),    ('AD', 'Adamawa',   'North East'),
+    ('AK', 'Akwa Ibom',   'South South'),   ('AN', 'Anambra',   'South East'),
+    ('BA', 'Bauchi',      'North East'),    ('BY', 'Bayelsa',   'South South'),
+    ('BE', 'Benue',       'North Central'), ('BO', 'Borno',     'North East'),
+    ('CR', 'Cross River', 'South South'),   ('DE', 'Delta',     'South South'),
+    ('EB', 'Ebonyi',      'South East'),    ('ED', 'Edo',       'South South'),
+    ('EK', 'Ekiti',       'South West'),    ('EN', 'Enugu',     'South East'),
+    ('FC', 'Federal Capital Territory', 'North Central'),
+    ('GO', 'Gombe',       'North East'),    ('IM', 'Imo',       'South East'),
+    ('JI', 'Jigawa',      'North West'),    ('KD', 'Kaduna',    'North West'),
+    ('KN', 'Kano',        'North West'),    ('KT', 'Katsina',   'North West'),
+    ('KE', 'Kebbi',       'North West'),    ('KO', 'Kogi',      'North Central'),
+    ('KW', 'Kwara',       'North Central'), ('LA', 'Lagos',     'South West'),
+    ('NA', 'Nasarawa',    'North Central'), ('NI', 'Niger',     'North Central'),
+    ('OG', 'Ogun',        'South West'),    ('ON', 'Ondo',      'South West'),
+    ('OS', 'Osun',        'South West'),    ('OY', 'Oyo',       'South West'),
+    ('PL', 'Plateau',     'North Central'), ('RI', 'Rivers',    'South South'),
+    ('SO', 'Sokoto',      'North West'),    ('TA', 'Taraba',    'North East'),
+    ('YO', 'Yobe',        'North East'),    ('ZA', 'Zamfara',   'North West')
+) AS v(code, name, zone);
 
 -- ---------------------------------------------------------------------
 -- Consultants: 24 staff spread over the three offices
+-- Hourly rates in naira (NGN), by seniority
 -- ---------------------------------------------------------------------
-INSERT INTO consultant (office_id, full_name, email, role, hire_date, hourly_rate_eur)
+INSERT INTO consultant (office_id, full_name, email, role, hire_date, hourly_rate_ngn)
 SELECT
-    1 + (g % 3),
+    1 + (g % 3),                                              -- round-robin over the offices
     first_names[1 + (g % array_length(first_names, 1))] || ' ' ||
         last_names[1 + ((g * 7) % array_length(last_names, 1))],
     'consultant' || g || '@terracyb.example',
@@ -31,12 +69,12 @@ SELECT
          WHEN g <= 13 THEN 'trainer'
          ELSE 'analyst' END,
     DATE '2021-01-04' + (g * 37),
-    CASE WHEN g <= 3 THEN 140 WHEN g <= 9 THEN 115 WHEN g <= 13 THEN 95 ELSE 80 END
+    CASE WHEN g <= 3 THEN 84000 WHEN g <= 9 THEN 69000 WHEN g <= 13 THEN 57000 ELSE 48000 END
 FROM generate_series(1, 24) AS g,
-     LATERAL (SELECT ARRAY['Amara','Jonas','Ngozi','Lena','Chidi','Wanjiru','Felix','Aisha',
-                           'Tobias','Ifeoma','Kofi','Marie'] AS first_names,
-                     ARRAY['Okafor','Schmidt','Mwangi','Adeyemi','Weber','Otieno','Becker',
-                           'Eze','Kamau','Fischer','Nwosu','Wagner'] AS last_names) n;
+     LATERAL (SELECT ARRAY['Amara','Tunde','Ngozi','Bola','Chidi','Halima','Emeka','Aisha',
+                           'Segun','Ifeoma','Musa','Ebere'] AS first_names,
+                     ARRAY['Okafor','Bello','Adeyemi','Eze','Ibrahim','Nwosu','Ogunleye',
+                           'Danjuma','Okon','Usman','Etim','Akande'] AS last_names) n;
 
 -- ---------------------------------------------------------------------
 -- Service lines (fixed reference data)
@@ -47,48 +85,60 @@ INSERT INTO service_line (service_id, name) VALUES
     (3, 'Training and security awareness');
 
 -- ---------------------------------------------------------------------
--- Clients: 20 organisations across NGO, public and private sectors
+-- Clients: 20 fictitious Nigerian organisations across NGO, public and
+-- private sectors, spread over all six geopolitical zones.
+-- The temp table also holds each client's head-office and field cities.
 -- ---------------------------------------------------------------------
-INSERT INTO client (name, sector, country_code, data_residency, created_at)
-SELECT v.name, v.sector, v.cc,
-       CASE WHEN v.cc IN ('DE','NL','BE','FR','AT') THEN 'EU'
-            WHEN v.cc IN ('NG','KE','GH','UG')       THEN 'AFRICA'
-            ELSE 'OTHER' END,
-       DATE '2022-01-10' + (row_number() OVER () * 41)::int
-FROM (VALUES
-    ('Rhine Relief Network',        'ngo',     'DE'),
-    ('Sahel Water Alliance',        'ngo',     'NG'),
-    ('Lakeside Health Trust',       'ngo',     'KE'),
-    ('Open Hands Migration Aid',    'ngo',     'NL'),
-    ('Coastal Food Bank Union',     'ngo',     'GH'),
-    ('City of Northbridge',         'public',  'DE'),
-    ('Delta State Pensions Office', 'public',  'NG'),
-    ('County Revenue Authority',    'public',  'KE'),
-    ('Federal Archive Service',     'public',  'BE'),
-    ('Regional Transit Board',      'public',  'AT'),
-    ('Greenfield Microfinance',     'private', 'NG'),
-    ('Atlas Logistics GmbH',        'private', 'DE'),
-    ('Savanna Mobile Money',        'private', 'KE'),
-    ('Harbour Insurance SA',        'private', 'FR'),
-    ('Nova Retail Group',           'private', 'NL'),
-    ('Kilimani Telecom',            'private', 'KE'),
-    ('Pioneer Agritech',            'private', 'UG'),
-    ('Meridian Hotels',             'private', 'AE'),
-    ('Bluecrest Software',          'private', 'US'),
-    ('Unity Property Partners',     'private', 'NG')
-) AS v(name, sector, cc);
+CREATE TEMP TABLE client_src (n INT, name TEXT, sector TEXT, hq_city TEXT, hq_state CHAR(2),
+                              field_city TEXT, field_state CHAR(2));
+INSERT INTO client_src VALUES
+    ( 1, 'Lagoon Community Food Network',  'ngo',     'Lagos',         'LA', 'Abeokuta',      'OG'),
+    ( 2, 'Sahel Water Alliance',           'ngo',     'Maiduguri',     'BO', 'Damaturu',      'YO'),
+    ( 3, 'Benue Valley Health Trust',      'ngo',     'Makurdi',       'BE', 'Lafia',         'NA'),
+    ( 4, 'Northern Girls Education Fund',  'ngo',     'Kano',          'KN', 'Dutse',         'JI'),
+    ( 5, 'Delta Mangrove Trust',           'ngo',     'Port Harcourt', 'RI', 'Yenagoa',       'BY'),
+    ( 6, 'Federal Archives Service',       'public',  'Abuja',         'FC', 'Minna',         'NI'),
+    ( 7, 'Rivers Coastal Pensions Board',  'public',  'Port Harcourt', 'RI', 'Uyo',           'AK'),
+    ( 8, 'Kano Municipal Revenue Office',  'public',  'Kano',          'KN', 'Katsina',       'KT'),
+    ( 9, 'Oyo Health Records Agency',      'public',  'Ibadan',        'OY', 'Oshogbo',       'OS'),
+    (10, 'Enugu Urban Transit Board',      'public',  'Enugu',         'EN', 'Abakaliki',     'EB'),
+    (11, 'Greenfield Microfinance Bank',   'private', 'Lagos',         'LA', 'Ibadan',        'OY'),
+    (12, 'Atlas Logistics Nigeria',        'private', 'Lagos',         'LA', 'Kano',          'KN'),
+    (13, 'Savanna Mobile Money',           'private', 'Abuja',         'FC', 'Kaduna',        'KD'),
+    (14, 'Harbour Insurance Plc',          'private', 'Lagos',         'LA', 'Port Harcourt', 'RI'),
+    (15, 'Nova Retail Group',              'private', 'Ibadan',        'OY', 'Akure',         'ON'),
+    (16, 'Niger Delta Offshore Services',  'private', 'Port Harcourt', 'RI', 'Warri',         'DE'),
+    (17, 'Creekside Energy Services',      'private', 'Warri',         'DE', 'Benin City',    'ED'),
+    (18, 'Pioneer Agritech',               'private', 'Kaduna',        'KD', 'Jos',           'PL'),
+    (19, 'Meridian Hotels',                'private', 'Abuja',         'FC', 'Lagos',         'LA'),
+    (20, 'Unity Property Partners',        'private', 'Enugu',         'EN', 'Owerri',        'IM');
+
+INSERT INTO client (name, sector, state_code, created_at)
+SELECT name, sector, hq_state, DATE '2022-01-10' + n * 41
+FROM client_src
+ORDER BY n;                                   -- client_id follows n
 
 -- ---------------------------------------------------------------------
--- Client sites: 2 or 3 per client
+-- Client sites: head office, data centre, and a field office for even ids.
+-- The data centre is placed in the city of the client's serving office,
+-- where the colocation facilities are (Lagos, Abuja, Port Harcourt).
 -- ---------------------------------------------------------------------
-INSERT INTO client_site (client_id, site_name, city, country_code)
+INSERT INTO client_site (client_id, site_name, city, state_code)
 SELECT c.client_id,
-       (ARRAY['Head office', 'Data centre', 'Field office'])[s],
-       (ARRAY['Main city', 'Hosting campus', 'Regional town'])[s],
-       c.country_code
+       x.site_name, x.city, x.state_code
 FROM client c
-CROSS JOIN generate_series(1, 3) AS s
-WHERE s <= 2 OR c.client_id % 2 = 0;
+JOIN client_src src ON src.n = c.client_id
+JOIN state st       ON st.state_code = c.state_code
+JOIN office o       ON o.office_id   = st.serving_office_id
+CROSS JOIN LATERAL (VALUES
+    (1, 'Head office',  src.hq_city,    src.hq_state),
+    (2, 'Data centre',  o.city,         CASE o.office_code WHEN 'LOS' THEN 'LA'
+                                                           WHEN 'ABV' THEN 'FC'
+                                                           ELSE 'RI' END),
+    (3, 'Field office', src.field_city, src.field_state)
+) AS x(k, site_name, city, state_code)
+WHERE x.k <= 2 OR c.client_id % 2 = 0
+ORDER BY c.client_id, x.k;
 
 -- ---------------------------------------------------------------------
 -- Assets: 8 to 20 per site
@@ -108,7 +158,7 @@ CROSS JOIN LATERAL generate_series(1, 8 + floor(random() * 13)::int) AS n;
 -- Engagements: 3 per client, one per service line, spread over 2023-2026
 -- ---------------------------------------------------------------------
 INSERT INTO engagement (client_id, service_id, lead_consultant_id, title,
-                        start_date, end_date, status, budget_eur)
+                        start_date, end_date, status, budget_ngn)
 SELECT c.client_id,
        sl.service_id,
        4 + ((c.client_id + sl.service_id) % 6),          -- leads are consultants 4-9
@@ -118,7 +168,7 @@ SELECT c.client_id,
        CASE WHEN d.start_date >= DATE '2026-09-01' THEN 'planned'
             WHEN d.start_date >= DATE '2026-03-01' THEN 'active'
             ELSE 'closed' END,
-       (12000 + c.client_id * 1500 + sl.service_id * 4000)::numeric
+       (7200000 + c.client_id * 900000 + sl.service_id * 2400000)::numeric   -- budget in naira
 FROM client c
 CROSS JOIN service_line sl
 CROSS JOIN LATERAL (SELECT DATE '2023-02-01' + ((c.client_id * 53 + sl.service_id * 97) % 1310) AS start_date) d
@@ -210,7 +260,7 @@ CROSS JOIN LATERAL (
 -- ---------------------------------------------------------------------
 INSERT INTO framework (name, version) VALUES
     ('ISO/IEC 27001', '2022'),
-    ('GDPR',          '2016/679'),
+    ('Nigeria Data Protection Act', '2023'),
     ('NIST CSF',      '2.0');
 
 -- ISO/IEC 27001:2022 Annex A has 93 controls in four themes:
@@ -222,15 +272,20 @@ FROM (VALUES (5, 37, 'Organisational'), (6, 8, 'People'),
 CROSS JOIN LATERAL generate_series(1, t.cnt) AS n;
 
 INSERT INTO control (framework_id, ref_code, title) VALUES
-    (2, 'Art.5',  'Principles relating to processing of personal data'),
-    (2, 'Art.6',  'Lawfulness of processing'),
-    (2, 'Art.25', 'Data protection by design and by default'),
-    (2, 'Art.30', 'Records of processing activities'),
-    (2, 'Art.32', 'Security of processing'),
-    (2, 'Art.33', 'Notification of a personal data breach to the supervisory authority'),
-    (2, 'Art.34', 'Communication of a personal data breach to the data subject'),
-    (2, 'Art.35', 'Data protection impact assessment'),
-    (2, 'Art.37', 'Designation of the data protection officer'),
+    -- Nigeria Data Protection Act 2023: section numbers and headings as in the Act
+    (2, 'S.24', 'Principles of personal data processing'),
+    (2, 'S.25', 'Lawful basis of personal data processing'),
+    (2, 'S.26', 'Consent'),
+    (2, 'S.27', 'Provision of information to the data subject'),
+    (2, 'S.28', 'Data privacy impact assessment'),
+    (2, 'S.29', 'Obligations of the data controller and data processor'),
+    (2, 'S.30', 'Sensitive personal data'),
+    (2, 'S.32', 'Data Protection Officers'),
+    (2, 'S.34', 'Rights of a data subject'),
+    (2, 'S.39', 'Security, integrity, and confidentiality'),
+    (2, 'S.40', 'Personal data breaches'),
+    (2, 'S.41', 'Basis for cross-border transfer of personal data'),
+    (2, 'S.44', 'Registration of data controllers and data processors of major importance'),
     (3, 'GV.OC', 'Organizational Context'),
     (3, 'GV.RM', 'Risk Management Strategy'),
     (3, 'GV.RR', 'Roles, Responsibilities, and Authorities'),
@@ -254,8 +309,9 @@ INSERT INTO control (framework_id, ref_code, title) VALUES
     (3, 'RC.RP', 'Incident Recovery Plan Execution'),
     (3, 'RC.CO', 'Incident Recovery Communication');
 
--- Each compliance engagement assesses every ISO control.
--- EU clients are also assessed on GDPR; others on NIST CSF.
+-- Each compliance engagement assesses every ISO control and every NDPA
+-- section (all clients process personal data in Nigeria). Private-sector
+-- clients are also assessed against NIST CSF 2.0.
 INSERT INTO control_assessment (engagement_id, control_id, assessed_by, rating, assessed_on, notes)
 SELECT e.engagement_id, ctl.control_id,
        14 + ((e.engagement_id + ctl.control_id) % 11),
@@ -269,8 +325,8 @@ FROM engagement e
 JOIN client c ON c.client_id = e.client_id
 JOIN control ctl
   ON ctl.framework_id = 1
-  OR (ctl.framework_id = 2 AND c.data_residency = 'EU')
-  OR (ctl.framework_id = 3 AND c.data_residency <> 'EU')
+  OR ctl.framework_id = 2
+  OR (ctl.framework_id = 3 AND c.sector = 'private')
 -- ctl.control_id is referenced so random() is drawn once per row, not once per client
 CROSS JOIN LATERAL (SELECT random() + 0 * ctl.control_id AS r,
                            0.40 + (c.client_id % 5) * 0.09 AS q) x   -- clients differ in maturity
@@ -301,10 +357,10 @@ CROSS JOIN LATERAL generate_series(1, 10 + floor(random() * 16)::int) AS p;
 -- ---------------------------------------------------------------------
 -- Invoices and payments (payments go through the trigger)
 -- ---------------------------------------------------------------------
-INSERT INTO invoice (engagement_id, invoice_no, amount_eur, issued_on, due_on)
+INSERT INTO invoice (engagement_id, invoice_no, amount_ngn, issued_on, due_on)
 SELECT e.engagement_id,
        'TCC-' || to_char(e.start_date + k * 30, 'YYYY') || '-' || lpad((e.engagement_id * 10 + k)::text, 5, '0'),
-       round(e.budget_eur / 2, 2),
+       round(e.budget_ngn / 2, 2),              -- two instalments of half the budget
        e.start_date + k * 30,
        e.start_date + k * 30 + 30
 FROM engagement e
@@ -312,15 +368,15 @@ CROSS JOIN generate_series(1, 2) AS k
 WHERE e.status <> 'planned';
 
 -- Full payment for invoices issued before 2026-06; half payment for some later ones
-INSERT INTO payment (invoice_id, amount_eur, paid_on, method)
-SELECT i.invoice_id, i.amount_eur, i.issued_on + 20,
-       (ARRAY['bank_transfer', 'card', 'mobile_money'])[1 + i.invoice_id % 3]
+INSERT INTO payment (invoice_id, amount_ngn, paid_on, method)
+SELECT i.invoice_id, i.amount_ngn, i.issued_on + 20,
+       (ARRAY['bank_transfer', 'card', 'ussd'])[1 + i.invoice_id % 3]
 FROM invoice i
 WHERE i.issued_on < DATE '2026-06-01'
 ORDER BY i.invoice_id;
 
-INSERT INTO payment (invoice_id, amount_eur, paid_on, method)
-SELECT i.invoice_id, round(i.amount_eur / 2, 2), i.issued_on + 15, 'bank_transfer'
+INSERT INTO payment (invoice_id, amount_ngn, paid_on, method)
+SELECT i.invoice_id, round(i.amount_ngn / 2, 2), i.issued_on + 15, 'bank_transfer'
 FROM invoice i
 WHERE i.issued_on >= DATE '2026-06-01' AND i.invoice_id % 2 = 0
 ORDER BY i.invoice_id;
@@ -332,6 +388,7 @@ ANALYZE;
 
 -- Row counts for the README
 SELECT 'office' AS table_name, count(*) FROM office
+UNION ALL SELECT 'state', count(*) FROM state
 UNION ALL SELECT 'consultant', count(*) FROM consultant
 UNION ALL SELECT 'client', count(*) FROM client
 UNION ALL SELECT 'client_site', count(*) FROM client_site
