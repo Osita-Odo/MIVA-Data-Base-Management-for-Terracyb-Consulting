@@ -15,6 +15,22 @@
 | Normalisation explanation | Section 5 |
 | Sample data | [`seed.sql`](seed.sql) (synthetic, deterministic) |
 
+## Key decisions and reasons
+
+Full register with alternatives: [docs/design-decisions.md](../docs/design-decisions.md).
+
+| Decision | Reason | ID |
+| --- | --- | --- |
+| PostgreSQL 16 | One free DBMS supports everything Portfolios 1, 2, 3 and 5 need: generated columns, partial indexes, true SERIALIZABLE, partitioning and replication | D06 |
+| Surrogate integer keys; natural key for `state`; composite keys for junction tables | Names and emails change but integer keys do not; state codes are already stable identifiers; a composite key stops duplicate staffing or attendance rows | D11 |
+| Separate `state` table for zone and serving office | Zone depends on the state, not the client; keeping it in `client` would break 3NF | D16 |
+| `severity` as a generated column | It is fully determined by the CVSS score, so it must never be stored independently | D17 |
+| TEXT + CHECK instead of ENUM | Allowed values are easy to change and visible next to the column | D13 |
+| NUMERIC for naira amounts | Exact decimals; floating point cannot store money exactly | D14 |
+| CASCADE only for dependent rows, RESTRICT for findings and billing | Evidence and financial records must never disappear because a parent was deleted | D19 |
+| Triggers for cross-table rules | A CHECK cannot see other tables; a trigger enforces the rule for every writer | D20, D21 |
+| Synthetic data with a fixed random seed | No real client data (NDPA, confidentiality); identical results on every run | D29, D30 |
+
 ## 2. Case study in brief
 
 TerraCyber Consulting is a Nigerian cybersecurity consultancy serving NGOs, public bodies and private firms in all six geopolitical zones. It works from three sites, Lagos (headquarters), Abuja and Port Harcourt; [../docs/site-selection.md](../docs/site-selection.md) explains why. It runs three service lines: compliance and data protection, advisory and resilience, and training and security awareness. Engagements are budgeted and invoiced in naira (NGN).

@@ -5,7 +5,7 @@
 -- Run after schema.sql:  psql -d ead -f seed.sql
 -- =====================================================================
 SET search_path TO ead;
-SELECT setseed(0.42);   -- same data on every run
+SELECT setseed(0.42);   -- same data on every run, so results and screenshots are reproducible (D30)
 
 BEGIN;
 
@@ -56,7 +56,8 @@ FROM (VALUES
 
 -- ---------------------------------------------------------------------
 -- Consultants: 24 staff spread over the three offices
--- Hourly rates in naira (NGN), by seniority
+-- Hourly rates in naira (NGN), by seniority. The figures are illustrative,
+-- set so that some engagements exceed budget and Q5 has risks to flag (D33)
 -- ---------------------------------------------------------------------
 INSERT INTO consultant (office_id, full_name, email, role, hire_date, hourly_rate_ngn)
 SELECT
