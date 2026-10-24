@@ -1,5 +1,5 @@
 #!/bin/bash
-# Runs once, when pg-primary initialises its data directory.
+# Runs once, when pg-lagos (the primary) initialises its data directory.
 # Creates the replication user and a physical replication slot, and
 # allows replication connections from the Docker network.
 set -e

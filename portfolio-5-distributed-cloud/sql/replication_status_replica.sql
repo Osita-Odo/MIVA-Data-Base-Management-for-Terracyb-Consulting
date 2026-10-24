@@ -1,5 +1,5 @@
--- Run on pg-replica: am I a standby, and how stale is my data?
---   docker exec -i pg-replica psql -U postgres -d ead -f /sql/replication_status_replica.sql
+-- Run on pg-portharcourt (replica): am I a standby, and how stale is my data?
+--   docker exec -i pg-portharcourt psql -U postgres -d ead -f /sql/replication_status_replica.sql
 -- is_standby true     -> the server is replaying WAL and is read only
 -- received vs replayed -> WAL that has arrived but is not yet applied
 -- time_since_last...   -> how stale the replica's data may be (NULL if no

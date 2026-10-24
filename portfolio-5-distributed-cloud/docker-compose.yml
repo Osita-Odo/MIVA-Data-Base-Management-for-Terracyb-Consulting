@@ -1,19 +1,25 @@
 # =====================================================================
-# Portfolio 5: distributed TerraCyber EAD on one laptop
+# Portfolio 5: TerraCyber EAD distributed over three Nigerian sites
+# (simulated on one laptop; see ../docs/site-selection.md for the siting)
 #
-#   pg-primary  Bonn (EU) node: read/write primary, loads the Portfolio 1 schema and data
-#   pg-replica  Streaming read replica of pg-primary (high availability, read scaling)
-#   pg-africa   Lagos node: stores African clients' findings (geo-partition / shard)
-#   mongo1-3    MongoDB replica set rs0 for evidence documents
-#   mongo-init  One-shot container that initiates the replica set
+#   pg-lagos          Lagos (headquarters): read/write PRIMARY; loads the
+#                     Portfolio 1 schema and data
+#   pg-portharcourt   Port Harcourt: streaming hot-standby REPLICA of Lagos
+#                     for disaster recovery (separate subsea route, 448 km away)
+#   pg-abuja          Abuja: holds public-sector clients' findings
+#                     (geo-partition reached from Lagos via postgres_fdw)
+#   mongo-lagos, mongo-portharcourt, mongo-abuja
+#                     MongoDB replica set rs0: one member per site, so the
+#                     loss of any ONE site still leaves a majority (2 of 3)
+#   mongo-init        One-shot container that initiates the replica set
 #
-#   docker compose up -d        (first start takes about a minute: seed load + base backup)
+#   docker compose up -d     (first start takes about a minute: seed load + base backup)
 #   docker compose ps
 # =====================================================================
 x-pg-common: &pg-common
   image: postgres:16
   environment: &pg-env
-    POSTGRES_PASSWORD: terracyber-demo
+    POSTGRES_PASSWORD: terracyber-demo        # demo only; never commit real passwords
   healthcheck:
     test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U postgres"]
     interval: 5s
@@ -21,12 +27,13 @@ x-pg-common: &pg-common
     retries: 30
 
 services:
-  pg-primary:
+  pg-lagos:
     <<: *pg-common
-    container_name: pg-primary
+    container_name: pg-lagos
     environment:
       <<: *pg-env
       POSTGRES_DB: ead
+    # Settings a primary needs to stream WAL to a standby
     command: >
       postgres
         -c wal_level=replica
@@ -37,75 +44,77 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - pg-primary-data:/var/lib/postgresql/data
+      - pg-lagos-data:/var/lib/postgresql/data
+      # Scripts in docker-entrypoint-initdb.d run once, in name order, on first start
       - ./config/primary-init.sh:/docker-entrypoint-initdb.d/01-replication.sh:ro
       - ../portfolio-1-database-design/schema.sql:/docker-entrypoint-initdb.d/02-schema.sql:ro
       - ../portfolio-1-database-design/seed.sql:/docker-entrypoint-initdb.d/03-seed.sql:ro
       - ./sql:/sql:ro
 
-  pg-replica:
+  pg-portharcourt:
     <<: *pg-common
-    container_name: pg-replica
+    container_name: pg-portharcourt
     user: postgres
     environment:
       PGPASSWORD: replicator-demo
+      PRIMARY_HOST: pg-lagos
     command: ["bash", "/config/replica-entrypoint.sh"]
     depends_on:
-      pg-primary:
-        condition: service_healthy
+      pg-lagos:
+        condition: service_healthy            # wait until the primary accepts connections
     ports:
       - "5433:5432"
     volumes:
-      - pg-replica-data:/var/lib/postgresql/data
+      - pg-portharcourt-data:/var/lib/postgresql/data
       - ./config:/config:ro
       - ./sql:/sql:ro
 
-  pg-africa:
+  pg-abuja:
     <<: *pg-common
-    container_name: pg-africa
+    container_name: pg-abuja
     environment:
       <<: *pg-env
-      POSTGRES_DB: ead_africa
+      POSTGRES_DB: ead_abuja
     ports:
       - "5434:5432"
     volumes:
-      - pg-africa-data:/var/lib/postgresql/data
-      - ./sql/africa_node_init.sql:/docker-entrypoint-initdb.d/01-africa.sql:ro
+      - pg-abuja-data:/var/lib/postgresql/data
+      - ./sql/abuja_node_init.sql:/docker-entrypoint-initdb.d/01-abuja.sql:ro
       - ./sql:/sql:ro
 
-  mongo1: &mongo
+  mongo-lagos: &mongo
     image: mongo:7.0
-    container_name: mongo1
+    container_name: mongo-lagos
     command: ["--replSet", "rs0", "--bind_ip_all"]
     volumes:
-      - mongo1-data:/data/db
+      - mongo-lagos-data:/data/db
       - ./mongo:/scripts:ro
-  mongo2:
+  mongo-portharcourt:
     <<: *mongo
-    container_name: mongo2
+    container_name: mongo-portharcourt
     volumes:
-      - mongo2-data:/data/db
+      - mongo-portharcourt-data:/data/db
       - ./mongo:/scripts:ro
-  mongo3:
+  mongo-abuja:
     <<: *mongo
-    container_name: mongo3
+    container_name: mongo-abuja
     volumes:
-      - mongo3-data:/data/db
+      - mongo-abuja-data:/data/db
       - ./mongo:/scripts:ro
 
   mongo-init:
     image: mongo:7.0
     container_name: mongo-init
-    depends_on: [mongo1, mongo2, mongo3]
+    depends_on: [mongo-lagos, mongo-portharcourt, mongo-abuja]
     restart: "no"
     volumes:
       - ./mongo:/scripts:ro
     entrypoint: ["bash", "/scripts/init-replica-set.sh"]
 
 volumes:
-  pg-primary-data:
-  pg-replica-data:
-  pg-africa-data:
-  mongo1-data:
-  mongo2-data:
-  mongo3-data:
+  pg-lagos-data:
+  pg-portharcourt-data:
+  pg-abuja-data:
+  mongo-lagos-data:
+  mongo-portharcourt-data:
+  mongo-abuja-data:

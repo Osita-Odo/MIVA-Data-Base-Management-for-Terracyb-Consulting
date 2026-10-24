@@ -1,13 +1,17 @@
 -- =====================================================================
--- pg-africa (Lagos node) initialisation
--- Holds the findings of clients whose data_residency is 'AFRICA', so
--- that data stays in-region (Nigeria NDPA, Kenya DPA, etc.).
--- The EU node reaches this table through postgres_fdw (geo_sharding.sql).
+-- pg-abuja (Abuja node) initialisation
+-- Holds the findings of PUBLIC-SECTOR clients. Rationale (see
+-- docs/site-selection.md): NITDA's cloud policy and the proposed National
+-- Cloud Technical Document emphasise sovereign hosting of government data;
+-- Abuja hosts Galaxy Backbone's Tier III National Shared Services Centre
+-- and the regulators (NDPC, NITDA, CBN). The Lagos primary reaches this
+-- table through postgres_fdw (geo_sharding.sql).
 -- =====================================================================
-CREATE TABLE finding_geo_africa (
+CREATE TABLE finding_geo_public (
     finding_id     BIGINT       PRIMARY KEY,
-    residency      TEXT         NOT NULL CHECK (residency = 'AFRICA'),
+    sector         TEXT         NOT NULL CHECK (sector = 'public'),   -- this node accepts public-sector rows only
     client_id      INT          NOT NULL,
+    office_code    CHAR(3)      NOT NULL,          -- TerraCyber office serving the client
     engagement_id  INT          NOT NULL,
     asset_id       INT          NOT NULL,
     title          TEXT         NOT NULL,
@@ -16,4 +20,4 @@ CREATE TABLE finding_geo_africa (
     found_on       DATE         NOT NULL,
     fixed_on       DATE
 );
-CREATE INDEX idx_africa_client ON finding_geo_africa (client_id);
+CREATE INDEX idx_public_client ON finding_geo_public (client_id);

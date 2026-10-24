@@ -1,5 +1,5 @@
--- Run on pg-primary: who is replicating from me, and how far behind are they?
---   docker exec -i pg-primary psql -U postgres -d ead -f /sql/replication_status_primary.sql
+-- Run on pg-lagos (primary): who is replicating from me, and how far behind are they?
+--   docker exec -i pg-lagos psql -U postgres -d ead -f /sql/replication_status_primary.sql
 \x on   -- expanded display: one column per line, easier to read for wide rows
 
 -- One row per connected standby.

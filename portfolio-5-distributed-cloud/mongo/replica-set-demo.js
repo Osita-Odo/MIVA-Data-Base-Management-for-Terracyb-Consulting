@@ -1,13 +1,13 @@
 // =====================================================================
 // Portfolio 5: MongoDB replica set, consistency and availability
 // Run (connects to the whole set, so the driver follows the primary):
-//   docker exec -i mongo2 mongosh "mongodb://mongo1,mongo2,mongo3/terracyber?replicaSet=rs0" /scripts/replica-set-demo.js
+//   docker exec -i mongo-portharcourt mongosh "mongodb://mongo-lagos,mongo-portharcourt,mongo-abuja/terracyber?replicaSet=rs0" /scripts/replica-set-demo.js
 // =====================================================================
 db = db.getSiblingDB("terracyber");
 
 // Prints each member with its role (PRIMARY / SECONDARY) and health (1 = up)
 function members() {
-  rs.status().members.forEach(m => print("  " + m.name.padEnd(14) + m.stateStr.padEnd(11) + "health=" + m.health));
+  rs.status().members.forEach(m => print("  " + m.name.padEnd(26) + m.stateStr.padEnd(11) + "health=" + m.health));
 }
 
 print("=== 1. Replica set members ===");
