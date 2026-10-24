@@ -1,0 +1,161 @@
+// TerraCyber Consulting EAD: ER diagram source
+// Paste into https://dbdiagram.io, arrange, then Export > PNG and save as erd.png
+
+Project terracyber_ead {
+  database_type: 'PostgreSQL'
+  Note: 'Engagement and Assurance Database for TerraCyber Consulting'
+}
+
+Table office {
+  office_id int [pk, increment]
+  office_name text [not null]
+  city text [not null]
+  country_code char(2) [not null]
+  region text [not null, note: 'EU | AFRICA | OTHER']
+  indexes { (city, country_code) [unique] }
+}
+
+Table consultant {
+  consultant_id int [pk, increment]
+  office_id int [not null, ref: > office.office_id]
+  full_name text [not null]
+  email text [not null, unique]
+  role text [not null, note: 'analyst | lead | manager | trainer']
+  hire_date date [not null]
+  hourly_rate_eur numeric(8,2) [not null]
+}
+
+Table client {
+  client_id int [pk, increment]
+  name text [not null, unique]
+  sector text [not null, note: 'ngo | public | private']
+  country_code char(2) [not null]
+  data_residency text [not null, note: 'EU | AFRICA | OTHER']
+  created_at date
+}
+
+Table client_site {
+  site_id int [pk, increment]
+  client_id int [not null, ref: > client.client_id]
+  site_name text [not null]
+  city text [not null]
+  country_code char(2) [not null]
+  indexes { (client_id, site_name) [unique] }
+}
+
+Table service_line {
+  service_id smallint [pk]
+  name text [not null, unique]
+}
+
+Table engagement {
+  engagement_id int [pk, increment]
+  client_id int [not null, ref: > client.client_id]
+  service_id smallint [not null, ref: > service_line.service_id]
+  lead_consultant_id int [not null, ref: > consultant.consultant_id]
+  title text [not null]
+  start_date date [not null]
+  end_date date
+  status text [not null]
+  budget_eur numeric(12,2) [not null]
+}
+
+Table engagement_staff {
+  engagement_id int [pk, ref: > engagement.engagement_id]
+  consultant_id int [pk, ref: > consultant.consultant_id]
+  role_on_engagement text [not null]
+  hours_allocated numeric(6,1) [not null]
+}
+
+Table asset {
+  asset_id int [pk, increment]
+  site_id int [not null, ref: > client_site.site_id]
+  hostname text [not null]
+  ip_address inet
+  asset_type text [not null]
+  criticality text [not null]
+  internet_facing boolean [not null]
+  indexes { (site_id, hostname) [unique] }
+}
+
+Table finding {
+  finding_id bigint [pk, increment]
+  engagement_id int [not null, ref: > engagement.engagement_id]
+  asset_id int [not null, ref: > asset.asset_id]
+  title text [not null]
+  cve_id text
+  cvss_score numeric(3,1) [not null, note: '0 to 10']
+  severity text [note: 'generated from cvss_score']
+  status text [not null]
+  found_on date [not null]
+  fixed_on date
+}
+
+Table framework {
+  framework_id int [pk, increment]
+  name text [not null]
+  version text [not null]
+}
+
+Table control {
+  control_id int [pk, increment]
+  framework_id int [not null, ref: > framework.framework_id]
+  ref_code text [not null]
+  title text [not null]
+  indexes { (framework_id, ref_code) [unique] }
+}
+
+Table control_assessment {
+  assessment_id int [pk, increment]
+  engagement_id int [not null, ref: > engagement.engagement_id]
+  control_id int [not null, ref: > control.control_id]
+  assessed_by int [not null, ref: > consultant.consultant_id]
+  rating text [not null]
+  assessed_on date [not null]
+  notes text
+  indexes { (engagement_id, control_id) [unique] }
+}
+
+Table training_session {
+  session_id int [pk, increment]
+  engagement_id int [not null, ref: > engagement.engagement_id]
+  trainer_id int [not null, ref: > consultant.consultant_id]
+  topic text [not null]
+  delivered_on date [not null]
+  mode text [not null]
+}
+
+Table attendance {
+  session_id int [pk, ref: > training_session.session_id]
+  participant_email text [pk]
+  quiz_score smallint
+}
+
+Table invoice {
+  invoice_id int [pk, increment]
+  engagement_id int [not null, ref: > engagement.engagement_id]
+  invoice_no text [not null, unique]
+  amount_eur numeric(12,2) [not null]
+  issued_on date [not null]
+  due_on date [not null]
+  status text [not null]
+}
+
+Table payment {
+  payment_id int [pk, increment]
+  invoice_id int [not null, ref: > invoice.invoice_id]
+  amount_eur numeric(12,2) [not null]
+  paid_on date [not null]
+  method text [not null]
+}
+
+Table audit_log {
+  log_id bigint [pk, increment]
+  table_name text [not null]
+  record_id bigint [not null]
+  action text [not null]
+  old_data jsonb
+  new_data jsonb
+  changed_by text [not null]
+  changed_at timestamptz [not null]
+}
