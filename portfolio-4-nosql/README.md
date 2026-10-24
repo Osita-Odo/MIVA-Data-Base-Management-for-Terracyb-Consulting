@@ -57,7 +57,7 @@ Example (shortened):
   "collected_at": "2026-03-02T09:14:00Z",
   "scanner": { "name": "OpenVAS", "version": "23.1" },
   "results": [
-    { "host": "rhiner-1-010", "ip": "10.1.0.11", "port": 443,
+    { "host": "lagoon-1-010", "ip": "10.1.0.11", "port": 443,
       "cve": "CVE-2021-44228", "cvss": 10.0, "status": "open" }
   ],
   "tags": ["perimeter", "external-scan"]
@@ -81,7 +81,7 @@ graph LR
 | `Asset` | hostname (unique), ip, asset_type, criticality, internet_facing |
 | `Vulnerability` | cve (unique), name, cvss |
 
-The graph covers client 1 (Rhine Relief Network): 13 assets, 4 CVEs, 12 network links.
+The graph covers client 1 (Lagoon Community Food Network, an NGO with a head office and a data-centre site in Lagos): 13 assets, 4 CVEs, 12 network links.
 
 ## 4. How to run
 
@@ -119,7 +119,7 @@ The script prints the plan stages and `docsExamined` before and after indexing. 
 | # | Question |
 | --- | --- |
 | G1 | Every path from an exploitable internet-facing asset to a critical asset, within 4 hops |
-| G2 | Shortest path from each entry point to cloud asset `rhiner-21-003` |
+| G2 | Shortest path from each entry point to cloud asset `lagoon-2-009` in the Lagos data centre |
 | G3 | Blast radius: assets reachable within 3 hops of each entry point |
 | G4 | Choke points: internal assets on the most attack paths (best places to segment) |
 

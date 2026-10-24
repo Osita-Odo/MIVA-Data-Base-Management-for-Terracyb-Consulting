@@ -16,11 +16,11 @@ db.evidence.insertMany([
     scanner: { name: "OpenVAS", version: "23.1", profile: "Full and fast" },
     target_range: "10.1.0.0/24",
     results: [
-      { host: "rhiner-1-010", ip: "10.1.0.11", port: 443, protocol: "tcp", cve: "CVE-2021-44228",
+      { host: "lagoon-1-010", ip: "10.1.0.11", port: 443, protocol: "tcp", cve: "CVE-2021-44228",
         title: "Apache Log4j remote code execution (Log4Shell)", cvss: 10.0, status: "open" },
-      { host: "rhiner-1-007", ip: "10.1.0.8", port: 3389, protocol: "tcp", cve: "CVE-2019-0708",
+      { host: "lagoon-1-007", ip: "10.1.0.8", port: 3389, protocol: "tcp", cve: "CVE-2019-0708",
         title: "Windows RDP remote code execution (BlueKeep)", cvss: 9.8, status: "open" },
-      { host: "rhiner-1-003", ip: "10.1.0.4", port: 443, protocol: "tcp",
+      { host: "lagoon-1-003", ip: "10.1.0.4", port: 443, protocol: "tcp",
         title: "Outdated TLS configuration allows TLS 1.0", cvss: 5.3, status: "open" }
     ],
     tags: ["perimeter", "external-scan"]
@@ -37,7 +37,7 @@ db.evidence.insertMany([
   {
     _id: "EV-2026-00003", engagement_id: 1, client_id: 1, control_ref: "ISO27001:A.8.20",
     type: "config_snapshot", collected_by: "consultant19", collected_at: new Date("2026-03-04T08:30:00Z"),
-    device: { hostname: "rhiner-1-002", vendor: "FortiGate", model: "60F", firmware: "7.2.8" },
+    device: { hostname: "lagoon-1-002", vendor: "FortiGate", model: "60F", firmware: "7.2.8" },
     firewall_rules: [
       { id: 1, src: "any", dst: "10.1.0.11", service: "HTTPS", action: "accept", logging: true },
       { id: 7, src: "any", dst: "10.1.0.8", service: "RDP", action: "accept", logging: false },
@@ -65,14 +65,14 @@ db.evidence.insertMany([
     tags: ["identity", "mfa"]
   },
   {
-    _id: "EV-2026-00006", engagement_id: 1, client_id: 1, control_ref: "GDPR:Art.30",
+    _id: "EV-2026-00006", engagement_id: 1, client_id: 1, control_ref: "NDPA:S.28",
     type: "policy_document", collected_by: "consultant6", collected_at: new Date("2026-03-06T10:00:00Z"),
-    document: { title: "Record of Processing Activities", version: "1.0", owner: "Data Protection Officer",
-                processing_activities: 23, file_ref: "gdpr/ropa-2026.xlsx" },
-    review: { outcome: "compliant" },
-    tags: ["gdpr", "privacy"]
-  }
-]);
+    document: { title: "Data Privacy Impact Assessment: beneficiary registration app", version: "1.0",
+                owner: "Data Protection Officer", high_risk_processing: true,
+                file_ref: "ndpa/dpia-beneficiary-app-2026.pdf" },
+    review: { outcome: "partial", comment: "DPIA completed, but no record of consulting the NDPC on the high residual risk." },
+    tags: ["ndpa", "privacy"]
+  }]);
 print("Inserted 6 hand-written evidence documents.");
 
 // ---------- 2. Generated scans (deterministic pseudo-random numbers) ----------

@@ -12,10 +12,10 @@ RETURN entry.hostname AS entry_point, v.name AS exploited_with,
        [n IN nodes(p) | n.hostname] AS path, length(p) AS hops, target.hostname AS target
 ORDER BY hops, entry_point;
 
-// G2. Shortest route from each exploitable entry point to the cloud asset rhiner-21-003.
+// G2. Shortest route from each exploitable entry point to the cloud asset lagoon-2-009.
 MATCH (entry:Asset {internet_facing: true})-[:AFFECTED_BY]->(v:Vulnerability)
 WHERE v.cvss >= 9
-MATCH p = shortestPath((entry)-[:CONNECTS_TO*..6]->(:Asset {hostname: 'rhiner-21-003'}))
+MATCH p = shortestPath((entry)-[:CONNECTS_TO*..6]->(:Asset {hostname: 'lagoon-2-009'}))
 RETURN entry.hostname AS entry_point, [n IN nodes(p) | n.hostname] AS shortest_path, length(p) AS hops
 ORDER BY hops;
 
