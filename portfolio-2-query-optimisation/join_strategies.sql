@@ -10,7 +10,7 @@ SET search_path TO ead;
 -- so differences in cost and time come from the join algorithm alone.
 \echo '=== 1. Planner default ==='
 EXPLAIN (ANALYZE, BUFFERS, COSTS)
-SELECT e.engagement_id, sum(es.hours_allocated * co.hourly_rate_eur) AS planned_cost
+SELECT e.engagement_id, sum(es.hours_allocated * co.hourly_rate_ngn) AS planned_cost
 FROM engagement e
 LEFT JOIN engagement_staff es ON es.engagement_id = e.engagement_id
 LEFT JOIN consultant co       ON co.consultant_id = es.consultant_id
@@ -21,7 +21,7 @@ GROUP BY e.engagement_id;
 -- so the planner picks the next best one.
 SET enable_hashjoin = off;
 EXPLAIN (ANALYZE, BUFFERS, COSTS)
-SELECT e.engagement_id, sum(es.hours_allocated * co.hourly_rate_eur) AS planned_cost
+SELECT e.engagement_id, sum(es.hours_allocated * co.hourly_rate_ngn) AS planned_cost
 FROM engagement e
 LEFT JOIN engagement_staff es ON es.engagement_id = e.engagement_id
 LEFT JOIN consultant co       ON co.consultant_id = es.consultant_id
@@ -30,7 +30,7 @@ GROUP BY e.engagement_id;
 \echo '=== 3. Hash and merge joins disabled (nested loops only) ==='
 SET enable_mergejoin = off;
 EXPLAIN (ANALYZE, BUFFERS, COSTS)
-SELECT e.engagement_id, sum(es.hours_allocated * co.hourly_rate_eur) AS planned_cost
+SELECT e.engagement_id, sum(es.hours_allocated * co.hourly_rate_ngn) AS planned_cost
 FROM engagement e
 LEFT JOIN engagement_staff es ON es.engagement_id = e.engagement_id
 LEFT JOIN consultant co       ON co.consultant_id = es.consultant_id

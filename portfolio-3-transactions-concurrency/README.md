@@ -67,8 +67,8 @@ Another valid fix is an atomic update: `SET hours_allocated = hours_allocated + 
 
 | Isolation level | First read | Second read | Explanation |
 | --- | --- | --- | --- |
-| READ COMMITTED | 48 | 62 | Each statement sees a fresh snapshot |
-| REPEATABLE READ | 48 | 48 | The whole transaction uses one snapshot |
+| READ COMMITTED | 52 | 68 | Each statement sees a fresh snapshot |
+| REPEATABLE READ | 52 | 52 | The whole transaction uses one snapshot |
 
 **Part 2, write skew.** Rule: an engagement must keep at least one analyst. Two managers each check "more than one analyst?" and then remove a *different* analyst. They update different rows, so row locks never conflict.
 

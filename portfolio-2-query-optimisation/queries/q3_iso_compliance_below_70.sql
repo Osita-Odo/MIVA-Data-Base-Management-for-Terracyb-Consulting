@@ -15,7 +15,7 @@ WITH iso AS (
     JOIN control ct    ON ct.control_id    = ca.control_id
     JOIN framework fw  ON fw.framework_id  = ct.framework_id
     JOIN engagement e  ON e.engagement_id  = ca.engagement_id
-    WHERE fw.name = 'ISO/IEC 27001'          -- ignore GDPR and NIST CSF assessments
+    WHERE fw.name = 'ISO/IEC 27001'          -- ignore NDPA and NIST CSF assessments
     GROUP BY e.client_id
     -- HAVING filters groups after aggregation (WHERE cannot see aggregates).
     -- NULLIF avoids a division by zero if every control were N/A.

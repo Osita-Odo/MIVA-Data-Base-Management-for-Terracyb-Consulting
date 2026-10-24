@@ -8,7 +8,7 @@
 
 | Evidence required by the brief | Where it is |
 | --- | --- |
-| SQL queries | [`queries/`](queries) (8 business queries, one file each) |
+| SQL queries | [`queries/`](queries) (9 business queries, one file each) |
 | Query results | `results/query-results/*.txt`, produced by `run_queries.sh` |
 | Execution plans | `plans/before/` and `plans/after/`, produced by `run_benchmark.sh` |
 | Indexing and optimisation evidence | [`indexes.sql`](indexes.sql), `results/timings.md`, [`join_strategies.sql`](join_strategies.sql) |
@@ -28,6 +28,7 @@ Each query answers a question TerraCyber managers actually ask.
 | Q6a | How many findings mention "password"? (ILIKE) | Pattern matching with a leading wildcard |
 | Q6b | Same question with full-text search | `to_tsvector` / `to_tsquery` |
 | Q7 | Where is Log4Shell (CVE-2021-44228) still unfixed? | Selective equality lookup |
+| Q8 | How much open risk does each office (Lagos, Abuja, Port Harcourt) carry, by geopolitical zone? | 6-table join through the `state` lookup, `GROUP BY ROLLUP` subtotals |
 
 ## 3. How to run
 
@@ -55,6 +56,7 @@ The `finding` table holds about 66,000 rows. Without Portfolio 2 indexes, every 
 | Q6a | `ILIKE '%password%'` cannot use a B-tree | **None for ILIKE** | Stays a sequential scan. A B-tree only helps for left-anchored patterns such as `'password%'`. |
 | Q6b | `to_tsvector` is computed for every row on every run | **GIN expression index** on `to_tsvector('english', title)` | Bitmap Index Scan on the GIN index. The biggest single improvement after Q2. |
 | Q7 | Equality filter on a rare value, but a full scan | **Partial B-tree** on `cve_id` where it is not null | Bitmap Index Scan. Index stays small because most findings have no CVE. |
+| Q8 | Scans all findings to keep the unresolved ones, then joins through `state` to the office | **Reuses** the Q4 covering partial index | Shows that one well-chosen index can serve several queries. Compare the before and after plans to see whether the planner chose it. |
 
 **Points to write about in your own words after running the benchmark:**
 
@@ -83,6 +85,7 @@ After running the scripts, paste `results/timings.md` here, then add 3 to 5 sent
 | Q6a | | | | |
 | Q6b | | | | |
 | Q7 | | | | |
+| Q8 | | | | |
 
 Hardware used: _(laptop model, CPU, RAM)_. Timings vary between machines; the ratios matter more than the absolute times.
 
