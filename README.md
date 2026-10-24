@@ -8,12 +8,13 @@
 
 | Item | Description |
 | --- | --- |
-| **Organisation** | TerraCyber Consulting ([terracybconsulting.com](https://terracybconsulting.com)), a multi-site cybersecurity consultancy delivering grounded, human-centred cybersecurity |
-| **Nature of the business** | Consultancy for NGOs, public sector bodies and private firms, across three service lines: compliance and data protection; advisory and resilience; training and security awareness |
+| **Organisation** | TerraCyber Consulting ([terracybconsulting.com](https://terracybconsulting.com)), a Nigerian cybersecurity consultancy delivering grounded, human-centred cybersecurity |
+| **Locations** | Three sites: **Lagos** (headquarters, primary database), **Abuja** (northern office, public-sector data shard) and **Port Harcourt** (South South and South East office, disaster-recovery standby). The choice of sites is justified in [docs/site-selection.md](docs/site-selection.md). |
+| **Nature of the business** | Consultancy for NGOs, public sector bodies and private firms in all six geopolitical zones of Nigeria, across three service lines: compliance and data protection; advisory and resilience; training and security awareness |
 | **Database** | Engagement and Assurance Database (EAD) |
 | **Users** | Consultants and analysts, engagement managers, trainers, finance staff, auditors (read-only), client contacts (read-only portal) |
-| **Major data** | Offices, consultants, clients and their sites, engagements and staffing, client assets, vulnerability findings, compliance frameworks and controls, control assessments, audit evidence, training sessions and attendance, invoices and payments, audit trail |
-| **Key operations** | Open and staff an engagement; log and triage findings; assess controls against ISO/IEC 27001, GDPR or NIST CSF; attach evidence; track remediation; deliver training and record results; invoice and record payments; produce client compliance reports |
+| **Major data** | Offices, the 36 states and FCT with their serving office, consultants, clients and their sites, engagements and staffing, client assets, vulnerability findings, compliance frameworks and controls, control assessments, audit evidence, training sessions and attendance, invoices and payments, audit trail |
+| **Key operations** | Open and staff an engagement; log and triage findings; assess controls against ISO/IEC 27001, the Nigeria Data Protection Act 2023 (NDPA) or NIST CSF 2.0; attach evidence; track remediation; deliver training and record results; invoice in naira and record payments; produce client compliance reports |
 
 All data in this repository is synthetic. Names, organisations, hostnames and IP addresses are fictitious; CVE identifiers are real public vulnerabilities used as examples.
 
@@ -22,21 +23,21 @@ All data in this repository is synthetic. Names, organisations, hostnames and IP
 ```
 terracyber-advanced-database-portfolio/
 ├── portfolio-1-database-design/          ER model, schema, constraints, normalisation, seed data
-├── portfolio-2-query-optimisation/       8 queries, execution plans, indexes, benchmark
+├── portfolio-2-query-optimisation/       9 queries, execution plans, indexes, benchmark
 ├── portfolio-3-transactions-concurrency/ commit, rollback, locking, isolation levels, deadlock
 ├── portfolio-4-nosql/                    MongoDB document model and Neo4j graph model
-├── portfolio-5-distributed-cloud/        replication, geo-sharding, failover, consistency
-├── docs/                                 LMS documentation template and reflection notes
+├── portfolio-5-distributed-cloud/        Lagos primary, Port Harcourt standby, Abuja shard, failover
+├── docs/                                 site-selection analysis, LMS documentation template
 └── README.md                             this file
 ```
 
 | Portfolio | Marks | Main evidence | README |
 | --- | --- | --- | --- |
-| 1. Database design and modelling | 7 | ER diagram, 17-table schema, 11 constraint tests, normalisation walk-through | [link](portfolio-1-database-design/README.md) |
+| 1. Database design and modelling | 7 | ER diagram, 18-table schema, 12 constraint tests, normalisation walk-through | [link](portfolio-1-database-design/README.md) |
 | 2. Query processing and optimisation | 7 | Query results, before/after plans, timing table | [link](portfolio-2-query-optimisation/README.md) |
 | 3. Transactions and concurrency | 7 | Logs of 5 scenarios, two-terminal screenshots | [link](portfolio-3-transactions-concurrency/README.md) |
 | 4. NoSQL and advanced data models | 7 | MongoDB outputs, Neo4j attack paths, suitability analysis | [link](portfolio-4-nosql/README.md) |
-| 5. Distributed and cloud database | 6 | Replication, sharding and failover logs | [link](portfolio-5-distributed-cloud/README.md) |
+| 5. Distributed and cloud database | 6 | Replication (Lagos to Port Harcourt), sharding (Abuja) and failover logs | [link](portfolio-5-distributed-cloud/README.md) |
 | Final documentation | 6 | 2-3 page LMS document | [docs](docs/lms-documentation-template.md) |
 
 ## Technology stack

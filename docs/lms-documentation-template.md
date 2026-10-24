@@ -11,11 +11,11 @@ Copy this into Word or Google Docs, fill every _italic_ placeholder with your ow
 
 ### 1. Selected organisation
 
-TerraCyber Consulting is a multi-site cybersecurity consultancy serving NGOs, public bodies and private firms in three service lines: compliance and data protection, advisory and resilience, and training and security awareness. Its Engagement and Assurance Database (EAD) is used by consultants, engagement managers, trainers, finance staff and auditors. It stores clients and sites, engagements, assets, vulnerability findings, compliance controls and assessments, audit evidence, training records, invoices and payments. Key operations: _list the 4-5 most important_.
+TerraCyber Consulting is a Nigerian cybersecurity consultancy serving NGOs, public bodies and private firms in all six geopolitical zones, in three service lines: compliance and data protection, advisory and resilience, and training and security awareness. It operates from Lagos (headquarters), Abuja and Port Harcourt, chosen through a weighted siting analysis of data centres, subsea connectivity, client demand, regulator proximity, security, disaster-recovery distance and flood risk (docs/site-selection.md). Its Engagement and Assurance Database (EAD) is used by consultants, engagement managers, trainers, finance staff and auditors. It stores clients and sites, engagements, assets, vulnerability findings, compliance assessments against ISO/IEC 27001, the NDPA 2023 and NIST CSF 2.0, audit evidence, training records, and invoices and payments in naira. Key operations: _list the 4-5 most important_.
 
 ### 2. Portfolio 1: Database design and modelling
 
-_2-3 sentences: 17 tables in 3NF, the two junction tables, the most interesting constraints (generated severity column, cross-table triggers), and the constraint test result (11 of 11 rejected)._
+_2-3 sentences: 18 tables in 3NF (including the state table that removes the client -> state -> zone dependency), the two junction tables, the most interesting constraints (generated severity column, cross-table triggers), and the constraint test result (12 of 12 rejected)._
 
 _Screenshot: ER diagram (erd.png)._
 
@@ -39,7 +39,7 @@ _Screenshot: Neo4j graph or a MongoDB document._
 
 ### 6. Portfolio 5: Distributed and cloud database
 
-_2-3 sentences: streaming replica, geo-sharding of African clients' findings to a separate node, failover by promotion (time: X s), MongoDB automatic election, and your CAP choice for invoices vs evidence._
+_2-3 sentences: Lagos primary streaming to a Port Harcourt standby (independent subsea route, 448 km away), public-sector findings sharded to Abuja, failover by promotion (time: X s), MongoDB election with one member per city, and your CAP choice for invoices vs evidence._
 
 _Screenshot: docker compose ps or the promotion output._
 
@@ -60,7 +60,9 @@ _Write this yourself, in the first person, 150-250 words. Prompts:_
 - Neo4j, Inc. _Cypher Manual._ https://neo4j.com/docs/cypher-manual/current/
 - ISO/IEC 27001:2022. _Information security, cybersecurity and privacy protection: Information security management systems: Requirements._
 - NIST (2024). _The NIST Cybersecurity Framework (CSF) 2.0._ https://doi.org/10.6028/NIST.CSWP.29
-- Regulation (EU) 2016/679 (General Data Protection Regulation).
+- Federal Republic of Nigeria (2023). _Nigeria Data Protection Act, 2023._
+- Nigeria Data Protection Commission (2025). _NDPA General Application and Implementation Directive (GAID) 2025._
+- Sources on data centres, connectivity, flood risk and security are listed in docs/site-selection.md.
 - _Add your course textbook and any other sources you used._
 
 ### 9. AI-use declaration
