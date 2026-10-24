@@ -1,7 +1,10 @@
 // =====================================================================
 // Portfolio 4 / MongoDB step 2: load evidence documents
 // 6 hand-written documents (one of each shape) plus 3,000 generated
-// vulnerability scans so that index effects are measurable.
+// vulnerability scans so that index effects are measurable (D53).
+// Scan results are EMBEDDED in their scan, because they are always read
+// together; engagements and clients are REFERENCED by id, because they
+// change and live in PostgreSQL (D51).
 // engagement_id and client_id match the PostgreSQL seed data.
 // Run: docker exec -it tc-mongo mongosh terracyber /scripts/02_load_evidence.js
 // =====================================================================

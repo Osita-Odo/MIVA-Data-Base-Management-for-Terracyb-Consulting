@@ -15,6 +15,19 @@
 | Concurrency control (extra) | 5. Deadlock detection | [`05_deadlock.sh`](05_deadlock.sh) |
 | Output evidence | Logs of every run | `output/*.log` |
 
+## Key decisions and reasons
+
+Full register with alternatives: [docs/design-decisions.md](../docs/design-decisions.md).
+
+| Decision | Reason | ID |
+| --- | --- | --- |
+| Scenarios built on TerraCyber operations (closing findings, payments, staffing, compliance reports) | Each brief requirement is evidenced with a realistic case rather than an abstract example | D44 |
+| Two scripted sessions timed with `pg_sleep` | Forces the same interleaving every time, so the logs are reproducible evidence | D45 |
+| `SELECT ... FOR UPDATE` to fix the lost update | The manager reads the hours before deciding; a row lock protects exactly this read-decide-write pattern | D46 |
+| SERIALIZABLE to stop write skew | The two managers update different rows, so ordinary row locks never conflict; SERIALIZABLE detects the pattern anyway | D47 |
+| Deadlock scenario with ordered locking as the fix | Row locks (D46) create deadlock risk; the scenario shows both detection and prevention | D48 |
+| Scripts restore the rows they change | Scenarios can be rerun in any order with the same results | D49 |
+
 ## 2. How to run
 
 Load Portfolio 1 first. Then run everything at once:

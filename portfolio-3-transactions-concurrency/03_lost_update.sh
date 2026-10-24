@@ -5,6 +5,9 @@
 #   Manager A adds 10 hours, Manager B adds 5 hours. Correct total: +15.
 # Run 1: plain read then write (READ COMMITTED) -> B's change is lost.
 # Run 2: row lock with FOR UPDATE -> B waits for A, total is correct.
+# Why FOR UPDATE (D46): each manager reads the hours, decides, then writes.
+# A row lock protects this read-decide-write pattern; an atomic
+# "hours = hours + 5" would also work, but only when no decision is needed.
 # =====================================================================
 source "$(dirname "$0")/common.sh"
 LOG="$OUT_DIR/03_lost_update.log"

@@ -14,6 +14,20 @@
 | Implementation evidence | `evidence-samples/*.txt` outputs and screenshots (section 4) |
 | Explanation of suitability | Section 5 |
 
+## Key decisions and reasons
+
+Full register with alternatives: [docs/design-decisions.md](../docs/design-decisions.md).
+
+| Decision | Reason | ID |
+| --- | --- | --- |
+| MongoDB for audit evidence | Evidence types have different shapes; one flexible document per item fits them, with aggregation and array updates built in | D07, D50 |
+| Embed scan results; reference engagements by id | Results are read only with their scan; engagement data changes and belongs in PostgreSQL | D51 |
+| Validate only shared fields | Shared fields must be consistent for queries; type-specific fields stay flexible | D52 |
+| 3,000 generated documents | Index effects are invisible on a handful of documents | D53 |
+| Hostnames exported from PostgreSQL | All stores describe the same assets, as a real polyglot system must | D54 |
+| Neo4j for attack paths, one client only | Multi-hop paths are one Cypher pattern but a recursive CTE in SQL; one client keeps the graph readable | D08, D56 |
+| Entry points: internet-facing with CVSS 9 or more | Matches the "critical" severity threshold and realistic attacker access | D57 |
+
 ## 2. Why NoSQL here: polyglot persistence
 
 PostgreSQL stays the **system of record** for engagements, findings, controls and money. Two kinds of TerraCyber data fit it badly:

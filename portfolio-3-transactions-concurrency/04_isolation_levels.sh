@@ -10,6 +10,8 @@
 #         that "another analyst remains".
 #         REPEATABLE READ -> both succeed, zero analysts left (anomaly)
 #         SERIALIZABLE    -> one transaction fails with SQLSTATE 40001
+# Why SERIALIZABLE (D47): the managers delete DIFFERENT rows, so row locks
+# never conflict; only serializable isolation detects this anomaly.
 # =====================================================================
 source "$(dirname "$0")/common.sh"
 LOG="$OUT_DIR/04_isolation_levels.log"

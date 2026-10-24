@@ -26,6 +26,20 @@ The full analysis, with sources and a weighted scoring of six candidate cities, 
 
 **Why the shard key is sector, not region.** The Nigeria Data Protection Act 2023 regulates transfers *outside* Nigeria (sections 41 to 43). Since all three nodes are in Nigeria, it does not force a split by region. The rules that do care where data sits are sector rules: government data (NITDA policy) and bank and fintech transaction data (CBN local-hosting requirement from 1 January 2027).
 
+## Key decisions and reasons
+
+Full register with alternatives: [docs/design-decisions.md](../docs/design-decisions.md). Site evidence: [docs/site-selection.md](../docs/site-selection.md).
+
+| Decision | Reason | ID |
+| --- | --- | --- |
+| Partitioning plus `postgres_fdw` for sharding | Built into PostgreSQL, no extra software, and the routing is visible in standard `EXPLAIN` output | D62 |
+| Copy `sector` and `office_code` into `finding_geo` | A partition key must be a column of the partitioned table (documented denormalisation) | D63 |
+| Asynchronous replication, synchronous for billing | Fast writes where slight staleness is acceptable; no lost payments where it is not | D64 |
+| Replication slot `replica1` | The standby can catch up after an outage; slot lag is monitored to stop WAL piling up | D65 |
+| Manual promotion | Shows each failover step clearly; Patroni named as the production choice | D66 |
+| One MongoDB member per site, Lagos priority 2 | Losing any one site leaves a majority; headquarters is the normal primary | D67 |
+| `w: "majority"` for evidence | Survives one site failure without stopping uploads | D68 |
+
 ## 3. Architecture
 
 ```mermaid

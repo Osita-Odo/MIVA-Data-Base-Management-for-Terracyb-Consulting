@@ -14,6 +14,18 @@
 | Indexing and optimisation evidence | [`indexes.sql`](indexes.sql), `results/timings.md`, [`join_strategies.sql`](join_strategies.sql) |
 | Performance analysis | Section 4 below |
 
+## Key decisions and reasons
+
+Full register with alternatives: [docs/design-decisions.md](../docs/design-decisions.md).
+
+| Decision | Reason | ID |
+| --- | --- | --- |
+| Each query answers a TerraCyber business question and shows a different SQL feature | Shows the database serving its purpose and covers joins, CTEs, window functions, ROLLUP and full-text search without repetition | D34 |
+| One optimisation per plan problem (partial, covering, GIN, materialised view) | Each technique is matched to the specific reason the baseline plan was slow | D35 to D40 |
+| No new index for Q3, Q5, Q6a and Q8 | Demonstrates when an index does not help or when an existing one is enough; every extra index slows writes | D37, D41 |
+| Median of 5 warm runs, scripted drop and recreate | Resists outliers, is reproducible, and guarantees a fair before/after comparison | D42 |
+| Join methods compared by planner settings | Isolates the effect of the join algorithm alone | D43 |
+
 ## 2. The queries
 
 Each query answers a question TerraCyber managers actually ask.

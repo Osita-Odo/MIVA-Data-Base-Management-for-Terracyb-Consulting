@@ -1,6 +1,8 @@
 #!/bin/bash
 # Runs once, when pg-lagos (the primary) initialises its data directory.
-# Creates the replication user and a physical replication slot, and
+# Creates the replication user and a physical replication slot (D65: the
+# slot keeps WAL until the standby has it, so it can catch up after an
+# outage), and
 # allows replication connections from the Docker network.
 set -e
 psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
