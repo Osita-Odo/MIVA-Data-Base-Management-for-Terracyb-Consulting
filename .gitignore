@@ -1,0 +1,12 @@
+# OS and editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Local environment files (never commit passwords)
+.env
+
+# Large temporary dumps
+*.dump
+*.backup
