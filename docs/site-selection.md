@@ -41,7 +41,9 @@ Candidates: Abuja, Port Harcourt, Kano, Enugu and Ibadan, the cities that either
 | F4 | Proximity to regulators and the federal government | 10 | NDPA, NITDA and CBN work; public-sector engagements |
 | F5 | Staff security and travel (UK FCDO advice) | 15 | Consultants travel to client sites |
 | F6 | Distance from Lagos (disaster-recovery separation) | 10 | A regional disaster must not hit both sites |
-| F7 | Flood exposure (2026 Annual Flood Outlook) | 10 | Flooding is Nigeria's most frequent natural hazard |
+| F7 | Flood exposure (2026 Annual Flood Outlook) | 10 | Flooding affects 33 states and the FCT in the 2026 outlook, so it must be checked |
+
+**Why these weights:** data-centre availability (F1) and client demand (F3) carry the most weight (20 each) because a site without a certified facility cannot host a database node, and a site without clients cannot justify an office. Internet route independence (F2) and staff security (F5) come next (15 each): the first is the main reason to have a backup site at all, and the second protects consultants who travel to clients. Regulator proximity (F4), distance from Lagos (F6) and flood exposure (F7) matter but are partly covered by other factors or do not separate the candidates, so they carry 10 each.
 
 ### 3.2 Evidence per candidate
 

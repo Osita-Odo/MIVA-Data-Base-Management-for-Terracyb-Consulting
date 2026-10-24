@@ -27,7 +27,7 @@ terracyber-advanced-database-portfolio/
 ├── portfolio-3-transactions-concurrency/ commit, rollback, locking, isolation levels, deadlock
 ├── portfolio-4-nosql/                    MongoDB document model and Neo4j graph model
 ├── portfolio-5-distributed-cloud/        Lagos primary, Port Harcourt standby, Abuja shard, failover
-├── docs/                                 site-selection analysis, LMS documentation template
+├── docs/                                 design decisions, site selection, LMS template
 └── README.md                             this file
 ```
 
@@ -39,6 +39,13 @@ terracyber-advanced-database-portfolio/
 | 4. NoSQL and advanced data models | 7 | MongoDB outputs, Neo4j attack paths, suitability analysis | [link](portfolio-4-nosql/README.md) |
 | 5. Distributed and cloud database | 6 | Replication (Lagos to Port Harcourt), sharding (Abuja) and failover logs | [link](portfolio-5-distributed-cloud/README.md) |
 | Final documentation | 6 | 2-3 page LMS document | [docs](docs/lms-documentation-template.md) |
+
+## Design decisions
+
+Every significant choice in this project, from the three sites to individual column types and index choices, is recorded with the alternatives considered and the reason for the decision:
+
+- [docs/design-decisions.md](docs/design-decisions.md): register of 71 decisions (D01 to D71), referenced from the code comments and each portfolio README
+- [docs/site-selection.md](docs/site-selection.md): evidence and weighted scoring behind the choice of Lagos, Abuja and Port Harcourt
 
 ## Technology stack
 
