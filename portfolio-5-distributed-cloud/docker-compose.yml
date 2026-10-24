@@ -1,0 +1,111 @@
+# =====================================================================
+# Portfolio 5: distributed TerraCyber EAD on one laptop
+#
+#   pg-primary  Bonn (EU) node: read/write primary, loads the Portfolio 1 schema and data
+#   pg-replica  Streaming read replica of pg-primary (high availability, read scaling)
+#   pg-africa   Lagos node: stores African clients' findings (geo-partition / shard)
+#   mongo1-3    MongoDB replica set rs0 for evidence documents
+#   mongo-init  One-shot container that initiates the replica set
+#
+#   docker compose up -d        (first start takes about a minute: seed load + base backup)
+#   docker compose ps
+# =====================================================================
+x-pg-common: &pg-common
+  image: postgres:16
+  environment: &pg-env
+    POSTGRES_PASSWORD: terracyber-demo
+  healthcheck:
+    test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U postgres"]
+    interval: 5s
+    timeout: 3s
+    retries: 30
+
+services:
+  pg-primary:
+    <<: *pg-common
+    container_name: pg-primary
+    environment:
+      <<: *pg-env
+      POSTGRES_DB: ead
+    command: >
+      postgres
+        -c wal_level=replica
+        -c max_wal_senders=10
+        -c max_replication_slots=10
+        -c hot_standby=on
+        -c wal_keep_size=256MB
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg-primary-data:/var/lib/postgresql/data
+      - ./config/primary-init.sh:/docker-entrypoint-initdb.d/01-replication.sh:ro
+      - ../portfolio-1-database-design/schema.sql:/docker-entrypoint-initdb.d/02-schema.sql:ro
+      - ../portfolio-1-database-design/seed.sql:/docker-entrypoint-initdb.d/03-seed.sql:ro
+      - ./sql:/sql:ro
+
+  pg-replica:
+    <<: *pg-common
+    container_name: pg-replica
+    user: postgres
+    environment:
+      PGPASSWORD: replicator-demo
+    command: ["bash", "/config/replica-entrypoint.sh"]
+    depends_on:
+      pg-primary:
+        condition: service_healthy
+    ports:
+      - "5433:5432"
+    volumes:
+      - pg-replica-data:/var/lib/postgresql/data
+      - ./config:/config:ro
+      - ./sql:/sql:ro
+
+  pg-africa:
+    <<: *pg-common
+    container_name: pg-africa
+    environment:
+      <<: *pg-env
+      POSTGRES_DB: ead_africa
+    ports:
+      - "5434:5432"
+    volumes:
+      - pg-africa-data:/var/lib/postgresql/data
+      - ./sql/africa_node_init.sql:/docker-entrypoint-initdb.d/01-africa.sql:ro
+      - ./sql:/sql:ro
+
+  mongo1: &mongo
+    image: mongo:7.0
+    container_name: mongo1
+    command: ["--replSet", "rs0", "--bind_ip_all"]
+    volumes:
+      - mongo1-data:/data/db
+      - ./mongo:/scripts:ro
+  mongo2:
+    <<: *mongo
+    container_name: mongo2
+    volumes:
+      - mongo2-data:/data/db
+      - ./mongo:/scripts:ro
+  mongo3:
+    <<: *mongo
+    container_name: mongo3
+    volumes:
+      - mongo3-data:/data/db
+      - ./mongo:/scripts:ro
+
+  mongo-init:
+    image: mongo:7.0
+    container_name: mongo-init
+    depends_on: [mongo1, mongo2, mongo3]
+    restart: "no"
+    volumes:
+      - ./mongo:/scripts:ro
+    entrypoint: ["bash", "/scripts/init-replica-set.sh"]
+
+volumes:
+  pg-primary-data:
+  pg-replica-data:
+  pg-africa-data:
+  mongo1-data:
+  mongo2-data:
+  mongo3-data:
