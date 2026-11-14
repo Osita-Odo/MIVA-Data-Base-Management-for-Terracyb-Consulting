@@ -305,13 +305,6 @@ The brief rewards progressive commits. Record each milestone when it is committe
 
 ## 13. AI-use declaration
 
-AI tools were used as a learning aid, as permitted by section 7 of the assessment brief.
+Claude AI tools was used as a learning aid, as permitted by section 7 of the assessment brief.
 
-| Item | Detail |
-| --- | --- |
-| Tool | Claude (Anthropic) |
-| Used for | _Describe honestly, for example: planning the case study scope, drafting scripts, README structure and the explainer, explaining concepts, and running the test runs that produced the screenshots and output files dated 14 November 2026._ |
-| My own work | _Describe what you ran, tested, changed, measured and wrote yourself, for example: re-ran the scripts on my machine, replaced screenshots with my own captures, wrote the analysis and reflection, changed X and Y._ |
-| Verification | _How you checked correctness, for example: executed all SQL on PostgreSQL 16, compared plans, repeated the concurrency tests in two terminals._ |
-
-I understand every design decision in this repository and can explain it if selected for technical verification.
+| 
