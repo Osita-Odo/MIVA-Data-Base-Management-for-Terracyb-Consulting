@@ -1,0 +1,25 @@
+// Dev container for GitHub Codespaces (or VS Code Dev Containers).
+// Gives a Linux machine with Docker, the PostgreSQL 16 client and Graphviz,
+// so every portfolio can be tested in the browser. See docs/testing-guide.md.
+{
+  "name": "TerraCyber EAD test environment",
+  // Ubuntu 24.04 ships the PostgreSQL 16 client used by all scripts
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-24.04",
+  "features": {
+    // Docker inside the Codespace, for Portfolios 1-5 (databases run in containers)
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+  // psql client, Graphviz for make_erd.py, Python for the ER script
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y postgresql-client-16 graphviz python3",
+  // psql reads these, so commands like "psql -d ead" reach the PostgreSQL container
+  "remoteEnv": {
+    "PGHOST": "localhost",
+    "PGPORT": "5432",
+    "PGUSER": "postgres",
+    "PGPASSWORD": "terracyber-demo"
+  },
+  // Neo4j Browser (7474) and Bolt (7687) for Portfolio 4
+  "forwardPorts": [7474, 7687],
+  // Portfolio 5 runs seven containers: 4 cores and 16 GB RAM is recommended
+  "hostRequirements": { "cpus": 4, "memory": "16gb" }
+}
