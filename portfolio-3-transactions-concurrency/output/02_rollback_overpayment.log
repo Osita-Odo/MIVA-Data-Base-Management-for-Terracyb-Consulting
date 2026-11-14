@@ -1,0 +1,40 @@
+SET
+>>> Target invoice: 119 amount NGN 15750000.00
+>>> Before:
+ invoice_id | amount_ngn  | status | paid 
+------------+-------------+--------+------
+        119 | 15750000.00 | issued |    0
+(1 row)
+
+
+=== Part A: one transaction, second payment too large, ROLLBACK ===
+BEGIN
+INSERT 0 1
+>>> First payment accepted inside the transaction
+psql:02_rollback_overpayment.sql:30: ERROR:  Payment of 15750000.00 NGN would exceed invoice 119 (amount 15750000.00, already paid 7875000.00)
+CONTEXT:  PL/pgSQL function fn_payment_within_invoice() line 13 at RAISE
+>>> The transaction is now aborted, so even a SELECT fails:
+psql:02_rollback_overpayment.sql:33: ERROR:  current transaction is aborted, commands ignored until end of transaction block
+ROLLBACK
+>>> After ROLLBACK: nothing was saved, not even the valid first payment
+ invoice_id | status | paid 
+------------+--------+------
+        119 | issued |    0
+(1 row)
+
+
+=== Part B: same steps with a SAVEPOINT ===
+BEGIN
+INSERT 0 1
+SAVEPOINT
+psql:02_rollback_overpayment.sql:49: ERROR:  Payment of 15750000.00 NGN would exceed invoice 119 (amount 15750000.00, already paid 7875000.00)
+CONTEXT:  PL/pgSQL function fn_payment_within_invoice() line 13 at RAISE
+ROLLBACK
+>>> Rolled back to the savepoint; the transaction is usable again
+COMMIT
+>>> After COMMIT: half paid, status part_paid
+ invoice_id | amount_ngn  |  status   |    paid    
+------------+-------------+-----------+------------
+        119 | 15750000.00 | part_paid | 7875000.00
+(1 row)
+

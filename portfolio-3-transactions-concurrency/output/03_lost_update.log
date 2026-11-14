@@ -1,0 +1,23 @@
+Target row: engagement 1, consultant 6
+
+=== Run 1: no lock (lost update) ===
+    Start: hours_allocated = 100
+21:11:44.341 [A] read 100.0, now thinking for 2 seconds
+21:11:44.844 [B] reading ...
+21:11:44.847 [B] read 100.0
+21:11:44.849 [B] wrote 100.0 + 5
+21:11:44.852 [B] committed
+21:11:46.347 [A] wrote 100.0 + 10
+21:11:46.351 [A] committed
+    Final hours_allocated: 110.0  (expected 115.0)
+
+=== Run 2: SELECT ... FOR UPDATE (B waits for A) ===
+    Start: hours_allocated = 100
+21:11:46.435 [A] read 100.0, now thinking for 2 seconds
+21:11:46.939 [B] reading ...
+21:11:48.441 [A] wrote 100.0 + 10
+21:11:48.445 [A] committed
+21:11:48.445 [B] read 110.0
+21:11:48.449 [B] wrote 110.0 + 5
+21:11:48.452 [B] committed
+    Final hours_allocated: 115.0  (expected 115.0)
