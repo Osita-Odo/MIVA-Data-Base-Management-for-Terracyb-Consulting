@@ -2,27 +2,8 @@
 
 **Course:** MIT 8103 Advanced Database Systems, MIVA Open University, 2026/2027 First Semester
 **Student:** Osita Kingsley Odo
-**Assessment:** Individual Practical Database Portfolio (40 marks)
 
-> **Explainer document:** a 15-page plain-language guide to the whole project, [TerraCyber_Database_Project_Explainer.docx](docs/TerraCyber_Database_Project_Explainer.docx), sits in `docs/`. This README and the five portfolio READMEs carry the same explanations, so every part of the project can be understood on GitHub without opening the Word file.
-
-## Contents
-
-1. [The project in one page](#1-the-project-in-one-page)
-2. [Case study statement](#2-case-study-statement)
-3. [Where TerraCyber operates, and why](#3-where-terracyber-operates-and-why)
-4. [How the repository is organised](#4-how-the-repository-is-organised)
-5. [Evidence at a glance](#5-evidence-at-a-glance)
-6. [Design decisions](#6-design-decisions)
-7. [Technology stack](#7-technology-stack)
-8. [How to run the project](#8-how-to-run-the-project)
-9. [What is left to do](#9-what-is-left-to-do)
-10. [Preparing for a verification call](#10-preparing-for-a-verification-call)
-11. [Glossary](#11-glossary)
-12. [Progress log](#12-progress-log)
-13. [AI-use declaration](#13-ai-use-declaration)
-
-## 1. The project in one page
+## 1. The project Summary
 
 This project designs, builds and tests a database for **TerraCyber Consulting**, a Nigerian cybersecurity consultancy. The database is called the **Engagement and Assurance Database (EAD)**. It records the consultancy's clients, the security assessments it carries out for them, the vulnerabilities it finds, the compliance controls it checks, the training it delivers and the money it bills.
 
