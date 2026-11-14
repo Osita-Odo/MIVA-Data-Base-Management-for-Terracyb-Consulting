@@ -42,7 +42,7 @@ The assessment brief asks for five practical portfolios, all built on the same o
 
 ### 2.3 Why this organisation was chosen
 
-The brief asks for an organisation "with enough data and processes" for all five portfolios. TerraCyber has every ingredient naturally:
+The brief asks for an organisation "with enough data and processes" for all five portfolios. 
 
 | Portfolio need | Where TerraCyber provides it |
 | --- | --- |
