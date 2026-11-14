@@ -1,0 +1,31 @@
+flowchart LR
+    subgraph LOS["Lagos: headquarters"]
+        P[("PostgreSQL primary<br/>all writes")]
+        ML[("MongoDB<br/>preferred primary")]
+    end
+    subgraph ABV["Abuja: public sector"]
+        A[("PostgreSQL shard<br/>public-sector findings")]
+        MA[("MongoDB secondary")]
+    end
+    subgraph PHC["Port Harcourt: disaster recovery"]
+        R[("PostgreSQL standby<br/>read-only copy")]
+        MP[("MongoDB secondary")]
+    end
+    P -- "public-sector rows (postgres_fdw)" --> A
+    ML -- oplog --> MA
+    P -- "continuous copy (WAL streaming)" --> R
+    ML -- oplog --> MP
+
+    classDef postgres fill:#336791,stroke:#1d3d57,color:#ffffff,stroke-width:2px
+    classDef mongo fill:#4DB33D,stroke:#2e6b24,color:#ffffff,stroke-width:2px
+    class P,A,R postgres
+    class ML,MA,MP mongo
+
+    style LOS fill:#FFF4D6,stroke:#E0A800,stroke-width:2px,color:#000000
+    style ABV fill:#E8F1FB,stroke:#3B7DD8,stroke-width:2px,color:#000000
+    style PHC fill:#FDECEA,stroke:#D9534F,stroke-width:2px,color:#000000
+
+    linkStyle 0 stroke:#336791,stroke-width:2.5px
+    linkStyle 1 stroke:#4DB33D,stroke-width:2.5px
+    linkStyle 2 stroke:#336791,stroke-width:2.5px
+    linkStyle 3 stroke:#4DB33D,stroke-width:2.5px

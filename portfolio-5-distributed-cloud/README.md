@@ -50,28 +50,9 @@ Full register with alternatives: [docs/design-decisions.md](../docs/design-decis
 
 ## 3. Architecture
 
-```mermaid
-flowchart LR
-    subgraph LOS["Lagos (headquarters)"]
-        P[(pg-lagos<br/>primary, read/write)]
-        ML[(mongo-lagos<br/>preferred primary)]
-    end
-    subgraph PHC["Port Harcourt (DR site)"]
-        R[(pg-portharcourt<br/>hot standby, read only)]
-        MP[(mongo-portharcourt<br/>secondary)]
-    end
-    subgraph ABV["Abuja (public sector)"]
-        A[(pg-abuja<br/>finding_geo_public)]
-        MA[(mongo-abuja<br/>secondary)]
-    end
-    APP[Consultant app] -->|writes| P
-    DASH[Dashboards] -->|reads| R
-    P -- WAL streaming --> R
-    P -- postgres_fdw: public-sector rows --> A
-    APP -->|evidence| ML
-    ML -- oplog --> MP
-    ML -- oplog --> MA
-```
+![Portfolio 5 architecture with container names](architecture.png)
+
+*Blue: PostgreSQL containers. Green: MongoDB containers. Purple: the applications that write to and read from them. Amber, red and blue boxes: the Lagos, Port Harcourt and Abuja sites. Diagram source: [architecture.mmd](architecture.mmd).*
 
 | Container | Site | Role | Host port |
 | --- | --- | --- | --- |

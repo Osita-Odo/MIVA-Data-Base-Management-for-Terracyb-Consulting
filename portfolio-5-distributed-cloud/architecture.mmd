@@ -1,0 +1,41 @@
+flowchart LR
+    APP["Consultant app"]
+    DASH["Dashboards"]
+    subgraph LOS["Lagos: headquarters"]
+        P[("pg-lagos<br/>primary, read/write")]
+        ML[("mongo-lagos<br/>preferred primary")]
+    end
+    subgraph ABV["Abuja: public sector"]
+        A[("pg-abuja<br/>finding_geo_public")]
+        MA[("mongo-abuja<br/>secondary")]
+    end
+    subgraph PHC["Port Harcourt: disaster recovery"]
+        R[("pg-portharcourt<br/>hot standby, read only")]
+        MP[("mongo-portharcourt<br/>secondary")]
+    end
+    APP -- writes --> P
+    APP -- evidence --> ML
+    P -- "postgres_fdw: public-sector rows" --> A
+    ML -- oplog --> MA
+    P -- "WAL streaming" --> R
+    ML -- oplog --> MP
+    DASH -- reads --> R
+
+    classDef postgres fill:#336791,stroke:#1d3d57,color:#ffffff,stroke-width:2px
+    classDef mongo fill:#4DB33D,stroke:#2e6b24,color:#ffffff,stroke-width:2px
+    classDef user fill:#6C5B7B,stroke:#3f3348,color:#ffffff,stroke-width:2px
+    class P,A,R postgres
+    class ML,MA,MP mongo
+    class APP,DASH user
+
+    style LOS fill:#FFF4D6,stroke:#E0A800,stroke-width:2px,color:#000000
+    style ABV fill:#E8F1FB,stroke:#3B7DD8,stroke-width:2px,color:#000000
+    style PHC fill:#FDECEA,stroke:#D9534F,stroke-width:2px,color:#000000
+
+    linkStyle 0 stroke:#6C5B7B,stroke-width:2.5px
+    linkStyle 1 stroke:#6C5B7B,stroke-width:2.5px
+    linkStyle 2 stroke:#336791,stroke-width:2.5px
+    linkStyle 3 stroke:#4DB33D,stroke-width:2.5px
+    linkStyle 4 stroke:#336791,stroke-width:2.5px
+    linkStyle 5 stroke:#4DB33D,stroke-width:2.5px
+    linkStyle 6 stroke:#6C5B7B,stroke-width:2.5px

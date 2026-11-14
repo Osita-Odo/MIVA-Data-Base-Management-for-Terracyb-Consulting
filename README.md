@@ -84,25 +84,9 @@ Lagos was fixed as the primary first, because it leads on every infrastructure m
 
 **Why the data is split by sector, not by region.** All three sites are inside Nigeria. The NDPA regulates transfers of personal data **outside** Nigeria (sections 41 to 43), so it does not force data into one region or another. The rules that do care where data is hosted are **sector** rules: NITDA's cloud policy for government data, and the Central Bank of Nigeria's requirement that payment data be hosted locally from 1 January 2027.
 
-```mermaid
-flowchart LR
-    subgraph LOS["Lagos: headquarters"]
-        P[("PostgreSQL primary<br/>all writes")]
-        ML[("MongoDB<br/>preferred primary")]
-    end
-    subgraph PHC["Port Harcourt: disaster recovery"]
-        R[("PostgreSQL standby<br/>read-only copy")]
-        MP[("MongoDB secondary")]
-    end
-    subgraph ABV["Abuja: public sector"]
-        A[("PostgreSQL shard<br/>public-sector findings")]
-        MA[("MongoDB secondary")]
-    end
-    P -- "continuous copy (WAL streaming)" --> R
-    P -- "public-sector rows (postgres_fdw)" --> A
-    ML -- oplog --> MP
-    ML -- oplog --> MA
-```
+![TerraCyber architecture: Lagos primary, Port Harcourt standby, Abuja public-sector shard, MongoDB across all three sites](docs/images/architecture.png)
+
+*Blue: PostgreSQL. Green: MongoDB. Amber, red and blue boxes: the Lagos, Port Harcourt and Abuja sites. Diagram source: [docs/images/architecture.mmd](docs/images/architecture.mmd).*
 
 ## 4. How the repository is organised
 
@@ -113,8 +97,7 @@ MIVA-Data-Base-Management-for-Terracyb-Consulting/
 ├── portfolio-3-transactions-concurrency/ 5 scenarios, two-terminal lock demo, logs, screenshots
 ├── portfolio-4-nosql/                    MongoDB and Neo4j scripts, Docker setup
 ├── portfolio-5-distributed-cloud/        7-node Docker setup, sharding and failover, logs, screenshots
-├── .devcontainer/                        GitHub Codespaces set-up for testing in the cloud
-├── docs/                                 explainer and testing guide (Word), design decisions, site selection, LMS template
+├── docs/                                 explainer (Word), design decisions, site selection, LMS template
 └── README.md                             this file
 ```
 
@@ -124,8 +107,6 @@ MIVA-Data-Base-Management-for-Terracyb-Consulting/
 | [docs/design-decisions.md](docs/design-decisions.md) | Register of 71 decisions (D01 to D71), each with alternatives considered and the reason |
 | [docs/site-selection.md](docs/site-selection.md) | Evidence and scoring behind Lagos, Abuja and Port Harcourt |
 | [docs/lms-documentation-template.md](docs/lms-documentation-template.md) | Template for the 2-3 page LMS document |
-| [docs/testing-guide.md](docs/testing-guide.md) | Step-by-step guide to testing every portfolio in GitHub Codespaces, Azure or on a laptop (also as Word) |
-| [.devcontainer/devcontainer.json](.devcontainer/devcontainer.json) | Codespaces set-up: Docker, PostgreSQL 16 client, Graphviz |
 
 Every portfolio README follows the same pattern: what the portfolio delivers, its key decisions and reasons, the concepts in plain terms, how to run it, the results with screenshots, and an evidence checklist.
 
@@ -174,8 +155,6 @@ Every significant choice, from the three sites to individual column types and in
 | psql, mongosh, cypher-shell | bundled | All scripts |
 
 ## 8. How to run the project
-
-> **Testing in the cloud:** the step-by-step [testing guide](docs/testing-guide.md) (also in Word: [TerraCyber_Testing_Guide.docx](docs/TerraCyber_Testing_Guide.docx)) runs every portfolio in **GitHub Codespaces**, in the browser, with nothing to install. Open the repository, click **Code > Codespaces > Create codespace** (choose a 4-core machine); the `.devcontainer` folder installs Docker, the PostgreSQL 16 client and Graphviz automatically.
 
 **What you need:** PostgreSQL 16 with `psql` (Portfolios 1 to 3); Docker Desktop (Portfolios 4 and 5); on Windows, WSL or Git Bash to run the `.sh` scripts.
 
