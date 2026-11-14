@@ -1,0 +1,64 @@
+ engagement_id |          client_name          |          service_line           | budget_ngn  | planned_cost_ngn | pct_of_budget | invoiced_ngn 
+---------------+-------------------------------+---------------------------------+-------------+------------------+---------------+--------------
+             2 | Sahel Water Alliance          | Compliance and data protection  | 11400000.00 |     22764000.000 |         199.7 |  11400000.00
+             5 | Delta Mangrove Trust          | Compliance and data protection  | 14100000.00 |     22248000.000 |         157.8 |  14100000.00
+            23 | Benue Valley Health Trust     | Advisory and resilience         | 14700000.00 |     22638000.000 |         154.0 |  14700000.00
+            41 | Lagoon Community Food Network | Training and security awareness | 15300000.00 |     22773000.000 |         148.8 |  15300000.00
+            44 | Northern Girls Education Fund | Training and security awareness | 18000000.00 |     26211000.000 |         145.6 |  18000000.00
+             1 | Lagoon Community Food Network | Compliance and data protection  | 10500000.00 |     12330000.000 |         117.4 |  10500000.00
+            26 | Federal Archives Service      | Advisory and resilience         | 17400000.00 |     20010000.000 |         115.0 |  17400000.00
+            22 | Sahel Water Alliance          | Advisory and resilience         | 13800000.00 |     15660000.000 |         113.5 |  13800000.00
+            43 | Benue Valley Health Trust     | Training and security awareness | 17100000.00 |     18852000.000 |         110.2 |  17100000.00
+             8 | Kano Municipal Revenue Office | Compliance and data protection  | 16800000.00 |     18270000.000 |         108.8 |  16800000.00
+            47 | Rivers Coastal Pensions Board | Training and security awareness | 20700000.00 |     21753000.000 |         105.1 |  20700000.00
+            28 | Kano Municipal Revenue Office | Advisory and resilience         | 19200000.00 |     19518000.000 |         101.7 |  19200000.00
+             4 | Northern Girls Education Fund | Compliance and data protection  | 13200000.00 |     13344000.000 |         101.1 |  13200000.00
+            46 | Federal Archives Service      | Training and security awareness | 19800000.00 |     19866000.000 |         100.3 |  19800000.00
+            29 | Oyo Health Records Agency     | Advisory and resilience         | 20100000.00 |     19632000.000 |          97.7 |  20100000.00
+            53 | Savanna Mobile Money          | Training and security awareness | 26100000.00 |     24780000.000 |          94.9 |  26100000.00
+             7 | Rivers Coastal Pensions Board | Compliance and data protection  | 15900000.00 |     14940000.000 |          94.0 |  15900000.00
+            14 | Harbour Insurance Plc         | Compliance and data protection  | 22200000.00 |     20688000.000 |          93.2 |  22200000.00
+            11 | Greenfield Microfinance Bank  | Compliance and data protection  | 19500000.00 |     17754000.000 |          91.0 |  19500000.00
+            59 | Meridian Hotels               | Training and security awareness | 31500000.00 |     28377000.000 |          90.1 |  31500000.00
+            49 | Oyo Health Records Agency     | Training and security awareness | 22500000.00 |     19086000.000 |          84.8 |  22500000.00
+            56 | Niger Delta Offshore Services | Training and security awareness | 28800000.00 |     24426000.000 |          84.8 |  28800000.00
+            32 | Atlas Logistics Nigeria       | Advisory and resilience         | 22800000.00 |     19164000.000 |          84.1 |  22800000.00
+             3 | Benue Valley Health Trust     | Compliance and data protection  | 12300000.00 |     10062000.000 |          81.8 |  12300000.00
+            20 | Unity Property Partners       | Compliance and data protection  | 27600000.00 |     22008000.000 |          79.7 |  27600000.00
+            24 | Northern Girls Education Fund | Advisory and resilience         | 15600000.00 |     12192000.000 |          78.2 |  15600000.00
+            38 | Pioneer Agritech              | Advisory and resilience         | 28200000.00 |     21486000.000 |          76.2 |  28200000.00
+            50 | Enugu Urban Transit Board     | Training and security awareness | 23400000.00 |     17295000.000 |          73.9 |  23400000.00
+            13 | Savanna Mobile Money          | Compliance and data protection  | 21300000.00 |     15534000.000 |          72.9 |  21300000.00
+            35 | Nova Retail Group             | Advisory and resilience         | 25500000.00 |     18024000.000 |          70.7 |  25500000.00
+            17 | Creekside Energy Services     | Compliance and data protection  | 24900000.00 |     17436000.000 |          70.0 |  24900000.00
+             9 | Oyo Health Records Agency     | Compliance and data protection  | 17700000.00 |     11328000.000 |          64.0 |  17700000.00
+            42 | Sahel Water Alliance          | Training and security awareness | 16200000.00 |     10011000.000 |          61.8 |  16200000.00
+            25 | Delta Mangrove Trust          | Advisory and resilience         | 16500000.00 |      9912000.000 |          60.1 |  16500000.00
+            19 | Meridian Hotels               | Compliance and data protection  | 26700000.00 |     15840000.000 |          59.3 |  26700000.00
+            10 | Enugu Urban Transit Board     | Compliance and data protection  | 18600000.00 |     10968000.000 |          59.0 |  18600000.00
+            52 | Atlas Logistics Nigeria       | Training and security awareness | 25200000.00 |     14856000.000 |          59.0 |  25200000.00
+            16 | Niger Delta Offshore Services | Compliance and data protection  | 24000000.00 |     14058000.000 |          58.6 |  24000000.00
+            48 | Kano Municipal Revenue Office | Training and security awareness | 21600000.00 |     12582000.000 |          58.3 |  21600000.00
+            21 | Lagoon Community Food Network | Advisory and resilience         | 12900000.00 |      7146000.000 |          55.4 |  12900000.00
+            58 | Pioneer Agritech              | Training and security awareness | 30600000.00 |     16515000.000 |          54.0 |  30600000.00
+            31 | Greenfield Microfinance Bank  | Advisory and resilience         | 21900000.00 |     11802000.000 |          53.9 |  21900000.00
+            37 | Creekside Energy Services     | Advisory and resilience         | 27300000.00 |     14508000.000 |          53.1 |  27300000.00
+            34 | Harbour Insurance Plc         | Advisory and resilience         | 24600000.00 |     12336000.000 |          50.1 |  24600000.00
+             6 | Federal Archives Service      | Compliance and data protection  | 15000000.00 |      7146000.000 |          47.6 |  15000000.00
+            45 | Delta Mangrove Trust          | Training and security awareness | 18900000.00 |      8973000.000 |          47.5 |  18900000.00
+            27 | Rivers Coastal Pensions Board | Advisory and resilience         | 18300000.00 |      8556000.000 |          46.8 |  18300000.00
+            55 | Nova Retail Group             | Training and security awareness | 27900000.00 |     12564000.000 |          45.0 |  27900000.00
+            40 | Unity Property Partners       | Advisory and resilience         | 30000000.00 |     13176000.000 |          43.9 |  30000000.00
+            33 | Savanna Mobile Money          | Advisory and resilience         | 23700000.00 |     10254000.000 |          43.3 |  23700000.00
+            39 | Meridian Hotels               | Advisory and resilience         | 29100000.00 |     12240000.000 |          42.1 |  29100000.00
+            54 | Harbour Insurance Plc         | Training and security awareness | 27000000.00 |     10764000.000 |          39.9 |  27000000.00
+            12 | Atlas Logistics Nigeria       | Compliance and data protection  | 20400000.00 |      7932000.000 |          38.9 |  20400000.00
+            15 | Nova Retail Group             | Compliance and data protection  | 23100000.00 |      8808000.000 |          38.1 |  23100000.00
+            18 | Pioneer Agritech              | Compliance and data protection  | 25800000.00 |      9198000.000 |          35.7 |  25800000.00
+            30 | Enugu Urban Transit Board     | Advisory and resilience         | 21000000.00 |      7224000.000 |          34.4 |  21000000.00
+            60 | Unity Property Partners       | Training and security awareness | 32400000.00 |     10854000.000 |          33.5 |  32400000.00
+            51 | Greenfield Microfinance Bank  | Training and security awareness | 24300000.00 |      7326000.000 |          30.1 |  24300000.00
+            57 | Creekside Energy Services     | Training and security awareness | 29700000.00 |      8700000.000 |          29.3 |  29700000.00
+            36 | Niger Delta Offshore Services | Advisory and resilience         | 26400000.00 |      6474000.000 |          24.5 |  26400000.00
+(60 rows)
+

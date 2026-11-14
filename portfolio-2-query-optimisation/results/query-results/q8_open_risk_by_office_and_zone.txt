@@ -1,0 +1,14 @@
+ office_code | geopolitical_zone | clients | open_findings | critical | avg_cvss 
+-------------+-------------------+---------+---------------+----------+----------
+ ABV         | North Central     |       4 |          2311 |      761 |     7.49
+ ABV         | North East        |       1 |           232 |       73 |     7.31
+ ABV         | North West        |       3 |          2036 |      670 |     7.41
+ ABV         |                   |       8 |          4579 |     1504 |     7.45
+ LOS         | South West        |       6 |          1581 |      530 |     7.49
+ LOS         |                   |       6 |          1581 |      530 |     7.49
+ PHC         | South East        |       2 |          1930 |      611 |     7.39
+ PHC         | South South       |       4 |          2571 |      837 |     7.43
+ PHC         |                   |       6 |          4501 |     1448 |     7.41
+             |                   |      20 |         10661 |     3482 |     7.44
+(10 rows)
+

@@ -1,0 +1,54 @@
+          client_name          |  site_name   |   hostname   | finding_id |                       title                        | cvss_score |  found_on  | days_open 
+-------------------------------+--------------+--------------+------------+----------------------------------------------------+------------+------------+-----------
+ Lagoon Community Food Network | Data centre  | lagoon-2-017 |       2549 | MOVEit Transfer SQL injection                      |        9.8 | 2023-07-06 |      1227
+ Lagoon Community Food Network | Head office  | lagoon-1-017 |       2735 | PAN-OS GlobalProtect command injection             |       10.0 | 2023-07-08 |      1225
+ Lagoon Community Food Network | Head office  | lagoon-1-016 |       2488 | SQL injection in login form                        |       10.0 | 2023-07-09 |      1224
+ Lagoon Community Food Network | Data centre  | lagoon-2-012 |       2618 | SQL injection in login form                        |       10.0 | 2023-07-09 |      1224
+ Lagoon Community Food Network | Data centre  | lagoon-2-015 |       2338 | Citrix NetScaler session token leak (Citrix Bleed) |        9.4 | 2023-07-11 |      1222
+ Lagoon Community Food Network | Data centre  | lagoon-2-006 |       2808 | Windows RDP remote code execution (BlueKeep)       |        9.8 | 2023-07-19 |      1214
+ Lagoon Community Food Network | Head office  | lagoon-1-016 |       2519 | SQL injection in login form                        |       10.0 | 2023-07-29 |      1204
+ Lagoon Community Food Network | Head office  | lagoon-1-005 |       3002 | PAN-OS GlobalProtect command injection             |       10.0 | 2023-07-29 |      1204
+ Lagoon Community Food Network | Data centre  | lagoon-2-014 |       2159 | Citrix NetScaler session token leak (Citrix Bleed) |        9.4 | 2023-07-30 |      1203
+ Lagoon Community Food Network | Head office  | lagoon-1-006 |       2347 | Windows RDP remote code execution (BlueKeep)       |        9.8 | 2023-08-01 |      1201
+ Lagoon Community Food Network | Head office  | lagoon-1-012 |       2870 | MOVEit Transfer SQL injection                      |        9.8 | 2023-08-02 |      1200
+ Lagoon Community Food Network | Head office  | lagoon-1-011 |       2809 | PAN-OS GlobalProtect command injection             |       10.0 | 2023-08-06 |      1196
+ Lagoon Community Food Network | Data centre  | lagoon-2-003 |       2529 | Windows RDP remote code execution (BlueKeep)       |        9.8 | 2023-08-06 |      1196
+ Lagoon Community Food Network | Data centre  | lagoon-2-007 |       3073 | SQL injection in login form                        |       10.0 | 2023-08-10 |      1192
+ Lagoon Community Food Network | Head office  | lagoon-1-012 |       2944 | PAN-OS GlobalProtect command injection             |       10.0 | 2023-08-13 |      1189
+ Lagoon Community Food Network | Head office  | lagoon-1-012 |       2044 | SQL injection in login form                        |       10.0 | 2023-08-18 |      1184
+ Lagoon Community Food Network | Head office  | lagoon-1-015 |       2571 | PAN-OS GlobalProtect command injection             |       10.0 | 2023-08-23 |      1179
+ Sahel Water Alliance          | Data centre  | sahelw-4-012 |       5330 | Default credentials on administrative interface    |        9.5 | 2023-08-23 |      1179
+ Sahel Water Alliance          | Data centre  | sahelw-4-008 |       6091 | MOVEit Transfer SQL injection                      |        9.8 | 2023-08-27 |      1175
+ Sahel Water Alliance          | Field office | sahelw-5-003 |       6315 | PAN-OS GlobalProtect command injection             |       10.0 | 2023-08-27 |      1175
+ Lagoon Community Food Network | Head office  | lagoon-1-017 |       2008 | Apache Log4j remote code execution (Log4Shell)     |       10.0 | 2023-08-27 |      1175
+ Lagoon Community Food Network | Data centre  | lagoon-2-015 |       2991 | PAN-OS GlobalProtect command injection             |       10.0 | 2023-08-30 |      1172
+ Lagoon Community Food Network | Head office  | lagoon-1-003 |       2216 | Remote Desktop exposed to the internet             |        9.1 | 2023-08-30 |      1172
+ Sahel Water Alliance          | Data centre  | sahelw-4-013 |       6328 | SQL injection in login form                        |        9.7 | 2023-09-02 |      1169
+ Lagoon Community Food Network | Head office  | lagoon-1-010 |       3168 | PAN-OS GlobalProtect command injection             |       10.0 | 2023-09-06 |      1165
+ Sahel Water Alliance          | Field office | sahelw-5-013 |       5279 | Windows RDP remote code execution (BlueKeep)       |        9.8 | 2023-09-12 |      1159
+ Lagoon Community Food Network | Data centre  | lagoon-2-017 |       3055 | Default credentials on administrative interface    |        9.7 | 2023-09-12 |      1159
+ Sahel Water Alliance          | Field office | sahelw-5-009 |       5255 | PAN-OS GlobalProtect command injection             |       10.0 | 2023-09-14 |      1157
+ Sahel Water Alliance          | Head office  | sahelw-3-017 |       5562 | SQL injection in login form                        |       10.0 | 2023-09-14 |      1157
+ Sahel Water Alliance          | Head office  | sahelw-3-002 |       5864 | Citrix NetScaler session token leak (Citrix Bleed) |        9.4 | 2023-09-17 |      1154
+ Lagoon Community Food Network | Head office  | lagoon-1-016 |       2290 | Apache Log4j remote code execution (Log4Shell)     |       10.0 | 2023-09-18 |      1153
+ Lagoon Community Food Network | Head office  | lagoon-1-015 |       2218 | Windows RDP remote code execution (BlueKeep)       |        9.8 | 2023-09-19 |      1152
+ Sahel Water Alliance          | Field office | sahelw-5-013 |       5316 | MOVEit Transfer SQL injection                      |        9.8 | 2023-09-21 |      1150
+ Lagoon Community Food Network | Head office  | lagoon-1-008 |       2184 | PAN-OS GlobalProtect command injection             |       10.0 | 2023-09-25 |      1146
+ Sahel Water Alliance          | Head office  | sahelw-3-013 |       5984 | SQL injection in login form                        |        9.3 | 2023-09-26 |      1145
+ Sahel Water Alliance          | Head office  | sahelw-3-003 |       6082 | Apache Log4j remote code execution (Log4Shell)     |       10.0 | 2023-09-26 |      1145
+ Lagoon Community Food Network | Data centre  | lagoon-2-011 |       2532 | Apache Log4j remote code execution (Log4Shell)     |       10.0 | 2023-09-27 |      1144
+ Lagoon Community Food Network | Head office  | lagoon-1-014 |       2304 | Default credentials on administrative interface    |        9.6 | 2023-09-27 |      1144
+ Lagoon Community Food Network | Data centre  | lagoon-2-011 |       2939 | MOVEit Transfer SQL injection                      |        9.8 | 2023-09-29 |      1142
+ Lagoon Community Food Network | Data centre  | lagoon-2-009 |       2367 | Windows RDP remote code execution (BlueKeep)       |        9.8 | 2023-09-30 |      1141
+ Lagoon Community Food Network | Data centre  | lagoon-2-009 |       2685 | Default credentials on administrative interface    |        9.7 | 2023-10-01 |      1140
+ Sahel Water Alliance          | Data centre  | sahelw-4-009 |       6364 | MOVEit Transfer SQL injection                      |        9.8 | 2023-10-07 |      1134
+ Lagoon Community Food Network | Data centre  | lagoon-2-004 |       1358 | MOVEit Transfer SQL injection                      |        9.8 | 2023-10-08 |      1133
+ Sahel Water Alliance          | Head office  | sahelw-3-007 |       6138 | MOVEit Transfer SQL injection                      |        9.8 | 2023-10-08 |      1133
+ Sahel Water Alliance          | Data centre  | sahelw-4-011 |       6255 | SQL injection in login form                        |       10.0 | 2023-10-09 |      1132
+ Lagoon Community Food Network | Data centre  | lagoon-2-005 |        302 | PAN-OS GlobalProtect command injection             |       10.0 | 2023-10-10 |      1131
+ Sahel Water Alliance          | Field office | sahelw-5-003 |       5319 | Apache Log4j remote code execution (Log4Shell)     |       10.0 | 2023-10-13 |      1128
+ Sahel Water Alliance          | Field office | sahelw-5-004 |       5349 | MOVEit Transfer SQL injection                      |        9.8 | 2023-10-13 |      1128
+ Lagoon Community Food Network | Head office  | lagoon-1-008 |         21 | Windows RDP remote code execution (BlueKeep)       |        9.8 | 2023-10-14 |      1127
+ Lagoon Community Food Network | Data centre  | lagoon-2-016 |        233 | PAN-OS GlobalProtect command injection             |       10.0 | 2023-10-15 |      1126
+(50 rows)
+

@@ -1,0 +1,14 @@
+                                                   QUERY PLAN                                                    
+-----------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=1863.51..1863.52 rows=1 width=8) (actual time=31.455..31.456 rows=1 loops=1)
+   Buffers: shared hit=1027
+   ->  Seq Scan on finding  (cost=0.00..1855.00 rows=3405 width=0) (actual time=0.007..31.308 rows=3390 loops=1)
+         Filter: (title ~~* '%password%'::text)
+         Rows Removed by Filter: 62850
+         Buffers: shared hit=1027
+ Planning:
+   Buffers: shared hit=87
+ Planning Time: 0.264 ms
+ Execution Time: 31.500 ms
+(10 rows)
+

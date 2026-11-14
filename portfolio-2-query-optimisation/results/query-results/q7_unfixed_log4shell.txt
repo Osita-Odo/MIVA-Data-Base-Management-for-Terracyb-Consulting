@@ -1,0 +1,788 @@
+ finding_id |          client_name          |   hostname    |   status    |  found_on  
+------------+-------------------------------+---------------+-------------+------------
+       2703 | Lagoon Community Food Network | lagoon-2-017  | accepted    | 2023-07-16
+       2465 | Lagoon Community Food Network | lagoon-2-012  | accepted    | 2023-07-26
+       3063 | Lagoon Community Food Network | lagoon-1-002  | accepted    | 2023-08-11
+       2008 | Lagoon Community Food Network | lagoon-1-017  | in_progress | 2023-08-27
+       2287 | Lagoon Community Food Network | lagoon-1-014  | accepted    | 2023-09-01
+       2906 | Lagoon Community Food Network | lagoon-2-012  | accepted    | 2023-09-03
+       2290 | Lagoon Community Food Network | lagoon-1-016  | in_progress | 2023-09-18
+       5298 | Sahel Water Alliance          | sahelw-3-002  | accepted    | 2023-09-24
+       6082 | Sahel Water Alliance          | sahelw-3-003  | in_progress | 2023-09-26
+       2532 | Lagoon Community Food Network | lagoon-2-011  | in_progress | 2023-09-27
+       2315 | Lagoon Community Food Network | lagoon-2-017  | accepted    | 2023-09-27
+       5974 | Sahel Water Alliance          | sahelw-5-008  | accepted    | 2023-09-27
+       5288 | Sahel Water Alliance          | sahelw-5-014  | accepted    | 2023-10-12
+       5319 | Sahel Water Alliance          | sahelw-5-003  | in_progress | 2023-10-13
+       1273 | Lagoon Community Food Network | lagoon-1-016  | accepted    | 2023-10-13
+       6332 | Sahel Water Alliance          | sahelw-3-008  | in_progress | 2023-10-16
+       9132 | Benue Valley Health Trust     | benuev-6-007  | accepted    | 2023-10-21
+       1937 | Lagoon Community Food Network | lagoon-1-016  | in_progress | 2023-11-05
+       1470 | Lagoon Community Food Network | lagoon-1-003  | in_progress | 2023-11-09
+        262 | Lagoon Community Food Network | lagoon-1-016  | accepted    | 2023-11-18
+       8611 | Benue Valley Health Trust     | benuev-7-017  | in_progress | 2023-11-24
+        644 | Lagoon Community Food Network | lagoon-1-009  | in_progress | 2023-11-25
+       1469 | Lagoon Community Food Network | lagoon-2-011  | accepted    | 2023-12-02
+       8778 | Benue Valley Health Trust     | benuev-7-008  | accepted    | 2023-12-05
+       1147 | Lagoon Community Food Network | lagoon-2-011  | accepted    | 2023-12-05
+       4627 | Sahel Water Alliance          | sahelw-5-004  | in_progress | 2023-12-05
+      12720 | Northern Girls Education Fund | northe-8-004  | accepted    | 2023-12-10
+       3612 | Sahel Water Alliance          | sahelw-5-009  | in_progress | 2023-12-12
+       1375 | Lagoon Community Food Network | lagoon-1-003  | accepted    | 2023-12-16
+       1898 | Lagoon Community Food Network | lagoon-1-004  | in_progress | 2023-12-16
+       9770 | Benue Valley Health Trust     | benuev-7-013  | accepted    | 2023-12-21
+       9129 | Benue Valley Health Trust     | benuev-6-002  | accepted    | 2023-12-21
+       3341 | Sahel Water Alliance          | sahelw-5-011  | in_progress | 2023-12-23
+      13205 | Northern Girls Education Fund | northe-9-011  | in_progress | 2023-12-24
+       1119 | Lagoon Community Food Network | lagoon-2-001  | accepted    | 2023-12-25
+       1355 | Lagoon Community Food Network | lagoon-1-001  | accepted    | 2023-12-25
+       5126 | Sahel Water Alliance          | sahelw-4-016  | accepted    | 2023-12-26
+       8824 | Benue Valley Health Trust     | benuev-7-008  | accepted    | 2023-12-26
+        204 | Lagoon Community Food Network | lagoon-1-003  | accepted    | 2023-12-28
+       4075 | Sahel Water Alliance          | sahelw-5-013  | in_progress | 2023-12-28
+      12025 | Northern Girls Education Fund | northe-10-013 | accepted    | 2023-12-29
+      13154 | Northern Girls Education Fund | northe-10-013 | in_progress | 2024-01-12
+      12015 | Northern Girls Education Fund | northe-10-002 | in_progress | 2024-01-20
+       4256 | Sahel Water Alliance          | sahelw-4-016  | accepted    | 2024-01-20
+       7738 | Benue Valley Health Trust     | benuev-6-010  | in_progress | 2024-01-21
+       7766 | Benue Valley Health Trust     | benuev-6-016  | in_progress | 2024-01-21
+       8806 | Benue Valley Health Trust     | benuev-7-013  | accepted    | 2024-01-21
+       7495 | Benue Valley Health Trust     | benuev-7-001  | in_progress | 2024-01-23
+      13048 | Northern Girls Education Fund | northe-9-013  | in_progress | 2024-01-24
+      16808 | Delta Mangrove Trust          | deltam-12-006 | in_progress | 2024-01-30
+       8176 | Benue Valley Health Trust     | benuev-6-017  | accepted    | 2024-01-31
+      12420 | Northern Girls Education Fund | northe-10-011 | accepted    | 2024-02-01
+       3447 | Sahel Water Alliance          | sahelw-3-009  | in_progress | 2024-02-02
+      13222 | Northern Girls Education Fund | northe-8-015  | accepted    | 2024-02-07
+       3434 | Sahel Water Alliance          | sahelw-3-003  | accepted    | 2024-02-08
+      15492 | Delta Mangrove Trust          | deltam-11-010 | accepted    | 2024-02-10
+       3771 | Sahel Water Alliance          | sahelw-4-003  | accepted    | 2024-02-11
+      12133 | Northern Girls Education Fund | northe-9-005  | in_progress | 2024-02-12
+       4511 | Sahel Water Alliance          | sahelw-5-004  | in_progress | 2024-02-18
+      16555 | Delta Mangrove Trust          | deltam-11-008 | in_progress | 2024-02-24
+      12401 | Northern Girls Education Fund | northe-9-014  | accepted    | 2024-02-24
+       7303 | Benue Valley Health Trust     | benuev-6-005  | in_progress | 2024-02-27
+       7120 | Benue Valley Health Trust     | benuev-7-002  | accepted    | 2024-02-28
+      16536 | Delta Mangrove Trust          | deltam-12-008 | in_progress | 2024-02-29
+      16755 | Delta Mangrove Trust          | deltam-12-001 | accepted    | 2024-03-01
+      12192 | Northern Girls Education Fund | northe-10-009 | accepted    | 2024-03-03
+       8179 | Benue Valley Health Trust     | benuev-7-004  | in_progress | 2024-03-04
+      12327 | Northern Girls Education Fund | northe-10-007 | accepted    | 2024-03-08
+      16145 | Delta Mangrove Trust          | deltam-12-008 | accepted    | 2024-03-09
+      16577 | Delta Mangrove Trust          | deltam-11-016 | accepted    | 2024-03-11
+       7418 | Benue Valley Health Trust     | benuev-7-004  | in_progress | 2024-03-14
+       7829 | Benue Valley Health Trust     | benuev-7-007  | accepted    | 2024-03-22
+       8129 | Benue Valley Health Trust     | benuev-6-010  | accepted    | 2024-03-25
+      19030 | Federal Archives Service      | federa-14-001 | accepted    | 2024-03-25
+       6889 | Benue Valley Health Trust     | benuev-6-013  | accepted    | 2024-03-25
+      11346 | Northern Girls Education Fund | northe-8-011  | accepted    | 2024-03-27
+       7771 | Benue Valley Health Trust     | benuev-6-006  | accepted    | 2024-04-03
+      19272 | Federal Archives Service      | federa-13-011 | in_progress | 2024-04-06
+      19097 | Federal Archives Service      | federa-14-017 | in_progress | 2024-04-07
+       6832 | Benue Valley Health Trust     | benuev-7-009  | accepted    | 2024-04-08
+      19534 | Federal Archives Service      | federa-13-001 | accepted    | 2024-04-08
+       7946 | Benue Valley Health Trust     | benuev-7-014  | accepted    | 2024-04-08
+      10594 | Northern Girls Education Fund | northe-10-015 | accepted    | 2024-04-08
+      15567 | Delta Mangrove Trust          | deltam-11-009 | accepted    | 2024-04-09
+      16771 | Delta Mangrove Trust          | deltam-12-015 | in_progress | 2024-04-13
+      10038 | Northern Girls Education Fund | northe-8-008  | in_progress | 2024-04-15
+      19981 | Federal Archives Service      | federa-14-006 | accepted    | 2024-04-16
+      16006 | Delta Mangrove Trust          | deltam-11-009 | in_progress | 2024-04-17
+       6749 | Benue Valley Health Trust     | benuev-6-006  | in_progress | 2024-04-17
+       6891 | Benue Valley Health Trust     | benuev-6-011  | in_progress | 2024-04-19
+      16246 | Delta Mangrove Trust          | deltam-11-012 | accepted    | 2024-04-19
+       7525 | Benue Valley Health Trust     | benuev-7-012  | in_progress | 2024-04-21
+      11269 | Northern Girls Education Fund | northe-10-013 | accepted    | 2024-04-21
+      16209 | Delta Mangrove Trust          | deltam-12-010 | accepted    | 2024-04-22
+      19943 | Federal Archives Service      | federa-14-009 | accepted    | 2024-04-23
+       7503 | Benue Valley Health Trust     | benuev-7-007  | in_progress | 2024-04-23
+       9922 | Northern Girls Education Fund | northe-9-010  | accepted    | 2024-04-24
+      16756 | Delta Mangrove Trust          | deltam-11-010 | accepted    | 2024-04-25
+      15988 | Delta Mangrove Trust          | deltam-12-015 | accepted    | 2024-04-26
+       7957 | Benue Valley Health Trust     | benuev-7-009  | in_progress | 2024-04-27
+      10831 | Northern Girls Education Fund | northe-8-008  | accepted    | 2024-04-28
+      15619 | Delta Mangrove Trust          | deltam-12-009 | in_progress | 2024-05-01
+      11348 | Northern Girls Education Fund | northe-9-011  | in_progress | 2024-05-14
+      23109 | Rivers Coastal Pensions Board | rivers-17-009 | accepted    | 2024-05-16
+      13925 | Delta Mangrove Trust          | deltam-11-001 | in_progress | 2024-05-17
+      22680 | Rivers Coastal Pensions Board | rivers-17-001 | accepted    | 2024-05-18
+      13750 | Delta Mangrove Trust          | deltam-12-012 | in_progress | 2024-05-19
+      23428 | Rivers Coastal Pensions Board | rivers-16-009 | in_progress | 2024-05-22
+      14949 | Delta Mangrove Trust          | deltam-11-007 | accepted    | 2024-05-24
+      19850 | Federal Archives Service      | federa-15-001 | in_progress | 2024-05-26
+      22616 | Rivers Coastal Pensions Board | rivers-16-006 | accepted    | 2024-05-26
+      23498 | Rivers Coastal Pensions Board | rivers-17-013 | in_progress | 2024-05-26
+      14468 | Delta Mangrove Trust          | deltam-11-014 | in_progress | 2024-05-29
+      10468 | Northern Girls Education Fund | northe-8-013  | accepted    | 2024-05-29
+      10971 | Northern Girls Education Fund | northe-8-010  | accepted    | 2024-05-30
+      13770 | Delta Mangrove Trust          | deltam-12-011 | in_progress | 2024-06-03
+      11138 | Northern Girls Education Fund | northe-10-003 | in_progress | 2024-06-04
+       9964 | Northern Girls Education Fund | northe-8-007  | accepted    | 2024-06-04
+      10734 | Northern Girls Education Fund | northe-10-013 | in_progress | 2024-06-04
+      11063 | Northern Girls Education Fund | northe-10-016 | accepted    | 2024-06-04
+      15086 | Delta Mangrove Trust          | deltam-11-002 | accepted    | 2024-06-05
+      23112 | Rivers Coastal Pensions Board | rivers-17-012 | accepted    | 2024-06-08
+      19130 | Federal Archives Service      | federa-13-015 | in_progress | 2024-06-08
+      14583 | Delta Mangrove Trust          | deltam-12-004 | accepted    | 2024-06-09
+      23665 | Rivers Coastal Pensions Board | rivers-16-004 | accepted    | 2024-06-10
+      10048 | Northern Girls Education Fund | northe-10-017 | in_progress | 2024-06-10
+      15251 | Delta Mangrove Trust          | deltam-11-017 | accepted    | 2024-06-12
+      14569 | Delta Mangrove Trust          | deltam-12-013 | accepted    | 2024-06-16
+      11335 | Northern Girls Education Fund | northe-9-008  | in_progress | 2024-06-19
+      13804 | Delta Mangrove Trust          | deltam-11-010 | in_progress | 2024-06-20
+      11284 | Northern Girls Education Fund | northe-8-013  | accepted    | 2024-06-20
+      10243 | Northern Girls Education Fund | northe-8-004  | accepted    | 2024-06-21
+      23059 | Rivers Coastal Pensions Board | rivers-16-010 | in_progress | 2024-06-22
+      20080 | Federal Archives Service      | federa-15-011 | accepted    | 2024-06-25
+      20140 | Federal Archives Service      | federa-15-004 | accepted    | 2024-06-26
+      18933 | Federal Archives Service      | federa-15-008 | in_progress | 2024-06-27
+      19873 | Federal Archives Service      | federa-13-016 | accepted    | 2024-06-27
+      19844 | Federal Archives Service      | federa-15-006 | accepted    | 2024-06-27
+      19382 | Federal Archives Service      | federa-14-004 | accepted    | 2024-06-28
+      23510 | Rivers Coastal Pensions Board | rivers-17-008 | accepted    | 2024-06-29
+      13488 | Delta Mangrove Trust          | deltam-11-011 | accepted    | 2024-06-30
+      14386 | Delta Mangrove Trust          | deltam-11-007 | in_progress | 2024-06-30
+      22603 | Rivers Coastal Pensions Board | rivers-17-014 | accepted    | 2024-07-02
+      14671 | Delta Mangrove Trust          | deltam-12-001 | accepted    | 2024-07-02
+      23968 | Rivers Coastal Pensions Board | rivers-17-015 | in_progress | 2024-07-04
+      27033 | Kano Municipal Revenue Office | kanomu-19-014 | accepted    | 2024-07-08
+      17400 | Federal Archives Service      | federa-15-002 | accepted    | 2024-07-12
+      18787 | Federal Archives Service      | federa-14-009 | accepted    | 2024-07-13
+      24042 | Rivers Coastal Pensions Board | rivers-16-017 | in_progress | 2024-07-13
+      13704 | Delta Mangrove Trust          | deltam-11-012 | accepted    | 2024-07-16
+      23902 | Rivers Coastal Pensions Board | rivers-16-014 | in_progress | 2024-07-19
+      27288 | Kano Municipal Revenue Office | kanomu-18-010 | accepted    | 2024-07-20
+      26737 | Kano Municipal Revenue Office | kanomu-20-013 | in_progress | 2024-07-21
+      26775 | Kano Municipal Revenue Office | kanomu-20-010 | accepted    | 2024-07-22
+      23421 | Rivers Coastal Pensions Board | rivers-17-004 | in_progress | 2024-07-24
+      26944 | Kano Municipal Revenue Office | kanomu-20-001 | accepted    | 2024-07-27
+      14817 | Delta Mangrove Trust          | deltam-11-001 | accepted    | 2024-07-28
+      13469 | Delta Mangrove Trust          | deltam-11-005 | accepted    | 2024-07-31
+      13438 | Delta Mangrove Trust          | deltam-11-009 | accepted    | 2024-07-31
+      27613 | Kano Municipal Revenue Office | kanomu-20-016 | accepted    | 2024-08-03
+      17499 | Federal Archives Service      | federa-15-015 | in_progress | 2024-08-06
+      18530 | Federal Archives Service      | federa-14-002 | in_progress | 2024-08-07
+      17178 | Federal Archives Service      | federa-14-016 | accepted    | 2024-08-08
+      14703 | Delta Mangrove Trust          | deltam-11-012 | in_progress | 2024-08-08
+      18487 | Federal Archives Service      | federa-13-009 | in_progress | 2024-08-14
+      22805 | Rivers Coastal Pensions Board | rivers-16-014 | accepted    | 2024-08-16
+      20492 | Rivers Coastal Pensions Board | rivers-17-004 | accepted    | 2024-08-22
+      21540 | Rivers Coastal Pensions Board | rivers-17-001 | accepted    | 2024-08-22
+      26366 | Kano Municipal Revenue Office | kanomu-20-006 | in_progress | 2024-08-23
+      23021 | Rivers Coastal Pensions Board | rivers-16-011 | in_progress | 2024-08-25
+      18730 | Federal Archives Service      | federa-14-001 | in_progress | 2024-08-26
+      21623 | Rivers Coastal Pensions Board | rivers-17-006 | in_progress | 2024-08-27
+      18916 | Federal Archives Service      | federa-14-007 | in_progress | 2024-09-02
+      26994 | Kano Municipal Revenue Office | kanomu-20-001 | in_progress | 2024-09-02
+      21473 | Rivers Coastal Pensions Board | rivers-17-017 | accepted    | 2024-09-03
+      26927 | Kano Municipal Revenue Office | kanomu-18-002 | accepted    | 2024-09-04
+      27488 | Kano Municipal Revenue Office | kanomu-18-017 | in_progress | 2024-09-05
+      17112 | Federal Archives Service      | federa-13-015 | accepted    | 2024-09-06
+      17224 | Federal Archives Service      | federa-14-003 | accepted    | 2024-09-09
+      21921 | Rivers Coastal Pensions Board | rivers-17-009 | accepted    | 2024-09-09
+      18910 | Federal Archives Service      | federa-14-010 | accepted    | 2024-09-11
+      18102 | Federal Archives Service      | federa-13-003 | accepted    | 2024-09-11
+      17120 | Federal Archives Service      | federa-15-014 | in_progress | 2024-09-12
+      30786 | Oyo Health Records Agency     | oyohea-21-013 | in_progress | 2024-09-14
+      16957 | Federal Archives Service      | federa-13-012 | accepted    | 2024-09-14
+      17950 | Federal Archives Service      | federa-15-002 | in_progress | 2024-09-18
+      21433 | Rivers Coastal Pensions Board | rivers-16-008 | in_progress | 2024-09-19
+      20893 | Rivers Coastal Pensions Board | rivers-17-014 | in_progress | 2024-09-22
+      18348 | Federal Archives Service      | federa-13-007 | accepted    | 2024-09-23
+      20771 | Rivers Coastal Pensions Board | rivers-17-014 | in_progress | 2024-09-23
+      17844 | Federal Archives Service      | federa-14-011 | in_progress | 2024-09-25
+      16827 | Federal Archives Service      | federa-13-008 | accepted    | 2024-09-25
+      26439 | Kano Municipal Revenue Office | kanomu-18-003 | accepted    | 2024-09-26
+      31332 | Oyo Health Records Agency     | oyohea-21-016 | accepted    | 2024-09-26
+      18546 | Federal Archives Service      | federa-15-014 | in_progress | 2024-09-29
+      18714 | Federal Archives Service      | federa-13-012 | in_progress | 2024-09-30
+      20817 | Rivers Coastal Pensions Board | rivers-17-004 | accepted    | 2024-10-04
+      26913 | Kano Municipal Revenue Office | kanomu-20-011 | accepted    | 2024-10-07
+      22199 | Rivers Coastal Pensions Board | rivers-16-010 | in_progress | 2024-10-10
+      26981 | Kano Municipal Revenue Office | kanomu-20-005 | accepted    | 2024-10-12
+      24856 | Kano Municipal Revenue Office | kanomu-19-016 | accepted    | 2024-10-15
+      26938 | Kano Municipal Revenue Office | kanomu-19-007 | in_progress | 2024-10-16
+      22101 | Rivers Coastal Pensions Board | rivers-16-012 | accepted    | 2024-10-17
+      31392 | Oyo Health Records Agency     | oyohea-21-015 | in_progress | 2024-10-18
+      21806 | Rivers Coastal Pensions Board | rivers-17-011 | in_progress | 2024-10-19
+      26918 | Kano Municipal Revenue Office | kanomu-19-012 | accepted    | 2024-10-24
+      33320 | Enugu Urban Transit Board     | enuguu-25-005 | accepted    | 2024-10-27
+      27334 | Kano Municipal Revenue Office | kanomu-19-001 | accepted    | 2024-10-27
+      21616 | Rivers Coastal Pensions Board | rivers-17-012 | in_progress | 2024-10-30
+      22508 | Rivers Coastal Pensions Board | rivers-16-010 | accepted    | 2024-10-31
+      25792 | Kano Municipal Revenue Office | kanomu-18-008 | in_progress | 2024-11-01
+      30113 | Oyo Health Records Agency     | oyohea-22-014 | in_progress | 2024-11-03
+      30374 | Oyo Health Records Agency     | oyohea-22-014 | accepted    | 2024-11-03
+      24654 | Kano Municipal Revenue Office | kanomu-19-016 | in_progress | 2024-11-04
+      31156 | Oyo Health Records Agency     | oyohea-22-012 | in_progress | 2024-11-05
+      31281 | Oyo Health Records Agency     | oyohea-22-003 | in_progress | 2024-11-07
+      21832 | Rivers Coastal Pensions Board | rivers-17-015 | in_progress | 2024-11-08
+      25391 | Kano Municipal Revenue Office | kanomu-20-012 | in_progress | 2024-11-08
+      20548 | Rivers Coastal Pensions Board | rivers-17-016 | in_progress | 2024-11-13
+      24234 | Kano Municipal Revenue Office | kanomu-18-017 | accepted    | 2024-11-13
+      25935 | Kano Municipal Revenue Office | kanomu-20-014 | accepted    | 2024-11-13
+      21053 | Rivers Coastal Pensions Board | rivers-17-002 | in_progress | 2024-11-13
+      21025 | Rivers Coastal Pensions Board | rivers-16-016 | in_progress | 2024-11-13
+      33038 | Enugu Urban Transit Board     | enuguu-25-011 | accepted    | 2024-11-17
+      33574 | Enugu Urban Transit Board     | enuguu-25-011 | in_progress | 2024-11-18
+      33674 | Enugu Urban Transit Board     | enuguu-25-011 | in_progress | 2024-11-19
+      31291 | Oyo Health Records Agency     | oyohea-21-007 | in_progress | 2024-11-20
+      24736 | Kano Municipal Revenue Office | kanomu-20-015 | accepted    | 2024-11-24
+      22215 | Rivers Coastal Pensions Board | rivers-17-001 | in_progress | 2024-11-25
+      21896 | Rivers Coastal Pensions Board | rivers-16-010 | accepted    | 2024-11-26
+      26010 | Kano Municipal Revenue Office | kanomu-18-007 | accepted    | 2024-11-26
+      33414 | Enugu Urban Transit Board     | enuguu-25-001 | in_progress | 2024-11-26
+      24824 | Kano Municipal Revenue Office | kanomu-20-008 | accepted    | 2024-11-29
+      24615 | Kano Municipal Revenue Office | kanomu-19-002 | in_progress | 2024-12-02
+      20541 | Rivers Coastal Pensions Board | rivers-16-013 | accepted    | 2024-12-03
+      22321 | Rivers Coastal Pensions Board | rivers-17-005 | in_progress | 2024-12-05
+      34360 | Enugu Urban Transit Board     | enuguu-24-006 | in_progress | 2024-12-14
+      29392 | Oyo Health Records Agency     | oyohea-22-001 | accepted    | 2024-12-15
+      28665 | Oyo Health Records Agency     | oyohea-21-012 | accepted    | 2024-12-15
+      31538 | Oyo Health Records Agency     | oyohea-22-007 | accepted    | 2024-12-16
+      29322 | Oyo Health Records Agency     | oyohea-21-016 | in_progress | 2024-12-19
+      36840 | Greenfield Microfinance Bank  | greenf-27-002 | in_progress | 2024-12-19
+      24651 | Kano Municipal Revenue Office | kanomu-18-006 | accepted    | 2024-12-20
+      25078 | Kano Municipal Revenue Office | kanomu-20-007 | accepted    | 2024-12-22
+      33837 | Enugu Urban Transit Board     | enuguu-25-016 | accepted    | 2024-12-22
+      31243 | Oyo Health Records Agency     | oyohea-22-010 | in_progress | 2024-12-22
+      29512 | Oyo Health Records Agency     | oyohea-21-013 | accepted    | 2024-12-25
+      29747 | Oyo Health Records Agency     | oyohea-22-005 | in_progress | 2024-12-25
+      25389 | Kano Municipal Revenue Office | kanomu-20-017 | accepted    | 2024-12-25
+      24206 | Kano Municipal Revenue Office | kanomu-18-003 | in_progress | 2024-12-30
+      29997 | Oyo Health Records Agency     | oyohea-22-004 | in_progress | 2025-01-03
+      26261 | Kano Municipal Revenue Office | kanomu-19-006 | accepted    | 2025-01-10
+      35754 | Greenfield Microfinance Bank  | greenf-26-014 | accepted    | 2025-01-11
+      28899 | Oyo Health Records Agency     | oyohea-22-008 | accepted    | 2025-01-13
+      36941 | Greenfield Microfinance Bank  | greenf-27-001 | in_progress | 2025-01-13
+      28776 | Oyo Health Records Agency     | oyohea-22-016 | accepted    | 2025-01-14
+      29344 | Oyo Health Records Agency     | oyohea-21-017 | in_progress | 2025-01-15
+      27877 | Oyo Health Records Agency     | oyohea-22-014 | in_progress | 2025-01-16
+      24446 | Kano Municipal Revenue Office | kanomu-18-002 | accepted    | 2025-01-17
+      27828 | Oyo Health Records Agency     | oyohea-22-005 | accepted    | 2025-01-18
+      25302 | Kano Municipal Revenue Office | kanomu-19-017 | in_progress | 2025-01-20
+      28613 | Oyo Health Records Agency     | oyohea-21-001 | accepted    | 2025-01-23
+      33486 | Enugu Urban Transit Board     | enuguu-23-013 | accepted    | 2025-01-25
+      32232 | Enugu Urban Transit Board     | enuguu-24-003 | in_progress | 2025-01-27
+      27966 | Oyo Health Records Agency     | oyohea-21-004 | in_progress | 2025-01-31
+      32386 | Enugu Urban Transit Board     | enuguu-25-002 | in_progress | 2025-02-01
+      32634 | Enugu Urban Transit Board     | enuguu-25-013 | in_progress | 2025-02-04
+      31887 | Enugu Urban Transit Board     | enuguu-25-002 | accepted    | 2025-02-08
+      39769 | Atlas Logistics Nigeria       | atlasl-30-007 | accepted    | 2025-02-10
+      39587 | Atlas Logistics Nigeria       | atlasl-30-003 | accepted    | 2025-02-10
+      34283 | Enugu Urban Transit Board     | enuguu-23-003 | accepted    | 2025-02-13
+      29414 | Oyo Health Records Agency     | oyohea-22-011 | in_progress | 2025-02-14
+      28942 | Oyo Health Records Agency     | oyohea-22-012 | in_progress | 2025-02-18
+      29902 | Oyo Health Records Agency     | oyohea-22-001 | in_progress | 2025-02-18
+      28026 | Oyo Health Records Agency     | oyohea-21-010 | accepted    | 2025-02-20
+      32396 | Enugu Urban Transit Board     | enuguu-24-008 | accepted    | 2025-02-21
+      29179 | Oyo Health Records Agency     | oyohea-21-010 | accepted    | 2025-02-22
+      36355 | Greenfield Microfinance Bank  | greenf-27-005 | accepted    | 2025-02-25
+      40066 | Atlas Logistics Nigeria       | atlasl-28-013 | accepted    | 2025-02-25
+      29698 | Oyo Health Records Agency     | oyohea-21-009 | in_progress | 2025-02-26
+      32134 | Enugu Urban Transit Board     | enuguu-23-013 | accepted    | 2025-02-26
+      39369 | Atlas Logistics Nigeria       | atlasl-29-001 | accepted    | 2025-02-27
+      28711 | Oyo Health Records Agency     | oyohea-21-003 | in_progress | 2025-03-08
+      31751 | Enugu Urban Transit Board     | enuguu-23-003 | accepted    | 2025-03-11
+      35781 | Greenfield Microfinance Bank  | greenf-26-013 | accepted    | 2025-03-13
+      35658 | Greenfield Microfinance Bank  | greenf-26-002 | accepted    | 2025-03-14
+      29775 | Oyo Health Records Agency     | oyohea-21-014 | in_progress | 2025-03-16
+      35249 | Greenfield Microfinance Bank  | greenf-27-005 | accepted    | 2025-03-19
+      28811 | Oyo Health Records Agency     | oyohea-22-004 | accepted    | 2025-03-22
+      29620 | Oyo Health Records Agency     | oyohea-22-014 | in_progress | 2025-03-22
+      34863 | Greenfield Microfinance Bank  | greenf-27-016 | accepted    | 2025-03-23
+      29262 | Oyo Health Records Agency     | oyohea-21-011 | in_progress | 2025-03-23
+      39607 | Atlas Logistics Nigeria       | atlasl-30-012 | accepted    | 2025-03-26
+      36521 | Greenfield Microfinance Bank  | greenf-27-009 | accepted    | 2025-03-27
+      32453 | Enugu Urban Transit Board     | enuguu-24-003 | in_progress | 2025-03-27
+      29858 | Oyo Health Records Agency     | oyohea-21-005 | in_progress | 2025-03-27
+      34434 | Greenfield Microfinance Bank  | greenf-27-004 | accepted    | 2025-04-09
+      42173 | Savanna Mobile Money          | savann-32-005 | in_progress | 2025-04-12
+      42832 | Savanna Mobile Money          | savann-31-009 | accepted    | 2025-04-12
+      31724 | Enugu Urban Transit Board     | enuguu-24-014 | accepted    | 2025-04-15
+      35074 | Greenfield Microfinance Bank  | greenf-27-010 | in_progress | 2025-04-20
+      42318 | Savanna Mobile Money          | savann-31-013 | accepted    | 2025-04-21
+      38681 | Atlas Logistics Nigeria       | atlasl-30-015 | accepted    | 2025-04-23
+      39814 | Atlas Logistics Nigeria       | atlasl-28-012 | in_progress | 2025-04-23
+      39732 | Atlas Logistics Nigeria       | atlasl-29-004 | accepted    | 2025-04-27
+      39838 | Atlas Logistics Nigeria       | atlasl-30-005 | accepted    | 2025-04-30
+      35108 | Greenfield Microfinance Bank  | greenf-27-001 | accepted    | 2025-04-30
+      39447 | Atlas Logistics Nigeria       | atlasl-29-011 | accepted    | 2025-05-01
+      39092 | Atlas Logistics Nigeria       | atlasl-29-010 | in_progress | 2025-05-09
+      35576 | Greenfield Microfinance Bank  | greenf-27-016 | in_progress | 2025-05-13
+      31868 | Enugu Urban Transit Board     | enuguu-24-014 | accepted    | 2025-05-21
+      42361 | Savanna Mobile Money          | savann-31-014 | accepted    | 2025-05-22
+      40116 | Atlas Logistics Nigeria       | atlasl-28-014 | in_progress | 2025-05-27
+      34531 | Greenfield Microfinance Bank  | greenf-27-007 | accepted    | 2025-05-27
+      35279 | Greenfield Microfinance Bank  | greenf-26-001 | in_progress | 2025-05-29
+      37900 | Atlas Logistics Nigeria       | atlasl-29-009 | in_progress | 2025-05-30
+      35160 | Greenfield Microfinance Bank  | greenf-26-012 | in_progress | 2025-05-31
+      43148 | Savanna Mobile Money          | savann-31-004 | in_progress | 2025-06-11
+      34384 | Greenfield Microfinance Bank  | greenf-27-013 | in_progress | 2025-06-14
+      44682 | Harbour Insurance Plc         | harbou-34-016 | accepted    | 2025-06-14
+      42382 | Savanna Mobile Money          | savann-32-014 | in_progress | 2025-06-19
+      35128 | Greenfield Microfinance Bank  | greenf-26-011 | accepted    | 2025-06-20
+      42723 | Savanna Mobile Money          | savann-31-002 | accepted    | 2025-06-25
+      35541 | Greenfield Microfinance Bank  | greenf-27-015 | in_progress | 2025-07-05
+      38345 | Atlas Logistics Nigeria       | atlasl-30-005 | in_progress | 2025-07-06
+      41872 | Savanna Mobile Money          | savann-31-010 | in_progress | 2025-07-08
+      44709 | Harbour Insurance Plc         | harbou-35-002 | in_progress | 2025-07-11
+      48882 | Nova Retail Group             | novare-36-017 | in_progress | 2025-07-13
+      38206 | Atlas Logistics Nigeria       | atlasl-28-016 | accepted    | 2025-07-14
+      46029 | Harbour Insurance Plc         | harbou-35-007 | accepted    | 2025-07-16
+      49329 | Nova Retail Group             | novare-36-008 | accepted    | 2025-07-18
+      42212 | Savanna Mobile Money          | savann-32-003 | accepted    | 2025-07-23
+      46096 | Harbour Insurance Plc         | harbou-35-017 | accepted    | 2025-07-27
+      41814 | Savanna Mobile Money          | savann-31-017 | in_progress | 2025-07-29
+      44714 | Harbour Insurance Plc         | harbou-35-014 | in_progress | 2025-07-29
+      45483 | Harbour Insurance Plc         | harbou-34-009 | accepted    | 2025-07-30
+      49168 | Nova Retail Group             | novare-36-013 | accepted    | 2025-07-31
+      45538 | Harbour Insurance Plc         | harbou-34-013 | accepted    | 2025-08-03
+      41101 | Savanna Mobile Money          | savann-32-001 | accepted    | 2025-08-04
+      45257 | Harbour Insurance Plc         | harbou-35-011 | accepted    | 2025-08-05
+      45937 | Harbour Insurance Plc         | harbou-35-002 | accepted    | 2025-08-08
+      37381 | Atlas Logistics Nigeria       | atlasl-30-003 | in_progress | 2025-08-08
+      41021 | Savanna Mobile Money          | savann-32-008 | accepted    | 2025-08-12
+      37991 | Atlas Logistics Nigeria       | atlasl-30-012 | in_progress | 2025-08-13
+      41419 | Savanna Mobile Money          | savann-32-002 | in_progress | 2025-08-19
+      49362 | Nova Retail Group             | novare-36-007 | accepted    | 2025-08-23
+      45565 | Harbour Insurance Plc         | harbou-33-009 | accepted    | 2025-08-24
+      47894 | Nova Retail Group             | novare-37-004 | accepted    | 2025-08-24
+      44673 | Harbour Insurance Plc         | harbou-35-017 | in_progress | 2025-08-26
+      41076 | Savanna Mobile Money          | savann-31-005 | accepted    | 2025-08-26
+      43935 | Harbour Insurance Plc         | harbou-34-001 | accepted    | 2025-08-28
+      48008 | Nova Retail Group             | novare-36-007 | in_progress | 2025-08-30
+      40430 | Savanna Mobile Money          | savann-32-010 | in_progress | 2025-08-31
+      48371 | Nova Retail Group             | novare-36-014 | accepted    | 2025-09-02
+      44943 | Harbour Insurance Plc         | harbou-34-001 | accepted    | 2025-09-05
+      52505 | Niger Delta Offshore Services | nigerd-39-010 | in_progress | 2025-09-05
+      47702 | Nova Retail Group             | novare-37-012 | in_progress | 2025-09-15
+      44585 | Harbour Insurance Plc         | harbou-35-002 | accepted    | 2025-09-22
+      48319 | Nova Retail Group             | novare-37-014 | accepted    | 2025-09-25
+      44411 | Harbour Insurance Plc         | harbou-34-004 | in_progress | 2025-09-26
+      40978 | Savanna Mobile Money          | savann-31-013 | accepted    | 2025-09-26
+      44227 | Harbour Insurance Plc         | harbou-33-016 | in_progress | 2025-09-27
+      48672 | Nova Retail Group             | novare-36-010 | in_progress | 2025-09-30
+      40888 | Savanna Mobile Money          | savann-31-004 | accepted    | 2025-09-30
+      44218 | Harbour Insurance Plc         | harbou-35-004 | accepted    | 2025-10-04
+      51295 | Niger Delta Offshore Services | nigerd-40-014 | accepted    | 2025-10-04
+      43434 | Harbour Insurance Plc         | harbou-33-003 | accepted    | 2025-10-04
+      43904 | Harbour Insurance Plc         | harbou-33-016 | in_progress | 2025-10-06
+      48661 | Nova Retail Group             | novare-37-017 | in_progress | 2025-10-07
+      43171 | Harbour Insurance Plc         | harbou-35-005 | in_progress | 2025-10-08
+      51801 | Niger Delta Offshore Services | nigerd-40-008 | accepted    | 2025-10-13
+      51873 | Niger Delta Offshore Services | nigerd-40-007 | in_progress | 2025-10-19
+      47245 | Nova Retail Group             | novare-37-007 | accepted    | 2025-10-20
+      51603 | Niger Delta Offshore Services | nigerd-38-009 | accepted    | 2025-10-26
+      51425 | Niger Delta Offshore Services | nigerd-39-017 | accepted    | 2025-10-29
+      43709 | Harbour Insurance Plc         | harbou-35-003 | accepted    | 2025-10-29
+      52217 | Niger Delta Offshore Services | nigerd-38-015 | accepted    | 2025-10-30
+      50845 | Niger Delta Offshore Services | nigerd-39-010 | in_progress | 2025-11-03
+      49365 | Nova Retail Group             | novare-37-005 | accepted    | 2025-11-06
+      51913 | Niger Delta Offshore Services | nigerd-38-002 | accepted    | 2025-11-09
+      48636 | Nova Retail Group             | novare-37-014 | accepted    | 2025-11-11
+      55747 | Creekside Energy Services     | creeks-42-013 | in_progress | 2025-11-11
+      47552 | Nova Retail Group             | novare-37-002 | accepted    | 2025-11-14
+      48212 | Nova Retail Group             | novare-36-016 | in_progress | 2025-11-14
+      51526 | Niger Delta Offshore Services | nigerd-40-002 | in_progress | 2025-11-16
+      51232 | Niger Delta Offshore Services | nigerd-38-011 | in_progress | 2025-11-20
+      54380 | Creekside Energy Services     | creeks-41-017 | accepted    | 2025-11-27
+      46510 | Nova Retail Group             | novare-37-005 | in_progress | 2025-11-28
+      43165 | Harbour Insurance Plc         | harbou-33-015 | in_progress | 2025-12-05
+      55795 | Creekside Energy Services     | creeks-41-011 | in_progress | 2025-12-05
+      54570 | Creekside Energy Services     | creeks-41-011 | accepted    | 2025-12-05
+      54789 | Creekside Energy Services     | creeks-42-006 | accepted    | 2025-12-11
+      55752 | Creekside Energy Services     | creeks-41-003 | in_progress | 2025-12-15
+      51322 | Niger Delta Offshore Services | nigerd-40-016 | in_progress | 2025-12-16
+      47143 | Nova Retail Group             | novare-37-011 | accepted    | 2025-12-21
+      50675 | Niger Delta Offshore Services | nigerd-40-012 | accepted    | 2025-12-21
+      55002 | Creekside Energy Services     | creeks-41-001 | in_progress | 2025-12-22
+      50544 | Niger Delta Offshore Services | nigerd-39-001 | accepted    | 2025-12-23
+      43933 | Harbour Insurance Plc         | harbou-34-016 | in_progress | 2025-12-26
+      55828 | Creekside Energy Services     | creeks-41-001 | in_progress | 2025-12-26
+      46705 | Nova Retail Group             | novare-37-002 | accepted    | 2025-12-28
+      47154 | Nova Retail Group             | novare-36-002 | in_progress | 2025-12-28
+      49657 | Niger Delta Offshore Services | nigerd-40-015 | in_progress | 2025-12-28
+      46973 | Nova Retail Group             | novare-36-008 | accepted    | 2025-12-29
+      59213 | Pioneer Agritech              | pionee-45-008 | in_progress | 2025-12-30
+      47413 | Nova Retail Group             | novare-37-014 | open        | 2026-01-01
+      47386 | Nova Retail Group             | novare-37-002 | in_progress | 2026-01-01
+      51383 | Niger Delta Offshore Services | nigerd-39-015 | open        | 2026-01-02
+      51905 | Niger Delta Offshore Services | nigerd-38-007 | open        | 2026-01-03
+      54515 | Creekside Energy Services     | creeks-41-003 | in_progress | 2026-01-04
+      51405 | Niger Delta Offshore Services | nigerd-40-016 | in_progress | 2026-01-04
+      49429 | Niger Delta Offshore Services | nigerd-39-001 | open        | 2026-01-05
+      52373 | Niger Delta Offshore Services | nigerd-38-010 | in_progress | 2026-01-06
+      49477 | Niger Delta Offshore Services | nigerd-39-012 | in_progress | 2026-01-06
+      50228 | Niger Delta Offshore Services | nigerd-38-003 | open        | 2026-01-07
+      49954 | Niger Delta Offshore Services | nigerd-38-012 | in_progress | 2026-01-07
+      54274 | Creekside Energy Services     | creeks-41-017 | open        | 2026-01-09
+      54361 | Creekside Energy Services     | creeks-41-006 | open        | 2026-01-09
+      51584 | Niger Delta Offshore Services | nigerd-38-016 | open        | 2026-01-09
+      50672 | Niger Delta Offshore Services | nigerd-38-001 | in_progress | 2026-01-09
+      49715 | Niger Delta Offshore Services | nigerd-39-010 | accepted    | 2026-01-10
+      51884 | Niger Delta Offshore Services | nigerd-38-011 | open        | 2026-01-10
+      49433 | Niger Delta Offshore Services | nigerd-40-014 | in_progress | 2026-01-11
+      51958 | Niger Delta Offshore Services | nigerd-38-016 | in_progress | 2026-01-13
+      46605 | Nova Retail Group             | novare-37-007 | accepted    | 2026-01-13
+      55619 | Creekside Energy Services     | creeks-41-008 | accepted    | 2026-01-13
+      57833 | Pioneer Agritech              | pionee-43-008 | in_progress | 2026-01-14
+      55225 | Creekside Energy Services     | creeks-42-001 | in_progress | 2026-01-15
+      46687 | Nova Retail Group             | novare-37-013 | in_progress | 2026-01-15
+      51036 | Niger Delta Offshore Services | nigerd-39-008 | accepted    | 2026-01-16
+      46807 | Nova Retail Group             | novare-37-006 | open        | 2026-01-17
+      50469 | Niger Delta Offshore Services | nigerd-40-017 | open        | 2026-01-17
+      54968 | Creekside Energy Services     | creeks-41-017 | open        | 2026-01-18
+      54180 | Creekside Energy Services     | creeks-42-015 | open        | 2026-01-20
+      58166 | Pioneer Agritech              | pionee-45-001 | open        | 2026-01-20
+      58370 | Pioneer Agritech              | pionee-43-015 | open        | 2026-01-21
+      49704 | Niger Delta Offshore Services | nigerd-40-013 | open        | 2026-01-21
+      55736 | Creekside Energy Services     | creeks-41-008 | in_progress | 2026-01-21
+      49541 | Niger Delta Offshore Services | nigerd-40-003 | accepted    | 2026-01-22
+      55579 | Creekside Energy Services     | creeks-42-002 | accepted    | 2026-01-22
+      47598 | Nova Retail Group             | novare-37-015 | open        | 2026-01-24
+      54395 | Creekside Energy Services     | creeks-42-011 | in_progress | 2026-01-25
+      55878 | Creekside Energy Services     | creeks-42-009 | open        | 2026-01-25
+      58424 | Pioneer Agritech              | pionee-43-011 | in_progress | 2026-01-26
+      50342 | Niger Delta Offshore Services | nigerd-40-016 | open        | 2026-01-26
+      47580 | Nova Retail Group             | novare-37-015 | in_progress | 2026-01-26
+      46834 | Nova Retail Group             | novare-36-008 | open        | 2026-01-29
+      58418 | Pioneer Agritech              | pionee-43-007 | open        | 2026-01-31
+      54980 | Creekside Energy Services     | creeks-42-002 | in_progress | 2026-01-31
+      54161 | Creekside Energy Services     | creeks-42-017 | open        | 2026-02-01
+      57563 | Pioneer Agritech              | pionee-45-009 | in_progress | 2026-02-03
+      52820 | Creekside Energy Services     | creeks-42-004 | in_progress | 2026-02-03
+      58577 | Pioneer Agritech              | pionee-44-007 | in_progress | 2026-02-03
+      58064 | Pioneer Agritech              | pionee-43-013 | in_progress | 2026-02-05
+      46791 | Nova Retail Group             | novare-37-001 | open        | 2026-02-05
+      52867 | Creekside Energy Services     | creeks-41-002 | in_progress | 2026-02-05
+      59185 | Pioneer Agritech              | pionee-44-011 | in_progress | 2026-02-06
+      49464 | Niger Delta Offshore Services | nigerd-39-005 | open        | 2026-02-06
+      46403 | Nova Retail Group             | novare-37-012 | accepted    | 2026-02-06
+      54439 | Creekside Energy Services     | creeks-42-015 | in_progress | 2026-02-07
+      46630 | Nova Retail Group             | novare-37-007 | open        | 2026-02-08
+      58388 | Pioneer Agritech              | pionee-43-012 | open        | 2026-02-08
+      53701 | Creekside Energy Services     | creeks-41-003 | open        | 2026-02-08
+      53150 | Creekside Energy Services     | creeks-41-007 | open        | 2026-02-09
+      61961 | Meridian Hotels               | meridi-47-002 | accepted    | 2026-02-09
+      55166 | Creekside Energy Services     | creeks-41-008 | accepted    | 2026-02-09
+      57683 | Pioneer Agritech              | pionee-44-010 | in_progress | 2026-02-09
+      58217 | Pioneer Agritech              | pionee-45-007 | in_progress | 2026-02-09
+      53146 | Creekside Energy Services     | creeks-42-014 | in_progress | 2026-02-11
+      62173 | Meridian Hotels               | meridi-47-004 | accepted    | 2026-02-11
+      47448 | Nova Retail Group             | novare-36-015 | open        | 2026-02-12
+      49904 | Niger Delta Offshore Services | nigerd-40-010 | accepted    | 2026-02-13
+      57959 | Pioneer Agritech              | pionee-45-013 | open        | 2026-02-14
+      53351 | Creekside Energy Services     | creeks-42-009 | open        | 2026-02-14
+      61895 | Meridian Hotels               | meridi-46-009 | open        | 2026-02-14
+      58319 | Pioneer Agritech              | pionee-45-008 | in_progress | 2026-02-14
+      61857 | Meridian Hotels               | meridi-46-009 | in_progress | 2026-02-14
+      55304 | Creekside Energy Services     | creeks-41-015 | open        | 2026-02-16
+      46498 | Nova Retail Group             | novare-37-012 | accepted    | 2026-02-16
+      50639 | Niger Delta Offshore Services | nigerd-39-010 | open        | 2026-02-16
+      58529 | Pioneer Agritech              | pionee-45-012 | open        | 2026-02-17
+      52649 | Creekside Energy Services     | creeks-41-009 | open        | 2026-02-17
+      49535 | Niger Delta Offshore Services | nigerd-38-011 | open        | 2026-02-17
+      49606 | Niger Delta Offshore Services | nigerd-40-015 | open        | 2026-02-18
+      57617 | Pioneer Agritech              | pionee-43-007 | in_progress | 2026-02-18
+      57894 | Pioneer Agritech              | pionee-43-012 | open        | 2026-02-19
+      60894 | Meridian Hotels               | meridi-47-012 | accepted    | 2026-02-20
+      61324 | Meridian Hotels               | meridi-47-003 | open        | 2026-02-20
+      50326 | Niger Delta Offshore Services | nigerd-39-009 | in_progress | 2026-02-21
+      49444 | Niger Delta Offshore Services | nigerd-39-015 | accepted    | 2026-02-22
+      58602 | Pioneer Agritech              | pionee-45-004 | accepted    | 2026-02-22
+      47093 | Nova Retail Group             | novare-36-016 | in_progress | 2026-02-22
+      52606 | Creekside Energy Services     | creeks-41-008 | open        | 2026-02-23
+      58544 | Pioneer Agritech              | pionee-43-011 | in_progress | 2026-02-24
+      62332 | Meridian Hotels               | meridi-46-015 | in_progress | 2026-02-25
+      54307 | Creekside Energy Services     | creeks-42-014 | open        | 2026-02-25
+      50177 | Niger Delta Offshore Services | nigerd-38-013 | in_progress | 2026-02-25
+      57508 | Pioneer Agritech              | pionee-44-014 | open        | 2026-02-25
+      47188 | Nova Retail Group             | novare-36-002 | in_progress | 2026-02-25
+      49767 | Niger Delta Offshore Services | nigerd-38-003 | open        | 2026-02-26
+      55231 | Creekside Energy Services     | creeks-41-017 | accepted    | 2026-02-26
+      61609 | Meridian Hotels               | meridi-46-002 | open        | 2026-02-26
+      46717 | Nova Retail Group             | novare-37-007 | open        | 2026-02-26
+      53756 | Creekside Energy Services     | creeks-41-010 | in_progress | 2026-02-26
+      58315 | Pioneer Agritech              | pionee-45-013 | accepted    | 2026-02-28
+      55682 | Creekside Energy Services     | creeks-42-016 | open        | 2026-03-01
+      61437 | Meridian Hotels               | meridi-47-015 | in_progress | 2026-03-02
+      61370 | Meridian Hotels               | meridi-46-006 | open        | 2026-03-03
+      50153 | Niger Delta Offshore Services | nigerd-39-011 | in_progress | 2026-03-03
+      54889 | Creekside Energy Services     | creeks-41-016 | open        | 2026-03-04
+      53458 | Creekside Energy Services     | creeks-42-016 | in_progress | 2026-03-05
+      54159 | Creekside Energy Services     | creeks-42-016 | in_progress | 2026-03-05
+      50666 | Niger Delta Offshore Services | nigerd-40-009 | in_progress | 2026-03-07
+      49559 | Niger Delta Offshore Services | nigerd-40-001 | in_progress | 2026-03-07
+      55518 | Creekside Energy Services     | creeks-42-002 | open        | 2026-03-07
+      49612 | Niger Delta Offshore Services | nigerd-40-005 | open        | 2026-03-09
+      54702 | Creekside Energy Services     | creeks-41-003 | open        | 2026-03-11
+      59144 | Pioneer Agritech              | pionee-44-008 | in_progress | 2026-03-12
+      57826 | Pioneer Agritech              | pionee-45-008 | open        | 2026-03-12
+      55894 | Creekside Energy Services     | creeks-41-005 | in_progress | 2026-03-12
+      49812 | Niger Delta Offshore Services | nigerd-40-001 | in_progress | 2026-03-13
+      49676 | Niger Delta Offshore Services | nigerd-39-013 | open        | 2026-03-16
+      50376 | Niger Delta Offshore Services | nigerd-39-004 | open        | 2026-03-18
+      50294 | Niger Delta Offshore Services | nigerd-39-005 | open        | 2026-03-19
+      61875 | Meridian Hotels               | meridi-46-011 | accepted    | 2026-03-23
+      62152 | Meridian Hotels               | meridi-46-008 | in_progress | 2026-03-24
+      50039 | Niger Delta Offshore Services | nigerd-38-011 | in_progress | 2026-03-25
+      58907 | Pioneer Agritech              | pionee-45-010 | accepted    | 2026-03-25
+      58362 | Pioneer Agritech              | pionee-44-010 | accepted    | 2026-03-26
+      58877 | Pioneer Agritech              | pionee-43-006 | open        | 2026-03-26
+      61287 | Meridian Hotels               | meridi-46-016 | open        | 2026-03-27
+      58054 | Pioneer Agritech              | pionee-45-013 | in_progress | 2026-03-28
+      56246 | Pioneer Agritech              | pionee-45-007 | open        | 2026-03-28
+      57096 | Pioneer Agritech              | pionee-44-015 | in_progress | 2026-03-30
+      52659 | Creekside Energy Services     | creeks-41-003 | accepted    | 2026-03-30
+      61354 | Meridian Hotels               | meridi-46-010 | open        | 2026-03-31
+      50101 | Niger Delta Offshore Services | nigerd-38-002 | in_progress | 2026-04-01
+      52921 | Creekside Energy Services     | creeks-41-004 | open        | 2026-04-01
+      57879 | Pioneer Agritech              | pionee-45-005 | in_progress | 2026-04-02
+      49709 | Niger Delta Offshore Services | nigerd-40-016 | open        | 2026-04-02
+      53253 | Creekside Energy Services     | creeks-42-017 | in_progress | 2026-04-02
+      64615 | Unity Property Partners       | unityp-49-007 | open        | 2026-04-04
+      62029 | Meridian Hotels               | meridi-46-016 | in_progress | 2026-04-04
+      61040 | Meridian Hotels               | meridi-46-016 | in_progress | 2026-04-05
+      61680 | Meridian Hotels               | meridi-46-016 | in_progress | 2026-04-06
+      61311 | Meridian Hotels               | meridi-47-001 | in_progress | 2026-04-07
+      53651 | Creekside Energy Services     | creeks-42-015 | open        | 2026-04-07
+      57889 | Pioneer Agritech              | pionee-43-012 | in_progress | 2026-04-08
+      56975 | Pioneer Agritech              | pionee-44-015 | open        | 2026-04-08
+      57882 | Pioneer Agritech              | pionee-43-005 | open        | 2026-04-09
+      65890 | Unity Property Partners       | unityp-48-004 | in_progress | 2026-04-09
+      50278 | Niger Delta Offshore Services | nigerd-39-003 | open        | 2026-04-09
+      62643 | Meridian Hotels               | meridi-47-003 | open        | 2026-04-09
+      53614 | Creekside Energy Services     | creeks-41-002 | accepted    | 2026-04-09
+      49990 | Niger Delta Offshore Services | nigerd-39-017 | open        | 2026-04-11
+      64928 | Unity Property Partners       | unityp-48-017 | open        | 2026-04-12
+      65419 | Unity Property Partners       | unityp-48-015 | open        | 2026-04-13
+      56643 | Pioneer Agritech              | pionee-44-012 | in_progress | 2026-04-13
+      53973 | Creekside Energy Services     | creeks-41-001 | in_progress | 2026-04-15
+      56327 | Pioneer Agritech              | pionee-44-005 | open        | 2026-04-15
+      49643 | Niger Delta Offshore Services | nigerd-38-015 | open        | 2026-04-16
+      62007 | Meridian Hotels               | meridi-46-013 | open        | 2026-04-16
+      61489 | Meridian Hotels               | meridi-47-003 | in_progress | 2026-04-17
+      50693 | Niger Delta Offshore Services | nigerd-40-012 | accepted    | 2026-04-18
+      54033 | Creekside Energy Services     | creeks-41-009 | open        | 2026-04-18
+      64455 | Unity Property Partners       | unityp-49-001 | in_progress | 2026-04-18
+      62600 | Meridian Hotels               | meridi-46-002 | open        | 2026-04-20
+      61526 | Meridian Hotels               | meridi-47-003 | in_progress | 2026-04-20
+      56253 | Pioneer Agritech              | pionee-44-016 | open        | 2026-04-22
+      65007 | Unity Property Partners       | unityp-49-010 | accepted    | 2026-04-23
+      53026 | Creekside Energy Services     | creeks-42-001 | open        | 2026-04-24
+      53984 | Creekside Energy Services     | creeks-41-007 | open        | 2026-04-26
+      61757 | Meridian Hotels               | meridi-47-005 | open        | 2026-04-27
+      65185 | Unity Property Partners       | unityp-48-007 | in_progress | 2026-04-27
+      61532 | Meridian Hotels               | meridi-47-005 | in_progress | 2026-04-29
+      64407 | Unity Property Partners       | unityp-48-012 | accepted    | 2026-04-29
+      61273 | Meridian Hotels               | meridi-47-011 | open        | 2026-04-29
+      61263 | Meridian Hotels               | meridi-47-010 | accepted    | 2026-04-29
+      61337 | Meridian Hotels               | meridi-46-007 | in_progress | 2026-05-01
+      56005 | Pioneer Agritech              | pionee-43-016 | in_progress | 2026-05-03
+      56409 | Pioneer Agritech              | pionee-45-011 | open        | 2026-05-03
+      52770 | Creekside Energy Services     | creeks-41-004 | accepted    | 2026-05-03
+      54064 | Creekside Energy Services     | creeks-42-007 | accepted    | 2026-05-03
+      62557 | Meridian Hotels               | meridi-47-016 | open        | 2026-05-04
+      57972 | Pioneer Agritech              | pionee-43-004 | in_progress | 2026-05-04
+      56615 | Pioneer Agritech              | pionee-43-003 | open        | 2026-05-04
+      59201 | Pioneer Agritech              | pionee-43-001 | in_progress | 2026-05-05
+      57431 | Pioneer Agritech              | pionee-43-014 | open        | 2026-05-05
+      65005 | Unity Property Partners       | unityp-50-014 | accepted    | 2026-05-06
+      53855 | Creekside Energy Services     | creeks-42-003 | in_progress | 2026-05-06
+      61375 | Meridian Hotels               | meridi-47-002 | in_progress | 2026-05-06
+      53636 | Creekside Energy Services     | creeks-41-007 | in_progress | 2026-05-06
+      53599 | Creekside Energy Services     | creeks-41-013 | in_progress | 2026-05-08
+      58122 | Pioneer Agritech              | pionee-43-012 | open        | 2026-05-08
+      53488 | Creekside Energy Services     | creeks-41-007 | open        | 2026-05-08
+      58647 | Pioneer Agritech              | pionee-45-015 | open        | 2026-05-08
+      59150 | Pioneer Agritech              | pionee-44-014 | open        | 2026-05-09
+      58762 | Pioneer Agritech              | pionee-43-003 | in_progress | 2026-05-10
+      52839 | Creekside Energy Services     | creeks-42-006 | in_progress | 2026-05-11
+      62634 | Meridian Hotels               | meridi-46-006 | in_progress | 2026-05-12
+      53016 | Creekside Energy Services     | creeks-42-002 | in_progress | 2026-05-13
+      64508 | Unity Property Partners       | unityp-49-013 | open        | 2026-05-13
+      57069 | Pioneer Agritech              | pionee-44-005 | accepted    | 2026-05-15
+      65259 | Unity Property Partners       | unityp-48-012 | open        | 2026-05-16
+      65408 | Unity Property Partners       | unityp-49-013 | accepted    | 2026-05-16
+      64563 | Unity Property Partners       | unityp-50-009 | in_progress | 2026-05-16
+      62023 | Meridian Hotels               | meridi-46-005 | open        | 2026-05-17
+      65692 | Unity Property Partners       | unityp-49-016 | accepted    | 2026-05-18
+      64573 | Unity Property Partners       | unityp-49-007 | in_progress | 2026-05-19
+      59920 | Meridian Hotels               | meridi-46-016 | in_progress | 2026-05-20
+      64540 | Unity Property Partners       | unityp-48-003 | in_progress | 2026-05-21
+      53397 | Creekside Energy Services     | creeks-41-015 | open        | 2026-05-22
+      53980 | Creekside Energy Services     | creeks-41-002 | accepted    | 2026-05-22
+      62194 | Meridian Hotels               | meridi-47-002 | in_progress | 2026-05-23
+      61090 | Meridian Hotels               | meridi-47-005 | in_progress | 2026-05-23
+      53211 | Creekside Energy Services     | creeks-41-005 | open        | 2026-05-24
+      60450 | Meridian Hotels               | meridi-47-015 | accepted    | 2026-05-26
+      53168 | Creekside Energy Services     | creeks-42-012 | accepted    | 2026-05-26
+      65284 | Unity Property Partners       | unityp-48-004 | open        | 2026-05-27
+      65850 | Unity Property Partners       | unityp-50-005 | open        | 2026-05-27
+      56450 | Pioneer Agritech              | pionee-45-016 | in_progress | 2026-05-28
+      60126 | Meridian Hotels               | meridi-47-012 | accepted    | 2026-05-28
+      66225 | Unity Property Partners       | unityp-48-009 | accepted    | 2026-05-28
+      60377 | Meridian Hotels               | meridi-47-011 | open        | 2026-05-29
+      59678 | Meridian Hotels               | meridi-47-003 | open        | 2026-05-29
+      60122 | Meridian Hotels               | meridi-46-002 | in_progress | 2026-05-30
+      66129 | Unity Property Partners       | unityp-49-015 | open        | 2026-05-30
+      65102 | Unity Property Partners       | unityp-49-006 | open        | 2026-05-31
+      60214 | Meridian Hotels               | meridi-47-014 | in_progress | 2026-05-31
+      53542 | Creekside Energy Services     | creeks-42-015 | in_progress | 2026-06-01
+      56984 | Pioneer Agritech              | pionee-45-017 | open        | 2026-06-01
+      62473 | Meridian Hotels               | meridi-47-014 | in_progress | 2026-06-01
+      62533 | Meridian Hotels               | meridi-47-013 | in_progress | 2026-06-01
+      62344 | Meridian Hotels               | meridi-47-002 | in_progress | 2026-06-02
+      52971 | Creekside Energy Services     | creeks-42-002 | in_progress | 2026-06-02
+      65640 | Unity Property Partners       | unityp-50-017 | open        | 2026-06-03
+      65761 | Unity Property Partners       | unityp-49-006 | accepted    | 2026-06-03
+      59598 | Meridian Hotels               | meridi-46-003 | in_progress | 2026-06-04
+      60014 | Meridian Hotels               | meridi-47-010 | open        | 2026-06-05
+      61448 | Meridian Hotels               | meridi-47-012 | in_progress | 2026-06-06
+      53975 | Creekside Energy Services     | creeks-41-008 | in_progress | 2026-06-07
+      52613 | Creekside Energy Services     | creeks-41-009 | open        | 2026-06-07
+      53387 | Creekside Energy Services     | creeks-41-001 | in_progress | 2026-06-08
+      53794 | Creekside Energy Services     | creeks-41-015 | in_progress | 2026-06-10
+      53780 | Creekside Energy Services     | creeks-41-004 | open        | 2026-06-10
+      52719 | Creekside Energy Services     | creeks-42-006 | in_progress | 2026-06-10
+      56705 | Pioneer Agritech              | pionee-43-007 | open        | 2026-06-11
+      61255 | Meridian Hotels               | meridi-46-006 | accepted    | 2026-06-11
+      64661 | Unity Property Partners       | unityp-48-006 | in_progress | 2026-06-12
+      66086 | Unity Property Partners       | unityp-50-012 | in_progress | 2026-06-13
+      62496 | Meridian Hotels               | meridi-46-004 | accepted    | 2026-06-15
+      59533 | Meridian Hotels               | meridi-46-012 | open        | 2026-06-15
+      65658 | Unity Property Partners       | unityp-48-007 | in_progress | 2026-06-17
+      61326 | Meridian Hotels               | meridi-46-012 | open        | 2026-06-17
+      65726 | Unity Property Partners       | unityp-49-015 | in_progress | 2026-06-17
+      59453 | Meridian Hotels               | meridi-46-014 | in_progress | 2026-06-17
+      62380 | Meridian Hotels               | meridi-46-014 | in_progress | 2026-06-17
+      66166 | Unity Property Partners       | unityp-48-008 | in_progress | 2026-06-18
+      64595 | Unity Property Partners       | unityp-49-001 | in_progress | 2026-06-19
+      66180 | Unity Property Partners       | unityp-49-006 | open        | 2026-06-19
+      60508 | Meridian Hotels               | meridi-47-003 | in_progress | 2026-06-19
+      65244 | Unity Property Partners       | unityp-48-001 | accepted    | 2026-06-19
+      64378 | Unity Property Partners       | unityp-48-008 | in_progress | 2026-06-20
+      65656 | Unity Property Partners       | unityp-49-011 | in_progress | 2026-06-21
+      65660 | Unity Property Partners       | unityp-49-001 | open        | 2026-06-21
+      56265 | Pioneer Agritech              | pionee-45-010 | open        | 2026-06-21
+      60065 | Meridian Hotels               | meridi-46-005 | in_progress | 2026-06-22
+      64943 | Unity Property Partners       | unityp-49-017 | open        | 2026-06-24
+      61945 | Meridian Hotels               | meridi-47-002 | accepted    | 2026-06-25
+      59662 | Meridian Hotels               | meridi-47-016 | in_progress | 2026-06-25
+      59311 | Meridian Hotels               | meridi-47-011 | in_progress | 2026-06-25
+      64662 | Unity Property Partners       | unityp-49-009 | in_progress | 2026-06-26
+      62407 | Meridian Hotels               | meridi-46-006 | accepted    | 2026-06-27
+      62467 | Meridian Hotels               | meridi-46-005 | open        | 2026-06-27
+      64674 | Unity Property Partners       | unityp-50-011 | open        | 2026-06-29
+      62714 | Meridian Hotels               | meridi-47-017 | in_progress | 2026-06-29
+      65193 | Unity Property Partners       | unityp-48-016 | in_progress | 2026-06-30
+      62476 | Meridian Hotels               | meridi-47-015 | accepted    | 2026-07-01
+      57075 | Pioneer Agritech              | pionee-44-002 | in_progress | 2026-07-01
+      60304 | Meridian Hotels               | meridi-47-008 | open        | 2026-07-01
+      65817 | Unity Property Partners       | unityp-48-006 | in_progress | 2026-07-02
+      59695 | Meridian Hotels               | meridi-47-011 | in_progress | 2026-07-04
+      64564 | Unity Property Partners       | unityp-50-003 | in_progress | 2026-07-04
+      56800 | Pioneer Agritech              | pionee-44-010 | accepted    | 2026-07-07
+      59659 | Meridian Hotels               | meridi-47-004 | in_progress | 2026-07-08
+      64965 | Unity Property Partners       | unityp-48-007 | open        | 2026-07-08
+      63434 | Unity Property Partners       | unityp-49-002 | open        | 2026-07-10
+      64140 | Unity Property Partners       | unityp-48-007 | accepted    | 2026-07-11
+      60006 | Meridian Hotels               | meridi-47-013 | accepted    | 2026-07-12
+      63132 | Unity Property Partners       | unityp-50-005 | in_progress | 2026-07-14
+      66128 | Unity Property Partners       | unityp-48-015 | open        | 2026-07-14
+      56300 | Pioneer Agritech              | pionee-43-001 | in_progress | 2026-07-15
+      56534 | Pioneer Agritech              | pionee-44-001 | open        | 2026-07-15
+      65673 | Unity Property Partners       | unityp-49-009 | accepted    | 2026-07-17
+      64871 | Unity Property Partners       | unityp-48-011 | open        | 2026-07-18
+      60712 | Meridian Hotels               | meridi-46-015 | accepted    | 2026-07-19
+      64530 | Unity Property Partners       | unityp-49-006 | accepted    | 2026-07-19
+      66146 | Unity Property Partners       | unityp-50-001 | in_progress | 2026-07-21
+      64220 | Unity Property Partners       | unityp-50-005 | in_progress | 2026-07-22
+      60439 | Meridian Hotels               | meridi-46-001 | open        | 2026-07-23
+      60149 | Meridian Hotels               | meridi-46-012 | open        | 2026-07-23
+      60240 | Meridian Hotels               | meridi-46-008 | in_progress | 2026-07-25
+      60637 | Meridian Hotels               | meridi-46-001 | in_progress | 2026-07-27
+      55963 | Pioneer Agritech              | pionee-44-001 | open        | 2026-07-27
+      57264 | Pioneer Agritech              | pionee-45-015 | open        | 2026-07-31
+      63374 | Unity Property Partners       | unityp-50-009 | open        | 2026-08-01
+      60249 | Meridian Hotels               | meridi-46-004 | open        | 2026-08-01
+      55958 | Pioneer Agritech              | pionee-44-003 | in_progress | 2026-08-01
+      60230 | Meridian Hotels               | meridi-47-012 | in_progress | 2026-08-01
+      66038 | Unity Property Partners       | unityp-48-005 | open        | 2026-08-02
+      63489 | Unity Property Partners       | unityp-48-015 | accepted    | 2026-08-03
+      57115 | Pioneer Agritech              | pionee-43-007 | in_progress | 2026-08-03
+      63537 | Unity Property Partners       | unityp-49-003 | in_progress | 2026-08-03
+      63242 | Unity Property Partners       | unityp-50-006 | open        | 2026-08-04
+      63986 | Unity Property Partners       | unityp-50-004 | accepted    | 2026-08-04
+      64240 | Unity Property Partners       | unityp-50-017 | open        | 2026-08-05
+      64169 | Unity Property Partners       | unityp-48-001 | open        | 2026-08-06
+      59378 | Meridian Hotels               | meridi-47-009 | open        | 2026-08-10
+      63086 | Unity Property Partners       | unityp-49-005 | accepted    | 2026-08-10
+      63048 | Unity Property Partners       | unityp-48-010 | in_progress | 2026-08-11
+      60089 | Meridian Hotels               | meridi-46-004 | open        | 2026-08-11
+      65778 | Unity Property Partners       | unityp-50-010 | open        | 2026-08-12
+      66226 | Unity Property Partners       | unityp-48-004 | open        | 2026-08-12
+      57399 | Pioneer Agritech              | pionee-45-014 | open        | 2026-08-13
+      59321 | Meridian Hotels               | meridi-47-002 | accepted    | 2026-08-14
+      59681 | Meridian Hotels               | meridi-47-014 | in_progress | 2026-08-14
+      65774 | Unity Property Partners       | unityp-50-011 | in_progress | 2026-08-15
+      63000 | Unity Property Partners       | unityp-49-001 | open        | 2026-08-15
+      59835 | Meridian Hotels               | meridi-46-017 | accepted    | 2026-08-15
+      59973 | Meridian Hotels               | meridi-46-004 | open        | 2026-08-16
+      60292 | Meridian Hotels               | meridi-47-013 | open        | 2026-08-17
+      63188 | Unity Property Partners       | unityp-50-010 | accepted    | 2026-08-17
+      59757 | Meridian Hotels               | meridi-46-014 | accepted    | 2026-08-18
+      65552 | Unity Property Partners       | unityp-50-003 | open        | 2026-08-19
+      60261 | Meridian Hotels               | meridi-47-003 | open        | 2026-08-20
+      59374 | Meridian Hotels               | meridi-47-003 | accepted    | 2026-08-20
+      56852 | Pioneer Agritech              | pionee-45-007 | open        | 2026-08-22
+      56322 | Pioneer Agritech              | pionee-45-005 | open        | 2026-08-22
+      56624 | Pioneer Agritech              | pionee-44-005 | in_progress | 2026-08-23
+      56680 | Pioneer Agritech              | pionee-43-016 | open        | 2026-08-23
+      63633 | Unity Property Partners       | unityp-49-015 | in_progress | 2026-08-24
+      62925 | Unity Property Partners       | unityp-48-017 | open        | 2026-08-25
+      64694 | Unity Property Partners       | unityp-48-003 | in_progress | 2026-08-25
+      64066 | Unity Property Partners       | unityp-50-016 | in_progress | 2026-08-26
+      65669 | Unity Property Partners       | unityp-48-015 | in_progress | 2026-08-26
+      63696 | Unity Property Partners       | unityp-48-013 | accepted    | 2026-08-27
+      64247 | Unity Property Partners       | unityp-50-006 | in_progress | 2026-08-28
+      60169 | Meridian Hotels               | meridi-46-013 | in_progress | 2026-08-28
+      59549 | Meridian Hotels               | meridi-47-002 | accepted    | 2026-08-30
+      63912 | Unity Property Partners       | unityp-49-007 | in_progress | 2026-08-30
+      64580 | Unity Property Partners       | unityp-48-009 | accepted    | 2026-09-01
+      60683 | Meridian Hotels               | meridi-46-014 | in_progress | 2026-09-01
+      60384 | Meridian Hotels               | meridi-46-007 | in_progress | 2026-09-03
+      63051 | Unity Property Partners       | unityp-48-014 | in_progress | 2026-09-04
+      59864 | Meridian Hotels               | meridi-46-002 | open        | 2026-09-05
+      57032 | Pioneer Agritech              | pionee-45-014 | open        | 2026-09-05
+      56062 | Pioneer Agritech              | pionee-45-012 | in_progress | 2026-09-05
+      65046 | Unity Property Partners       | unityp-48-006 | in_progress | 2026-09-07
+      57211 | Pioneer Agritech              | pionee-43-006 | in_progress | 2026-09-11
+      65697 | Unity Property Partners       | unityp-49-003 | open        | 2026-09-12
+      64762 | Unity Property Partners       | unityp-48-001 | in_progress | 2026-09-13
+      63394 | Unity Property Partners       | unityp-50-008 | in_progress | 2026-09-13
+      63620 | Unity Property Partners       | unityp-49-007 | in_progress | 2026-09-16
+      62951 | Unity Property Partners       | unityp-49-013 | open        | 2026-09-16
+      65331 | Unity Property Partners       | unityp-50-005 | in_progress | 2026-09-16
+      63437 | Unity Property Partners       | unityp-49-014 | open        | 2026-09-17
+      60152 | Meridian Hotels               | meridi-46-001 | accepted    | 2026-09-17
+      63144 | Unity Property Partners       | unityp-49-003 | in_progress | 2026-09-18
+      64438 | Unity Property Partners       | unityp-49-001 | in_progress | 2026-09-18
+      56880 | Pioneer Agritech              | pionee-43-017 | open        | 2026-09-19
+      65069 | Unity Property Partners       | unityp-49-010 | accepted    | 2026-09-20
+      63471 | Unity Property Partners       | unityp-50-012 | open        | 2026-09-21
+      59689 | Meridian Hotels               | meridi-46-017 | open        | 2026-09-21
+      57129 | Pioneer Agritech              | pionee-45-017 | open        | 2026-09-22
+      65932 | Unity Property Partners       | unityp-49-007 | accepted    | 2026-09-22
+      64714 | Unity Property Partners       | unityp-48-012 | accepted    | 2026-09-23
+      63307 | Unity Property Partners       | unityp-49-002 | open        | 2026-09-24
+      63612 | Unity Property Partners       | unityp-48-012 | accepted    | 2026-09-24
+      63592 | Unity Property Partners       | unityp-48-007 | open        | 2026-09-25
+      57080 | Pioneer Agritech              | pionee-45-008 | in_progress | 2026-09-26
+      55956 | Pioneer Agritech              | pionee-45-013 | in_progress | 2026-09-26
+      56192 | Pioneer Agritech              | pionee-45-011 | in_progress | 2026-09-27
+      56730 | Pioneer Agritech              | pionee-45-005 | open        | 2026-09-30
+      60425 | Meridian Hotels               | meridi-46-003 | in_progress | 2026-09-30
+(784 rows)
+

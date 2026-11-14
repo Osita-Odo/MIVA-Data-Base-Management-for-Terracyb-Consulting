@@ -1,0 +1,63 @@
+                                                                                   QUERY PLAN                                                                                   
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=1.15..16.21 rows=50 width=110) (actual time=0.055..0.217 rows=50 loops=1)
+   Buffers: shared hit=183
+   ->  Nested Loop  (cost=1.15..1076.70 rows=3572 width=110) (actual time=0.054..0.212 rows=50 loops=1)
+         Buffers: shared hit=183
+         ->  Nested Loop  (cost=1.01..976.76 rows=3572 width=110) (actual time=0.042..0.186 rows=50 loops=1)
+               Buffers: shared hit=179
+               ->  Nested Loop  (cost=0.86..880.67 rows=3572 width=109) (actual time=0.035..0.163 rows=50 loops=1)
+                     Buffers: shared hit=175
+                     ->  Nested Loop  (cost=0.72..785.75 rows=3572 width=86) (actual time=0.031..0.143 rows=50 loops=1)
+                           Buffers: shared hit=171
+                           ->  Nested Loop  (cost=0.57..688.75 rows=3572 width=74) (actual time=0.027..0.122 rows=50 loops=1)
+                                 Buffers: shared hit=161
+                                 ->  Index Scan using idx_finding_open_critical on finding f  (cost=0.28..340.75 rows=3572 width=61) (actual time=0.014..0.051 rows=50 loops=1)
+                                       Buffers: shared hit=50
+                                 ->  Memoize  (cost=0.29..0.32 rows=1 width=21) (actual time=0.001..0.001 rows=1 loops=50)
+                                       Cache Key: f.asset_id
+                                       Cache Mode: logical
+                                       Hits: 13  Misses: 37  Evictions: 0  Overflows: 0  Memory Usage: 5kB
+                                       Buffers: shared hit=111
+                                       ->  Index Scan using asset_pkey on asset a  (cost=0.28..0.31 rows=1 width=21) (actual time=0.001..0.001 rows=1 loops=37)
+                                             Index Cond: (asset_id = f.asset_id)
+                                             Buffers: shared hit=111
+                           ->  Memoize  (cost=0.15..0.18 rows=1 width=20) (actual time=0.000..0.000 rows=1 loops=50)
+                                 Cache Key: a.site_id
+                                 Cache Mode: logical
+                                 Hits: 45  Misses: 5  Evictions: 0  Overflows: 0  Memory Usage: 1kB
+                                 Buffers: shared hit=10
+                                 ->  Index Scan using client_site_pkey on client_site s  (cost=0.14..0.17 rows=1 width=20) (actual time=0.001..0.001 rows=1 loops=5)
+                                       Index Cond: (site_id = a.site_id)
+                                       Buffers: shared hit=10
+                     ->  Memoize  (cost=0.15..0.41 rows=1 width=31) (actual time=0.000..0.000 rows=1 loops=50)
+                           Cache Key: s.client_id
+                           Cache Mode: logical
+                           Hits: 48  Misses: 2  Evictions: 0  Overflows: 0  Memory Usage: 1kB
+                           Buffers: shared hit=4
+                           ->  Index Scan using client_pkey on client c  (cost=0.14..0.40 rows=1 width=31) (actual time=0.002..0.002 rows=1 loops=2)
+                                 Index Cond: (client_id = s.client_id)
+                                 Buffers: shared hit=4
+               ->  Memoize  (cost=0.15..0.77 rows=1 width=7) (actual time=0.000..0.000 rows=1 loops=50)
+                     Cache Key: c.state_code
+                     Cache Mode: logical
+                     Hits: 48  Misses: 2  Evictions: 0  Overflows: 0  Memory Usage: 1kB
+                     Buffers: shared hit=4
+                     ->  Index Scan using state_pkey on state st  (cost=0.14..0.76 rows=1 width=7) (actual time=0.003..0.003 rows=1 loops=2)
+                           Index Cond: (state_code = c.state_code)
+                           Buffers: shared hit=4
+         ->  Memoize  (cost=0.14..0.48 rows=1 width=4) (actual time=0.000..0.000 rows=1 loops=50)
+               Cache Key: st.serving_office_id
+               Cache Mode: logical
+               Hits: 48  Misses: 2  Evictions: 0  Overflows: 0  Memory Usage: 1kB
+               Buffers: shared hit=4
+               ->  Index Only Scan using office_pkey on office o  (cost=0.13..0.47 rows=1 width=4) (actual time=0.003..0.003 rows=1 loops=2)
+                     Index Cond: (office_id = st.serving_office_id)
+                     Heap Fetches: 2
+                     Buffers: shared hit=4
+ Planning:
+   Buffers: shared hit=723
+ Planning Time: 1.574 ms
+ Execution Time: 0.317 ms
+(59 rows)
+

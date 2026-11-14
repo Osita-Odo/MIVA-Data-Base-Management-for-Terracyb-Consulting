@@ -1,0 +1,53 @@
+                                                                          QUERY PLAN                                                                           
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=2092.11..2092.64 rows=212 width=97) (actual time=9.897..9.910 rows=250 loops=1)
+   Sort Key: c.name, s.site_name, (rank() OVER (?))
+   Sort Method: quicksort  Memory: 49kB
+   Buffers: shared hit=1050
+   ->  Hash Join  (cost=2055.46..2083.92 rows=212 width=97) (actual time=9.514..9.744 rows=250 loops=1)
+         Hash Cond: (s.client_id = c.client_id)
+         Buffers: shared hit=1044
+         ->  Hash Join  (cost=2054.01..2081.79 rows=212 width=77) (actual time=9.491..9.692 rows=250 loops=1)
+               Hash Cond: (ar.site_id = s.site_id)
+               Buffers: shared hit=1043
+               ->  WindowAgg  (cost=2051.89..2068.89 rows=850 width=69) (actual time=9.464..9.636 rows=250 loops=1)
+                     Run Condition: (rank() OVER (?) <= 5)
+                     Buffers: shared hit=1042
+                     ->  Sort  (cost=2051.89..2054.01 rows=850 width=57) (actual time=9.457..9.491 rows=846 loops=1)
+                           Sort Key: ar.site_id, ar.total_cvss DESC
+                           Sort Method: quicksort  Memory: 76kB
+                           Buffers: shared hit=1042
+                           ->  Subquery Scan on ar  (cost=1991.40..2010.53 rows=850 width=57) (actual time=8.957..9.168 rows=846 loops=1)
+                                 Buffers: shared hit=1036
+                                 ->  HashAggregate  (cost=1991.40..2002.03 rows=850 width=61) (actual time=8.956..9.108 rows=846 loops=1)
+                                       Group Key: a.asset_id
+                                       Batches: 1  Memory Usage: 553kB
+                                       Buffers: shared hit=1036
+                                       ->  Hash Join  (cost=28.12..1911.30 rows=10680 width=27) (actual time=0.172..7.276 rows=10661 loops=1)
+                                             Hash Cond: (f.asset_id = a.asset_id)
+                                             Buffers: shared hit=1036
+                                             ->  Seq Scan on finding f  (cost=0.00..1855.00 rows=10680 width=10) (actual time=0.006..5.771 rows=10661 loops=1)
+                                                   Filter: (status = ANY ('{open,in_progress}'::text[]))
+                                                   Rows Removed by Filter: 55579
+                                                   Buffers: shared hit=1027
+                                             ->  Hash  (cost=17.50..17.50 rows=850 width=21) (actual time=0.159..0.160 rows=850 loops=1)
+                                                   Buckets: 1024  Batches: 1  Memory Usage: 53kB
+                                                   Buffers: shared hit=9
+                                                   ->  Seq Scan on asset a  (cost=0.00..17.50 rows=850 width=21) (actual time=0.002..0.063 rows=850 loops=1)
+                                                         Buffers: shared hit=9
+               ->  Hash  (cost=1.50..1.50 rows=50 width=20) (actual time=0.014..0.015 rows=50 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 11kB
+                     Buffers: shared hit=1
+                     ->  Seq Scan on client_site s  (cost=0.00..1.50 rows=50 width=20) (actual time=0.004..0.007 rows=50 loops=1)
+                           Buffers: shared hit=1
+         ->  Hash  (cost=1.20..1.20 rows=20 width=28) (actual time=0.014..0.014 rows=20 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 10kB
+               Buffers: shared hit=1
+               ->  Seq Scan on client c  (cost=0.00..1.20 rows=20 width=28) (actual time=0.004..0.006 rows=20 loops=1)
+                     Buffers: shared hit=1
+ Planning:
+   Buffers: shared hit=381
+ Planning Time: 0.858 ms
+ Execution Time: 10.038 ms
+(49 rows)
+

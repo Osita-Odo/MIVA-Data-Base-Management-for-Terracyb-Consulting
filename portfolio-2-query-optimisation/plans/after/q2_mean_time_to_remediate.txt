@@ -1,0 +1,36 @@
+                                                              QUERY PLAN                                                               
+---------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=3526.72..3536.32 rows=3837 width=81) (actual time=30.535..30.539 rows=29 loops=1)
+   Sort Key: sl.name, (((date_trunc('quarter'::text, (f.fixed_on)::timestamp with time zone)))::date)
+   Sort Method: quicksort  Memory: 27kB
+   Buffers: shared hit=1035
+   ->  HashAggregate  (cost=3192.79..3298.31 rows=3837 width=81) (actual time=30.459..30.495 rows=29 loops=1)
+         Group Key: sl.name, date_trunc('quarter'::text, (f.fixed_on)::timestamp with time zone)
+         Batches: 1  Memory Usage: 217kB
+         Buffers: shared hit=1029
+         ->  Hash Join  (cost=3.42..2566.77 rows=50082 width=45) (actual time=0.063..24.205 rows=50215 loops=1)
+               Hash Cond: (e.service_id = sl.service_id)
+               Buffers: shared hit=1029
+               ->  Hash Join  (cost=2.35..1998.10 rows=50082 width=10) (actual time=0.029..12.319 rows=50215 loops=1)
+                     Hash Cond: (f.engagement_id = e.engagement_id)
+                     Buffers: shared hit=1028
+                     ->  Seq Scan on finding f  (cost=0.00..1855.00 rows=50082 width=12) (actual time=0.003..6.415 rows=50215 loops=1)
+                           Filter: (status = 'fixed'::text)
+                           Rows Removed by Filter: 16025
+                           Buffers: shared hit=1027
+                     ->  Hash  (cost=1.60..1.60 rows=60 width=6) (actual time=0.014..0.015 rows=60 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 11kB
+                           Buffers: shared hit=1
+                           ->  Seq Scan on engagement e  (cost=0.00..1.60 rows=60 width=6) (actual time=0.002..0.006 rows=60 loops=1)
+                                 Buffers: shared hit=1
+               ->  Hash  (cost=1.03..1.03 rows=3 width=31) (actual time=0.012..0.012 rows=3 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                     Buffers: shared hit=1
+                     ->  Seq Scan on service_line sl  (cost=0.00..1.03 rows=3 width=31) (actual time=0.004..0.004 rows=3 loops=1)
+                           Buffers: shared hit=1
+ Planning:
+   Buffers: shared hit=493
+ Planning Time: 0.800 ms
+ Execution Time: 30.675 ms
+(32 rows)
+
