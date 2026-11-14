@@ -9,14 +9,6 @@ This project designs, builds and tests a database for **TerraCyber Consulting**,
 
 The assessment brief asks for five practical portfolios, all built on the same organisation. Each portfolio tests a different area of advanced database work. Together they show one realistic system, from design through to running across three cities.
 
-| Portfolio | Topic | What it delivers | Marks |
-| --- | --- | --- | ---: |
-| [1](portfolio-1-database-design/README.md) | Database design and modelling | 18-table PostgreSQL schema in third normal form, ER diagram, 12 constraint tests, synthetic data | 7 |
-| [2](portfolio-2-query-optimisation/README.md) | Query processing and optimisation | 9 business queries, indexes, before and after execution plans, a benchmark script | 7 |
-| [3](portfolio-3-transactions-concurrency/README.md) | Transactions and concurrency | 5 scenarios: commit, rollback, lost update, isolation levels, deadlock | 7 |
-| [4](portfolio-4-nosql/README.md) | NoSQL and advanced data models | MongoDB document store for audit evidence; Neo4j graph of attack paths | 7 |
-| [5](portfolio-5-distributed-cloud/README.md) | Distributed and cloud database | Lagos primary, Port Harcourt standby copy, Abuja public-sector shard, MongoDB across all three | 6 |
-| Final | Documentation | 2-3 page LMS document and individual reflection ([template](docs/lms-documentation-template.md)) | 6 |
 
 **Key idea:** one organisation runs through all five portfolios. A design decision in Portfolio 1 (for example, the `state` table) is reused in Portfolio 2 (query Q8) and Portfolio 5 (which office serves which client). This makes the project one connected system rather than five separate exercises.
 
