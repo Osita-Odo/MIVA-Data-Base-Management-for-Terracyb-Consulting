@@ -1,0 +1,49 @@
+=== 4. Simulate losing the Lagos site
+$ su postgres -c '/usr/lib/postgresql/16/bin/pg_ctl -D /home/claude/pg/data stop -m fast' | tail -1
+server stopped
+
+=== 4. Port Harcourt still answers reads
+$ psql -X -p 5435 -d ead -c "SELECT count(*) AS findings_readable FROM ead.finding;"
+ findings_readable 
+-------------------
+             66240
+(1 row)
+
+
+=== 4. ... but it is still a standby, so writes fail
+$ psql -X -p 5435 -d ead -c "SELECT pg_is_in_recovery() AS still_standby;"
+ still_standby 
+---------------
+ t
+(1 row)
+
+
+$ psql -X -p 5435 -d ead -c "UPDATE ead.finding SET status = 'in_progress' WHERE finding_id = (SELECT min(finding_id) FROM ead.finding WHERE status = 'open');"
+ERROR:  cannot execute UPDATE in a read-only transaction
+
+=== 5. Promote Port Harcourt (manual failover)
+$ psql -X -p 5435 -d ead -c "SELECT pg_promote(wait => true, wait_seconds => 30) AS promoted;"
+ promoted 
+----------
+ t
+(1 row)
+
+
+Promotion took 0.13 seconds
+
+$ psql -X -p 5435 -d ead -c "SELECT pg_is_in_recovery() AS still_standby;"
+ still_standby 
+---------------
+ f
+(1 row)
+
+
+=== 5. The new primary in Port Harcourt accepts writes
+$ psql -X -p 5435 -d ead -c "UPDATE ead.finding SET status = 'in_progress' WHERE finding_id = (SELECT min(finding_id) FROM ead.finding WHERE status = 'open') RETURNING finding_id, status;"
+ finding_id |   status    
+------------+-------------
+      43208 | in_progress
+(1 row)
+
+UPDATE 1
+

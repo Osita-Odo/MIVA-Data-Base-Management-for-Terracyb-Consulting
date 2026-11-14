@@ -12,7 +12,15 @@
 | Sharding | Public-sector clients' findings stored on the Abuja node; private and NGO findings in Lagos | `sql/geo_sharding.sql`, `sql/abuja_node_init.sql` |
 | Availability | Loss of the Lagos site, read-only standby, promotion of Port Harcourt; MongoDB automatic election | `replication_failover_demo.sh`, section 5.4 |
 | Consistency | Asynchronous vs synchronous replication; MongoDB write and read concerns | Section 5.5, `mongo/replica-set-demo.js` |
-| Deployment | Seven containers from one Compose file; optional managed cloud deployment | Section 7 |
+| Deployment | Seven containers from one Compose file; optional managed cloud deployment | Section 8 |
+| Test-run evidence | Replication, sharding and failover run on three local PostgreSQL servers, with logs and screenshots | Section 6, [`output/`](output), [`screenshots/`](screenshots) |
+
+## In plain terms: one database across three cities
+
+- **Replication** keeps a live copy. Every change in Lagos is written to a log (the write-ahead log, or WAL) that is streamed continuously to Port Harcourt. Port Harcourt holds a read-only copy that can answer reports and take over if Lagos fails.
+- **Sharding** splits one table across servers. The findings table is divided into three **partitions** by client sector: private and NGO findings stay in Lagos, public-sector findings are stored in Abuja. Applications still query one table, and PostgreSQL sends each query to the right place.
+- **Failover** is what happens when the primary is lost: the standby keeps answering reads, refuses writes, and is then **promoted** to become the new primary. MongoDB does this automatically: with one member in each city, losing any one city still leaves two of three, and they elect a new primary within seconds.
+- **Consistency or availability (CAP).** If the network between cities breaks, a distributed system must choose between staying **consistent** (refusing some work) and staying **available** (accepting work that may conflict). TerraCyber chooses differently for different data: consistency for money and public-sector data, availability for evidence uploads (section 5.5).
 
 ## 2. Why these three sites, and why each has its role
 
@@ -194,16 +202,42 @@ After Ctrl+C, PostgreSQL warns that the transaction was already committed locall
 | Public-sector findings in Abuja | **Consistency**: unavailable during a partition rather than copied elsewhere | Keeping government data in its designated hosting site matters more than availability |
 | Evidence uploads | **Availability** with `w: "majority"`: keep accepting uploads on the majority side | Losing an upload during fieldwork is worse than a brief delay |
 
-## 6. Evidence checklist
+## 6. Results from a local test run
 
-- [ ] `output/geo_sharding.log`
-- [ ] `output/replication_failover.log`
-- [ ] `output/mongo_rs_before_failure.log` and `output/mongo_rs_after_failure.log`
-- [ ] Screenshot of `docker compose ps` with all containers running
-- [ ] Screenshot of Port Harcourt's read-only error and of the successful write after promotion
+Docker images could not be downloaded in the test environment, so the PostgreSQL parts of this portfolio were run on **three separate PostgreSQL 16.15 servers** on one machine, on 14 November 2026. The steps are the same as in the Docker setup; only the way each server is addressed differs:
+
+| Docker setup (this README) | Local test run | Role |
+| --- | --- | --- |
+| `docker exec -i pg-lagos psql ...` | `psql -p 5432 -d ead` | Lagos primary |
+| `docker exec -i pg-portharcourt psql ...` | `psql -p 5435 -d ead` | Port Harcourt standby, cloned with `pg_basebackup -X stream -S replica1 -R -c fast` as in `config/replica-entrypoint.sh` |
+| `pg-abuja` (`ead_abuja`) | `psql -p 5433 -d ead_abuja` | Abuja public-sector node, created with `sql/abuja_node_init.sql` |
+| `docker stop pg-lagos` | `pg_ctl ... stop -m fast` on the Lagos server | Simulated loss of the Lagos site |
+
+The full command-by-command logs are [`output/local-test-replication.log`](output/local-test-replication.log), [`output/local-test-geo-sharding.log`](output/local-test-geo-sharding.log) and [`output/local-test-failover.log`](output/local-test-failover.log).
+
+**Replication.** Lagos reports Port Harcourt as `streaming` through slot `replica1`. A client registered in Lagos appears in Port Harcourt one second later, and an `INSERT` in Port Harcourt fails with `cannot execute INSERT in a read-only transaction`:
+
+![Replication status, replicated row and read-only error](screenshots/01-replication-status-and-read-only.png)
+
+**Sharding.** One `INSERT` routes the 66,240 findings into three partitions: `finding_geo_private` (31,870 rows) and `finding_geo_ngo` (16,810) in Lagos, and `finding_geo_public` (17,560) on the Abuja server. The plans show pruning for a private-sector query, a `Foreign Scan` with the `Remote SQL` sent to Abuja for a public-sector query, and a fan-out to every partition when the sector is not specified:
+
+![Partition row counts and plans](screenshots/02-geo-sharding.png)
+
+**Failover.** With Lagos stopped, Port Harcourt still answers reads (66,240 findings) but refuses an `UPDATE`. `pg_promote()` took 0.13 seconds; afterwards `pg_is_in_recovery()` is false and the same `UPDATE` succeeds:
+
+![Failover and promotion of Port Harcourt](screenshots/03-failover-promotion.png)
+
+## 7. Evidence checklist
+
+- [x] Sharding log ([`output/local-test-geo-sharding.log`](output/local-test-geo-sharding.log), local test run)
+- [x] Replication and failover logs ([`output/local-test-replication.log`](output/local-test-replication.log), [`output/local-test-failover.log`](output/local-test-failover.log), local test run)
+- [x] Screenshot of Port Harcourt's read-only error and of the successful write after promotion ([replication](screenshots/01-replication-status-and-read-only.png), [failover](screenshots/03-failover-promotion.png))
+- [ ] Run the Docker version on your own machine: `output/geo_sharding.log` and `output/replication_failover.log`
+- [ ] `output/mongo_rs_before_failure.log` and `output/mongo_rs_after_failure.log` (needs Docker)
+- [ ] Screenshot of `docker compose ps` with all containers running (needs Docker)
 - [ ] Screenshot of the synchronous replication hang (optional, strong evidence for the CAP discussion)
 
-## 7. Optional: managed cloud deployment
+## 8. Optional: managed cloud deployment
 
 The three-site design maps directly onto Nigerian colocation providers: Rack Centre or Equinix LG1 in Lagos, Equinix PR1 in Port Harcourt, and Galaxy Backbone's NSSC in Abuja. These are not free to try. For hands-on cloud evidence on a student budget:
 

@@ -28,6 +28,23 @@ Full register with alternatives: [docs/design-decisions.md](../docs/design-decis
 | Neo4j for attack paths, one client only | Multi-hop paths are one Cypher pattern but a recursive CTE in SQL; one client keeps the graph readable | D08, D56 |
 | Entry points: internet-facing with CVSS 9 or more | Matches the "critical" severity threshold and realistic attacker access | D57 |
 
+## In plain terms: why use more than one kind of database
+
+A relational database is excellent at data that fits neat tables and must stay consistent, such as clients, engagements and payments. Some data does not fit tables well. **NoSQL** databases store data in other shapes, and using several kinds of database side by side, each for the data it suits, is called **polyglot persistence**.
+
+- **MongoDB (documents):** each piece of audit evidence is one self-contained document, like a JSON file. A scan report and an interview note can sit in the same collection even though their fields are completely different.
+  - **Embedded:** scan results sit inside their scan document, because they are always read together.
+  - **Referenced:** engagement and client are stored only as ids, because their details live in PostgreSQL and change there.
+  - **Validated:** a schema validator checks the fields every evidence type shares, and leaves type-specific fields flexible.
+  - **Measured:** 3,006 documents, so the effect of indexes is visible: before indexing every document is examined; after, only the matching ones.
+- **Neo4j (graph):** client machines are **nodes** and network links are **relationships**. "Can an attacker get from an exposed server to a critical system?" becomes one short query that follows the links, where SQL would need a recursive query that grows with each hop. The graph models one client, Lagoon Community Food Network in Lagos: 13 assets, 4 real CVEs and 12 network links.
+
+| Need | Relational | Document | Graph |
+| --- | --- | --- | --- |
+| Engagements, invoices, payments | **Best** | Weak | Not suitable |
+| Evidence with varying structure | Awkward | **Best** | Not suitable |
+| Multi-hop network paths | Slow as hops grow | Limited | **Best** |
+
 ## 2. Why NoSQL here: polyglot persistence
 
 PostgreSQL stays the **system of record** for engagements, findings, controls and money. Two kinds of TerraCyber data fit it badly:
@@ -152,6 +169,8 @@ The script prints the plan stages and `docsExamined` before and after indexing. 
 **PostgreSQL JSONB as an alternative.** PostgreSQL could store evidence in a `JSONB` column with a GIN index. That would avoid a second database. MongoDB still wins here for aggregation pipelines over arrays, built-in sharding, and partial updates such as `arrayFilters`. Mention this trade-off in your reflection.
 
 ## 6. Evidence checklist
+
+**Status:** these items need Docker on your own machine. The MongoDB and Neo4j images could not be downloaded in the test environment used for the other portfolios, so no outputs or screenshots have been added here yet. The scripts were checked for syntax, and the MongoDB loader was tested against a MongoDB-compatible test server.
 
 - [ ] `evidence-samples/mongo-output.txt`, including the validator rejection and before/after explain summaries
 - [ ] `evidence-samples/neo4j-output.txt`
