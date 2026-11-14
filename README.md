@@ -193,49 +193,6 @@ Each portfolio README gives the full steps, the expected output and an evidence 
 
 **Testing status:** every PostgreSQL script was run and checked, and the Portfolio 5 replication, sharding and failover steps were run on three local PostgreSQL servers. The MongoDB, Neo4j and Docker files were checked for syntax only, because Docker images could not be downloaded in the test environment; run them on your own machine.
 
-## 9. What is left to do
-
-1. **Re-run each portfolio on your own machine** and replace the test-run screenshots and outputs with your own captures where you can. Your own runs are the strongest evidence of your work, and they prepare you for questions about the results.
-2. **Portfolio 4:** run the MongoDB and Neo4j steps in Docker and add the outputs and screenshots listed in its README.
-3. **Portfolio 5:** run the Docker version and add `docker compose ps` and the MongoDB replica set outputs.
-4. **Fill in your interpretation** of the Portfolio 2 timings (3 to 5 sentences) in its README.
-5. **Complete the AI-use declaration** in [section 13](#13-ai-use-declaration) honestly, in your own words.
-6. **Write the LMS document** using [docs/lms-documentation-template.md](docs/lms-documentation-template.md), including your personal reflection.
-7. **Make the repository private** and add the assessor as a collaborator before submission.
-
-## 10. Preparing for a verification call
-
-The brief says students may be asked to explain their work. These are likely questions, with short answers drawn from the project.
-
-**Why did you put the geopolitical zone in a separate table?**
-Because the zone depends on the state, not on the client. Storing it in the client table would be a transitive dependency, which breaks third normal form. With the `state` table, moving a state to another office is a single-row update.
-
-**Why is severity a generated column?**
-Severity is fully determined by the CVSS score. If it were an ordinary column, someone could change one without the other. The database calculates it, so it can never disagree with the score, and it can still be indexed.
-
-**Why did you not add an index for Q3?**
-The `control_assessment` table has about 2,300 rows and the query reads almost all of them. A sequential scan is already the cheapest plan, so an index would add write cost without improving the query.
-
-**What is the difference between a partial index and a covering index?**
-A partial index only contains rows that match a condition, such as open critical findings, so it is small. A covering index includes extra columns, so the query can be answered from the index alone without reading the table.
-
-**Why did the lost update happen, and how does FOR UPDATE fix it?**
-Both managers read the same value before either wrote, so the second write was based on a stale value. `FOR UPDATE` locks the row when it is read, so the second manager waits until the first commits and then reads the new value.
-
-**Why could row locks not prevent the write skew?**
-The two managers deleted different rows, so their locks never conflicted. Only SERIALIZABLE isolation detects that the combined result breaks the rule, and it cancels one transaction.
-
-**Why did you embed scan results in MongoDB but only reference the client?**
-Scan results are always read with their scan and belong to nothing else, so embedding avoids joins. Client details change and are owned by PostgreSQL, so copying them would create stale duplicates.
-
-**Why Port Harcourt for the backup and not Abuja?**
-Port Harcourt has the only international internet route that does not pass through Lagos. A cut to the Lagos cables, like the one in March 2024, would not cut off the backup. Abuja is more valuable as the public-sector site.
-
-**Why shard by sector rather than by region?**
-All three sites are in Nigeria, and the NDPA only regulates transfers abroad, so there is no legal reason to split by region. The hosting rules that exist are sector rules for government and payment data.
-
-**What happens if Abuja goes down?**
-Public-sector findings become unavailable, but private and NGO data in Lagos is unaffected. This is a known single point of failure: in production, Abuja would get its own standby, with Kano as the next candidate site.
 
 ## 11. Glossary
 
@@ -259,22 +216,6 @@ Public-sector findings become unavailable, but private and NGO data in Lagos is 
 | WAL | Write-ahead log: the record of every change, used for crash recovery and replication |
 | Write skew | Two transactions each change different rows and together break a rule neither breaks alone |
 
-## 12. Progress log
-
-The brief rewards progressive commits. Record each milestone when it is committed.
-
-| Date | Portfolio | Work committed |
-| --- | --- | --- |
-| | 1 | Case study statement, ER diagram, schema |
-| | 1 | Seed data, constraint tests, normalisation write-up |
-| | 2 | Queries and baseline plans |
-| | 2 | Indexes, after plans, performance analysis |
-| | 3 | Transaction scenarios, logs and screenshots |
-| | 4 | MongoDB model, queries and indexes |
-| | 4 | Neo4j graph and suitability analysis |
-| | 5 | Replication and failover |
-| | 5 | Geo-sharding and consistency analysis |
-| | Final | LMS documentation and reflection |
 
 ## 13. AI-use declaration
 
