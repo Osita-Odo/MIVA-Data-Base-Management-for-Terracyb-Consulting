@@ -9,11 +9,12 @@
 | Evidence required by the brief | Where it is |
 | --- | --- |
 | Case study description | Section 2 below and the root [README](../README.md) |
-| ER diagram | Section 3 (renders on GitHub) and `erd.dbml` (source for dbdiagram.io, exported as `erd.png`) |
+| ER diagram | Section 3: [`erd.png`](erd.png) (all 18 tables with columns and keys), generated from [`erd.dbml`](erd.dbml) by [`make_erd.py`](make_erd.py) |
 | Relational schema | [`schema.sql`](schema.sql) |
 | Keys and constraints | Section 4, tested by [`test_constraints.sql`](test_constraints.sql) |
 | Normalisation explanation | Section 5 |
 | Sample data | [`seed.sql`](seed.sql) (synthetic, deterministic) |
+| Screenshots and test output | Section 7, [`screenshots/`](screenshots), [`constraint-test-output.txt`](constraint-test-output.txt), [`output/seed-row-counts.txt`](output/seed-row-counts.txt) |
 
 ## Key decisions and reasons
 
@@ -31,6 +32,31 @@ Full register with alternatives: [docs/design-decisions.md](../docs/design-decis
 | Triggers for cross-table rules | A CHECK cannot see other tables; a trigger enforces the rule for every writer | D20, D21 |
 | Synthetic data with a fixed random seed | No real client data (NDPA, confidentiality); identical results on every run | D29, D30 |
 
+## In plain terms: what a schema is
+
+A **schema** is the blueprint of a relational database: which tables exist, which columns each holds, and the rules that link them. Good design stores each fact once, makes wrong data impossible to enter, and makes the data easy to query.
+
+The 18 tables fall into five groups:
+
+| Group | Tables | Purpose |
+| --- | --- | --- |
+| Organisation and geography | `office`, `state`, `consultant` | The three offices, Nigeria's 36 states plus the FCT with their serving office, and the 24 staff |
+| Clients | `client`, `client_site`, `asset` | 20 clients, 50 sites, 850 machines and applications |
+| Engagements | `service_line`, `engagement`, `engagement_staff` | 60 engagements and who works on each |
+| Security and compliance | `finding`, `framework`, `control`, `control_assessment` | 66,240 vulnerability findings; 128 controls from three frameworks; 2,340 assessments |
+| Training, billing and audit | `training_session`, `attendance`, `invoice`, `payment`, `audit_log` | Sessions and quiz scores; invoices and part payments in naira; a history of every change to a finding |
+
+The rules in plain terms:
+
+| Rule type | What it does, with a TerraCyber example |
+| --- | --- |
+| Primary key | Gives every row a unique identifier, for example `finding_id` |
+| Foreign key | A row may only point at something that exists: an engagement must belong to a real client |
+| UNIQUE | No two consultants share an email; no invoice number repeats |
+| CHECK | Values must make sense: a CVSS score lies between 0 and 10; an engagement cannot end before it starts |
+| Generated column | `severity` (critical, high, medium, low) is calculated from the CVSS score by the database, so the two can never disagree |
+| Trigger | Enforces rules that span tables: a finding's asset must belong to the engagement's client; payments can never exceed the invoice |
+
 ## 2. Case study in brief
 
 TerraCyber Consulting is a Nigerian cybersecurity consultancy serving NGOs, public bodies and private firms in all six geopolitical zones. It works from three sites, Lagos (headquarters), Abuja and Port Harcourt; [../docs/site-selection.md](../docs/site-selection.md) explains why. It runs three service lines: compliance and data protection, advisory and resilience, and training and security awareness. Engagements are budgeted and invoiced in naira (NGN).
@@ -45,6 +71,12 @@ The EAD supports these operations:
 - keep an audit trail of every change to a finding.
 
 ## 3. ER diagram
+
+![ER diagram of the 18 EAD tables](erd.png)
+
+*Figure P1-0. All 18 tables with their columns, primary keys (PK), foreign keys (FK) and unique columns (UK). Colours group the tables: blue = organisation and geography, green = clients and assets, amber = engagements, red = security and compliance, purple = training and billing, grey = audit log. Lines run from the parent key to the child foreign key; the crow's foot marks the "many" end. Generated from `erd.dbml` by `python3 make_erd.py`.*
+
+The simplified diagram below shows the relationship names and renders directly on GitHub:
 
 ```mermaid
 erDiagram
@@ -131,7 +163,7 @@ erDiagram
     }
 ```
 
-The full attribute list for all 18 tables is in `erd.dbml`. Export it from dbdiagram.io as `erd.png` and commit the image.
+The full attribute list for all 18 tables is in `erd.dbml`; `erd.png` above is generated from it. The same file can also be pasted into dbdiagram.io for an interactive version.
 
 `audit_log` has no foreign key on purpose. It must keep its history even after the row it describes is deleted.
 
@@ -204,7 +236,8 @@ No non-key attribute depends on another non-key attribute:
 createdb ead
 psql -d ead -f schema.sql
 psql -d ead -f seed.sql            # loads data and prints row counts
-psql -d ead -f test_constraints.sql
+psql -d ead -f test_constraints.sql 2>&1 | tee constraint-test-output.txt
+python3 make_erd.py                # optional: regenerate erd.png (needs Graphviz)
 ```
 
 Seed data volumes (deterministic, `setseed(0.42)`):
@@ -221,9 +254,26 @@ Seed data volumes (deterministic, `setseed(0.42)`):
 
 All names, organisations, hostnames and IP addresses in the seed data are fictitious. The CVE identifiers are real, public vulnerabilities used as realistic examples.
 
-## 7. Evidence checklist
+## 7. Results and screenshots
 
-- [ ] `erd.png` exported from `erd.dbml`
-- [ ] Screenshot of `\dt ead.*` listing the 18 tables
-- [ ] Screenshot of the seed row counts
-- [ ] `constraint-test-output.txt` showing the 12 expected errors
+The screenshots below were captured from a test run on 14 November 2026 (PostgreSQL 16.15). Each one shows the command that was run and its unedited output.
+
+**The 18 tables exist in schema `ead`:**
+
+![psql listing of the 18 EAD tables](screenshots/01-tables.png)
+
+**Seed data loaded, with the row count of every table:**
+
+![Row counts printed by seed.sql](screenshots/02-seed-row-counts.png)
+
+**All 12 constraint tests are rejected.** Each test breaks exactly one rule, and the error names the constraint or trigger that stopped it. No test row was stored:
+
+![Output of test_constraints.sql showing 12 errors](screenshots/03-constraint-tests.png)
+
+## 8. Evidence checklist
+
+- [x] `erd.png` generated from `erd.dbml` ([make_erd.py](make_erd.py))
+- [x] Screenshot of `\dt ead.*` listing the 18 tables ([screenshots/01-tables.png](screenshots/01-tables.png))
+- [x] Screenshot of the seed row counts ([screenshots/02-seed-row-counts.png](screenshots/02-seed-row-counts.png))
+- [x] `constraint-test-output.txt` showing the 12 expected errors ([screenshot](screenshots/03-constraint-tests.png))
+- [ ] Re-run on your own machine and replace the test-run captures with your own

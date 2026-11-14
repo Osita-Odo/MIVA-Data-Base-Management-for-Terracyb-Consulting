@@ -1,0 +1,29 @@
+$ psql -d ead -f schema.sql
+$ psql -d ead -f seed.sql
+ setseed 
+---------
+ 
+(1 row)
+
+     table_name     | count 
+--------------------+-------
+ office             |     3
+ state              |    37
+ consultant         |    24
+ client             |    20
+ client_site        |    50
+ service_line       |     3
+ engagement         |    60
+ engagement_staff   |   180
+ asset              |   850
+ finding            | 66240
+ framework          |     3
+ control            |   128
+ control_assessment |  2340
+ training_session   |    60
+ attendance         |   960
+ invoice            |   120
+ payment            |   114
+ audit_log          |     0
+(18 rows)
+

@@ -1,0 +1,38 @@
+SET
+--- T1 PRIMARY KEY: duplicate service_id
+psql:test_constraints.sql:12: ERROR:  duplicate key value violates unique constraint "service_line_pkey"
+DETAIL:  Key (service_id)=(1) already exists.
+--- T2 UNIQUE: duplicate consultant email
+psql:test_constraints.sql:17: ERROR:  duplicate key value violates unique constraint "consultant_email_key"
+DETAIL:  Key (email)=(consultant1@terracyb.example) already exists.
+--- T3 FOREIGN KEY: engagement for a client that does not exist
+psql:test_constraints.sql:22: ERROR:  insert or update on table "engagement" violates foreign key constraint "engagement_client_id_fkey"
+DETAIL:  Key (client_id)=(9999) is not present in table "client".
+--- T4 CHECK: CVSS score above 10
+psql:test_constraints.sql:27: ERROR:  new row for relation "finding" violates check constraint "finding_cvss_score_check"
+DETAIL:  Failing row contains (66241, 21, 651, Bad score, null, 11.5, critical, open, 2026-11-14, null).
+--- T5 CHECK: engagement ends before it starts
+psql:test_constraints.sql:32: ERROR:  new row for relation "engagement" violates check constraint "ck_engagement_dates"
+DETAIL:  Failing row contains (62, 1, 1, 4, Backwards dates, 2026-05-01, 2026-04-01, planned, 1000.00).
+--- T6 CHECK: status fixed without a fixed_on date
+psql:test_constraints.sql:37: ERROR:  new row for relation "finding" violates check constraint "ck_finding_fixed"
+DETAIL:  Failing row contains (66242, 21, 651, Fixed but no date, null, 5.0, medium, fixed, 2026-11-14, null).
+--- T7 CHECK: invalid sector value
+psql:test_constraints.sql:41: ERROR:  new row for relation "client" violates check constraint "client_sector_check"
+DETAIL:  Failing row contains (21, Test Org, charity, LA, 2026-11-14).
+--- T8 CHECK: malformed CVE identifier
+psql:test_constraints.sql:46: ERROR:  new row for relation "finding" violates check constraint "finding_cve_id_check"
+DETAIL:  Failing row contains (66243, 21, 651, Bad CVE, CVE-21-1, 5.0, medium, open, 2026-11-14, null).
+--- T9 TRIGGER: asset belongs to a different client than the engagement
+psql:test_constraints.sql:56: ERROR:  Asset 1 does not belong to the client of engagement 22
+CONTEXT:  PL/pgSQL function fn_finding_asset_matches_client() line 11 at RAISE
+--- T10 TRIGGER: payment larger than the invoice
+psql:test_constraints.sql:62: ERROR:  Payment of 5250001.00 NGN would exceed invoice 1 (amount 5250000.00, already paid 5250000.00)
+CONTEXT:  PL/pgSQL function fn_payment_within_invoice() line 13 at RAISE
+--- T11 GENERATED column: severity cannot be written directly
+psql:test_constraints.sql:66: ERROR:  column "severity" can only be updated to DEFAULT
+DETAIL:  Column "severity" is a generated column.
+--- T12 FOREIGN KEY: client in a state code that does not exist
+psql:test_constraints.sql:70: ERROR:  insert or update on table "client" violates foreign key constraint "client_state_code_fkey"
+DETAIL:  Key (state_code)=(XX) is not present in table "state".
+--- Done. Expect 12 ERROR lines above and no rows inserted.
