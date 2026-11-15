@@ -112,7 +112,7 @@ Every portfolio README follows the same pattern: what the portfolio delivers, it
 
 ## 5. Evidence at a glance
 
-The screenshots and output files below were captured from **test runs on 14 November 2026** (PostgreSQL 16.15; Portfolio 5) and **15 November 2026** (my own runs in GitHub Codespaces: Portfolios 1, 2 and 3 on PostgreSQL 16, Portfolio 4 on MongoDB 7.0 and Neo4j 5). Each screenshot shows the exact command that was run and its unedited output; the caption under each one says how it was captured. See also the [AI-use declaration](#11-ai-use-declaration) in section 11.
+The screenshots and output files below are screen captures from **my own runs in GitHub Codespaces on 15 November 2026**: PostgreSQL 16 in Docker for Portfolios 1, 2, 3 and 5, MongoDB 7.0 and Neo4j 5 for Portfolio 4, and the seven-container Docker set-up for Portfolio 5. Each screenshot shows the exact command that was run and its unedited output. See also the [AI-use declaration](#11-ai-use-declaration) in section 11.
 
 | Portfolio | Screenshots | Output files |
 | --- | --- | --- |
@@ -120,7 +120,7 @@ The screenshots and output files below were captured from **test runs on 14 Nove
 | 2 | [Q1 plan before and after](portfolio-2-query-optimisation/screenshots/01-q1-plan-before-after.png), [benchmark](portfolio-2-query-optimisation/screenshots/02-benchmark.png), [Q8 result](portfolio-2-query-optimisation/screenshots/03-q8-result.png) | `results/timings.md`, `results/query-results/`, `plans/` |
 | 3 | [two-terminal lock wait](portfolio-3-transactions-concurrency/screenshots/01-lock-wait-two-terminals.png), [B waiting on the lock](portfolio-3-transactions-concurrency/screenshots/02-lock-wait-in-progress.png), [lost update](portfolio-3-transactions-concurrency/screenshots/03-lost-update-script.png), [isolation](portfolio-3-transactions-concurrency/screenshots/04-isolation-non-repeatable-read.png), [SERIALIZABLE](portfolio-3-transactions-concurrency/screenshots/05-serializable-write-skew.png), [deadlock](portfolio-3-transactions-concurrency/screenshots/06-deadlock.png) | `output/01` to `output/05` logs |
 | 4 | [containers running](portfolio-4-nosql/screenshots/01-docker-compose-ps.png), [validator rejection](portfolio-4-nosql/screenshots/02-create-collection-validator.png), [index before](portfolio-4-nosql/screenshots/04-index-before-collscan.png) and [after](portfolio-4-nosql/screenshots/05-index-after-ixscan.png), [attack-path queries](portfolio-4-nosql/screenshots/08-neo4j-attack-path-queries.png), [Neo4j graph](portfolio-4-nosql/screenshots/11-neo4j-full-graph.png), [G1 attack paths](portfolio-4-nosql/screenshots/12-neo4j-g1-attack-paths.png) (screen captures from GitHub Codespaces) | `evidence-samples/mongo-output.txt`, `evidence-samples/neo4j-output.txt` |
-| 5 | [replication](portfolio-5-distributed-cloud/screenshots/01-replication-status-and-read-only.png), [sharding](portfolio-5-distributed-cloud/screenshots/02-geo-sharding.png), [failover](portfolio-5-distributed-cloud/screenshots/03-failover-promotion.png) (three local PostgreSQL servers, not Docker) | `output/local-test-*.log` |
+| 5 | [containers running](portfolio-5-distributed-cloud/screenshots/01-compose-ps-healthy.png), [sharding](portfolio-5-distributed-cloud/screenshots/03-geo-sharding-partitions-and-plans.png), [replication and read-only standby](portfolio-5-distributed-cloud/screenshots/05b-replica-status-write-read-only.png), [failover](portfolio-5-distributed-cloud/screenshots/06a-lagos-down-promotion.png), [MongoDB election after losing Lagos](portfolio-5-distributed-cloud/screenshots/08-mongo-rs-after-lagos-failure.png) | `output/geo_sharding.log`, `output/replication_failover.log`, `output/mongo_rs_*.log` |
 
 ## 6. Design decisions
 
@@ -173,9 +173,18 @@ cd portfolio-4-nosql && docker compose up -d && cd ..
 cd portfolio-5-distributed-cloud && docker compose up -d && cd ..
 ```
 
+**How I ran it (GitHub Codespaces, no local installation).** Open the repository in a codespace (its `.devcontainer` provides Docker and the `psql` client). For Portfolios 1 to 3, start a PostgreSQL 16 server in Docker and point `psql` at it:
+
+```bash
+export PGHOST=localhost PGPORT=5432 PGUSER=postgres PGPASSWORD=terracyb-demo
+docker run -d --name tc-postgres -e POSTGRES_PASSWORD=terracyb-demo -p 5432:5432 postgres:16
+```
+
+Run `docker stop tc-postgres` before starting Portfolio 5, which uses port 5432 for Lagos. The `export` line applies to one terminal only, so repeat it in every new terminal (Portfolio 3 uses two side by side).
+
 Each portfolio README gives the full steps, the expected output and an evidence checklist. Portfolio 5 publishes its Lagos PostgreSQL server on port 5432, so stop any local PostgreSQL server used for Portfolios 1 to 3 first, or change the host port in `portfolio-5-distributed-cloud/docker-compose.yml`. Portfolio 4 does not use port 5432.
 
-**Testing status:** every PostgreSQL script was run and checked, and the Portfolio 5 replication, sharding and failover steps were run on three local PostgreSQL servers. Portfolio 4 (MongoDB and Neo4j) was run with Docker in GitHub Codespaces on 15 November 2026. The Portfolio 5 Docker set-up (including the MongoDB replica set) was checked for syntax but not run.
+**Testing status:** every portfolio was run end to end in GitHub Codespaces on 15 November 2026, and the logs and screenshots in each folder come from those runs. The only part not run is the optional synchronous-replication hang in Portfolio 5 (section 5.5 of its README).
 
 
 ## 9. Glossary
@@ -214,7 +223,6 @@ All data in this project is synthetic and generated by [`seed.sql`](portfolio-1-
 - [Graphviz](https://graphviz.org/). Draws `erd.png` from `erd.dbml` (`make_erd.py`).
 - [Mermaid](https://mermaid.js.org/). Source format of the architecture diagrams (`*.mmd`).
 - [DBML (Database Markup Language)](https://dbml.dbdiagram.io/docs/). Format of `erd.dbml`.
-- [Playwright](https://playwright.dev/). Used to render the captured terminal output of the 14 November 2026 test runs as screenshot images.
 
 **Standards, frameworks and law**
 

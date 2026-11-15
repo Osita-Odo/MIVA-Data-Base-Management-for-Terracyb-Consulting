@@ -13,7 +13,7 @@
 | Availability | Loss of the Lagos site, read-only standby, promotion of Port Harcourt; MongoDB automatic election | `replication_failover_demo.sh`, section 5.4 |
 | Consistency | Asynchronous vs synchronous replication; MongoDB write and read concerns | Section 5.5, `mongo/replica-set-demo.js` |
 | Deployment | Seven containers from one Compose file; optional managed cloud deployment | Section 8 |
-| Test-run evidence | Replication, sharding and failover run on three local PostgreSQL servers, with logs and screenshots | Section 6, [`output/`](output), [`screenshots/`](screenshots) |
+| Test-run evidence | The full seven-container set-up run in GitHub Codespaces: sharding, replication, failover and the MongoDB replica set, with logs and screenshots | Section 6, [`output/`](output), [`screenshots/`](screenshots) |
 
 ## In plain terms: one database across three cities
 
@@ -183,39 +183,72 @@ After Ctrl+C, PostgreSQL warns that the transaction was already committed locall
 | Public-sector findings in Abuja | **Consistency**: unavailable during a partition rather than copied elsewhere | Keeping government data in its designated hosting site matters more than availability |
 | Evidence uploads | **Availability** with `w: "majority"`: keep accepting uploads on the majority side | Losing an upload during fieldwork is worse than a brief delay |
 
-## 6. Results from a local test run
+## 6. Results of my test run (15 November 2026)
 
-Docker images could not be downloaded in the test environment, so the PostgreSQL parts of this portfolio were run on **three separate PostgreSQL 16.15 servers** on one machine, on 14 November 2026. The steps are the same as in the Docker setup; only the way each server is addressed differs:
+I ran the full Docker set-up in GitHub Codespaces on 15 November 2026: seven containers (PostgreSQL 16 in Lagos, Port Harcourt and Abuja; MongoDB 7.0 in each city; and the one-shot replica-set initialiser). The screenshots are screen captures of the codespace terminal; times are UTC. The full logs are [`output/geo_sharding.log`](output/geo_sharding.log), [`output/replication_failover.log`](output/replication_failover.log), [`output/mongo_rs_before_failure.log`](output/mongo_rs_before_failure.log) and [`output/mongo_rs_after_failure.log`](output/mongo_rs_after_failure.log).
 
-| Docker setup (this README) | Local test run | Role |
-| --- | --- | --- |
-| `docker exec -i pg-lagos psql ...` | `psql -p 5432 -d ead` | Lagos primary |
-| `docker exec -i pg-portharcourt psql ...` | `psql -p 5435 -d ead` | Port Harcourt standby, cloned with `pg_basebackup -X stream -S replica1 -R -c fast` as in `config/replica-entrypoint.sh` |
-| `pg-abuja` (`ead_abuja`) | `psql -p 5433 -d ead_abuja` | Abuja public-sector node, created with `sql/abuja_node_init.sql` |
-| `docker stop pg-lagos` | `pg_ctl ... stop -m fast` on the Lagos server | Simulated loss of the Lagos site |
+### 6.1 Start-up
 
-The full command-by-command logs are [`output/local-test-replication.log`](output/local-test-replication.log), [`output/local-test-geo-sharding.log`](output/local-test-geo-sharding.log) and [`output/local-test-failover.log`](output/local-test-failover.log).
+`docker compose up -d` created the network, six volumes and seven containers. Lagos loaded the Portfolio 1 schema and data and became healthy in about 12 seconds, after which Port Harcourt cloned it:
 
-**Replication.** Lagos reports Port Harcourt as `streaming` through slot `replica1`. A client registered in Lagos appears in Port Harcourt one second later, and an `INSERT` in Port Harcourt fails with `cannot execute INSERT in a read-only transaction`:
+![docker compose up](screenshots/00-compose-up.png)
 
-![Replication status, replicated row and read-only error](screenshots/01-replication-status-and-read-only.png)
+All three PostgreSQL servers report `healthy`, the three MongoDB servers are up, and `mongo-init` exited with code 0 after initiating replica set `rs0`:
 
-**Sharding.** One `INSERT` routes the 66,240 findings into three partitions: `finding_geo_private` (31,870 rows) and `finding_geo_ngo` (16,810) in Lagos, and `finding_geo_public` (17,560) on the Abuja server. The plans show pruning for a private-sector query, a `Foreign Scan` with the `Remote SQL` sent to Abuja for a public-sector query, and a fan-out to every partition when the sector is not specified:
+![docker compose ps](screenshots/01-compose-ps-healthy.png)
 
-![Partition row counts and plans](screenshots/02-geo-sharding.png)
+Port Harcourt never ran the seed script, yet it holds the same 66,240 findings as Lagos, because it is a copy made by `pg_basebackup` and kept current by streaming replication:
 
-**Failover.** With Lagos stopped, Port Harcourt still answers reads (66,240 findings) but refuses an `UPDATE`. `pg_promote()` took 0.13 seconds; afterwards `pg_is_in_recovery()` is false and the same `UPDATE` succeeds:
+![Same row count in Lagos and Port Harcourt](screenshots/02-data-in-lagos-and-portharcourt.png)
 
-![Failover and promotion of Port Harcourt](screenshots/03-failover-promotion.png)
+### 6.2 Sharding: public-sector findings in Abuja
+
+One `INSERT` routes the 66,240 findings into three partitions: `finding_geo_private` (31,870) and `finding_geo_ngo` (16,810) in Lagos, and `finding_geo_public` (17,560) on the Abuja server. A private-sector query scans only the private partition (pruning). A public-sector query becomes a `Foreign Scan` whose `Remote SQL` (`WHERE sector = 'public' AND status = 'open'`) runs on the Abuja server:
+
+![Partition row counts, pruning and Foreign Scan](screenshots/03-geo-sharding-partitions-and-plans.png)
+
+A query without the sector key fans out to every partition, including the foreign one in Abuja, which is the cost of sharding:
+
+![Fan-out to every partition](screenshots/04-geo-sharding-fan-out.png)
+
+### 6.3 Replication and failover (PostgreSQL)
+
+| Stage | Result |
+| --- | --- |
+| 1. Status | Lagos sees Port Harcourt `streaming` through slot `replica1`, `async`, replay gap 0 bytes |
+| 2. Replication | Client 21 (Jos Plateau Solar Cooperative) inserted in Lagos at 19:29:42 is readable in Port Harcourt at 19:29:43 |
+| 3. Read-only standby | `INSERT` in Port Harcourt fails: `cannot execute INSERT in a read-only transaction` |
+| 4. Lagos lost | After `docker stop pg-lagos`, Port Harcourt still reads all 66,240 findings, but an `UPDATE` is refused |
+| 5. Failover | `pg_promote()` took **0.52 seconds**; `pg_is_in_recovery()` changes from true to false and the same `UPDATE` succeeds |
+
+![Replication status on Lagos](screenshots/05a-replication-status-primary.png)
+
+The three `\x: extra argument ... ignored` warnings at the top came from a comment written on the same line as the `\x on` command in `sql/replication_status_primary.sql`; psql read the comment's words as arguments. They were harmless (expanded display still switched on), and the comment has since been moved to its own line.
+
+![Replica status, replicated client and read-only error](screenshots/05b-replica-status-write-read-only.png)
+
+![Lagos stopped, reads continue, promotion](screenshots/06a-lagos-down-promotion.png)
+
+![The promoted Port Harcourt server accepts writes](screenshots/06b-new-primary-accepts-writes.png)
+
+### 6.4 MongoDB replica set across the three cities
+
+With all three cities up, `mongo-lagos` is PRIMARY; a `w: "majority"` write was acknowledged in 46 ms and a `w: 3` write by all three nodes:
+
+![Replica set before the failure](screenshots/07-mongo-rs-before-failure.png)
+
+After `docker stop mongo-lagos` and a 15-second wait, **Port Harcourt had been elected PRIMARY automatically**, with no manual step (compare the manual `pg_promote()` above). `w: "majority"` writes still succeed (8 ms) because two of three cities remain, but the `w: 3` write fails with `waiting for replication timed out`, which is the trade-off between the two write concerns:
+
+![Replica set after losing Lagos](screenshots/08-mongo-rs-after-lagos-failure.png)
+
+The "seconds behind the primary" figures in step 4 are calculated from the operation time each member last reported, which in a mostly idle set overstates the real delay; step 3 shows the document was already readable on a secondary (`secondary_local: 1`). Lagos was restarted afterwards and rejoins as a secondary.
 
 ## 7. Evidence checklist
 
-- [x] Sharding log ([`output/local-test-geo-sharding.log`](output/local-test-geo-sharding.log), local test run)
-- [x] Replication and failover logs ([`output/local-test-replication.log`](output/local-test-replication.log), [`output/local-test-failover.log`](output/local-test-failover.log), local test run)
-- [x] Screenshot of Port Harcourt's read-only error and of the successful write after promotion ([replication](screenshots/01-replication-status-and-read-only.png), [failover](screenshots/03-failover-promotion.png))
-- [ ] Run the Docker version on your own machine: `output/geo_sharding.log` and `output/replication_failover.log`
-- [ ] `output/mongo_rs_before_failure.log` and `output/mongo_rs_after_failure.log` (needs Docker)
-- [ ] Screenshot of `docker compose ps` with all containers running (needs Docker)
+- [x] `docker compose ps` with all containers running ([screenshot](screenshots/01-compose-ps-healthy.png))
+- [x] Sharding log [`output/geo_sharding.log`](output/geo_sharding.log) and screenshots
+- [x] Replication and failover log [`output/replication_failover.log`](output/replication_failover.log), with the read-only error and the successful write after promotion
+- [x] [`output/mongo_rs_before_failure.log`](output/mongo_rs_before_failure.log) and [`output/mongo_rs_after_failure.log`](output/mongo_rs_after_failure.log), with screenshots
 - [ ] Screenshot of the synchronous replication hang (optional, strong evidence for the CAP discussion)
 
 ## 8. Optional: managed cloud deployment

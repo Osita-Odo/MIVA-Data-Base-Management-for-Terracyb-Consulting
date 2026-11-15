@@ -1,6 +1,8 @@
 -- Run on pg-lagos (primary): who is replicating from me, and how far behind are they?
 --   docker exec -i pg-lagos psql -U postgres -d ead -f /sql/replication_status_primary.sql
-\x on   -- expanded display: one column per line, easier to read for wide rows
+-- Expanded display: one column per line, easier to read for wide rows.
+-- (A comment on the same line as a psql meta-command is read as extra arguments.)
+\x on
 
 -- One row per connected standby.
 --   state      'streaming' means the replica is receiving WAL live
