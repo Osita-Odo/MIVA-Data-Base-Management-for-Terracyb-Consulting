@@ -173,7 +173,7 @@ cd portfolio-4-nosql && docker compose up -d && cd ..
 cd portfolio-5-distributed-cloud && docker compose up -d && cd ..
 ```
 
-Each portfolio README gives the full steps, the expected output and an evidence checklist. Stop the Portfolio 4 containers before starting Portfolio 5 if port 5432 is already in use, or change the host port in `portfolio-5-distributed-cloud/docker-compose.yml`.
+Each portfolio README gives the full steps, the expected output and an evidence checklist. Portfolio 5 publishes its Lagos PostgreSQL server on port 5432, so stop any local PostgreSQL server used for Portfolios 1 to 3 first, or change the host port in `portfolio-5-distributed-cloud/docker-compose.yml`. Portfolio 4 does not use port 5432.
 
 **Testing status:** every PostgreSQL script was run and checked, and the Portfolio 5 replication, sharding and failover steps were run on three local PostgreSQL servers. Portfolio 4 (MongoDB and Neo4j) was run with Docker in GitHub Codespaces on 15 November 2026. The Portfolio 5 Docker set-up (including the MongoDB replica set) was checked for syntax but not run.
 

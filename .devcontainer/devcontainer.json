@@ -1,6 +1,6 @@
 // Dev container for GitHub Codespaces (or VS Code Dev Containers).
 // Gives a Linux machine with Docker, the PostgreSQL 16 client and Graphviz,
-// so every portfolio can be tested in the browser. See docs/testing-guide.md.
+// so every portfolio can be tested in the browser.
 {
   "name": "TerraCyb EAD test environment",
   // Ubuntu 24.04 ships the PostgreSQL 16 client used by all scripts
