@@ -130,47 +130,64 @@ Session A locks finding 1 then asks for finding 2. Session B locks finding 2 the
 
 ## 5. Screenshots
 
-The screenshots below were captured from a test run on 14 November 2026 (PostgreSQL 16.15). Each one shows the command that was run and its unedited output; the full logs are in [`output/`](output).
+The screenshots below are screen captures from my own run in GitHub Codespaces on 15 November 2026 (PostgreSQL 16 in Docker). Each one shows the command that was run and its unedited output; the full logs are in [`output/`](output). The times shown are UTC.
 
 ### 5.1 Two terminals: a row lock in action
 
-This is the brief's "two terminals side by side" evidence. It was run live with two real `psql` sessions using [`session_a.sql`](session_a.sql) and [`session_b.sql`](session_b.sql):
+This is the brief's "two terminals side by side" evidence. It was run live with two real `psql` sessions in two split terminals, using [`session_a.sql`](session_a.sql) and [`session_b.sql`](session_b.sql):
 
-1. In terminal A, start `psql -d ead -a -f session_a.sql`. Manager A locks the row with `SELECT ... FOR UPDATE` and holds the lock for 4 seconds.
-2. Within those 4 seconds, in terminal B, start `psql -d ead -a -f session_b.sql`. Manager B asks for the same row and **waits**.
-3. When A commits, B continues immediately and reads A's new value, so neither change is lost.
-4. To repeat the demo, run the reset line at the end of `session_b.sql`.
+1. Reset the row to 50 hours (the line at the end of `session_b.sql`).
+2. In terminal A, start session A. Manager A locks the row with `SELECT ... FOR UPDATE` and holds the lock. For this run the hold was lengthened from 4 to 20 seconds with a temporary copy, so there was time to start B by hand: `sed 's/pg_sleep(4)/pg_sleep(20)/; s/for 4 s/for 20 s/' session_a.sql > /tmp/session_a_20s.sql`.
+3. While A holds the lock, in terminal B, start `psql -d ead -a -f session_b.sql`. Manager B asks for the same row and **waits**.
+4. When A commits, B continues immediately and reads A's new value, so neither change is lost.
 
-![Two terminals: B waits for A's row lock](screenshots/01-lock-wait-two-terminals.png)
+**While B is waiting.** A (left) started at 18:56:37 and is inside `pg_sleep`; B (right) started at 18:56:38 and its `SELECT ... FOR UPDATE` has no result yet:
 
-B asked for the row at 21:12:36 but only got it at 21:12:39, the moment A committed. B then read 60.0 (A's value, not the stale 50.0), so the final total is 50 + 10 + 5 = 65.0.
+![B waits for A's row lock](screenshots/02-lock-wait-in-progress.png)
 
-While B was waiting, a third terminal ran [`monitor.sql`](monitor.sql). It shows B blocked on a `Lock` of type `transactionid`, which is A's open transaction:
+**After A commits.** The complete run in both terminals:
 
-![pg_stat_activity shows B waiting on a lock](screenshots/02-lock-wait-monitor.png)
+![Two terminals: B waits for A's row lock, then continues](screenshots/01-lock-wait-two-terminals.png)
+
+| Time (UTC) | Manager A (left) | Manager B (right) |
+| --- | --- | --- |
+| 18:56:37 | Starts, locks the row, reads 50.0 | |
+| 18:56:38 | Holds the lock | Starts, requests the same row, waits |
+| 18:56:57 | Adds 10, commits | Gets the lock in the same second, reads 60.0 (not the stale 50.0), adds 5 |
+| | | Final value 65.0 = 50 + 10 + 5 |
+
+B waited 19 seconds and was released the moment A's transaction ended, which shows the row lock serialising the two managers.
+
+A first attempt is worth noting: when B was started after A had already committed, B got the row at once and no wait occurred. The lock only matters while both transactions overlap, which is exactly the situation a lost update needs.
 
 ### 5.2 The scripted scenarios
 
-**Scenario 3, lost update.** Without a lock the total is 110.0 (B's +5 is overwritten by A); with `FOR UPDATE` it is 115.0:
+`run_all.sh` runs all five scenarios and saves their logs:
+
+![run_all.sh, first part](screenshots/07a-run-all-start.png)
+
+![run_all.sh, last part](screenshots/07b-run-all-end.png)
+
+**Scenario 3, lost update.** Without a lock both managers read 100.0 and the total is 110.0 (B's +5 is overwritten by A); with `FOR UPDATE`, B waits, reads 110.0 and the total is 115.0:
 
 ![Lost update and its fix](screenshots/03-lost-update-script.png)
 
-**Scenario 4, Part 1, non-repeatable read.** Under READ COMMITTED the report reads 52 and then 68 compliant controls inside one transaction; under REPEATABLE READ it reads 52 both times:
+**Scenario 4, Part 1, non-repeatable read.** Under READ COMMITTED the report reads 52 and then 68 compliant controls inside one transaction; under REPEATABLE READ it reads 52 both times. Part 2a is also visible: under REPEATABLE READ both managers remove an analyst and 0 remain:
 
 ![Non-repeatable read under READ COMMITTED vs REPEATABLE READ](screenshots/04-isolation-non-repeatable-read.png)
 
-**Scenario 4, Part 2, write skew.** Under REPEATABLE READ both managers remove an analyst and 0 remain. Under SERIALIZABLE, PostgreSQL cancels Manager B with SQLSTATE 40001 ("could not serialize access") and 1 analyst remains:
+**Scenario 4, Part 2, write skew.** Under SERIALIZABLE, PostgreSQL cancels Manager B with SQLSTATE 40001 ("could not serialize access due to read/write dependencies") and 1 analyst remains:
 
 ![Write skew prevented by SERIALIZABLE](screenshots/05-serializable-write-skew.png)
 
-**Scenario 5, deadlock.** Session A is chosen as the deadlock victim and rolled back; session B completes:
+**Scenario 5, deadlock.** A and B lock findings 43208 and 43789 in opposite order. PostgreSQL detects the cycle about one second later, chooses session A as the victim and rolls it back; session B completes:
 
 ![Deadlock detected and resolved](screenshots/06-deadlock.png)
 
 ## 6. Evidence checklist
 
-- [x] `output/01` to `output/05` logs committed (test run)
-- [x] Two-terminal screenshot of the lock wait ([section 5.1](#51-two-terminals-a-row-lock-in-action))
+- [x] `output/01` to `output/05` logs committed (my Codespaces run)
+- [x] Two-terminal screenshots of the lock wait, during and after ([section 5.1](#51-two-terminals-a-row-lock-in-action))
 - [x] Screenshot of the SERIALIZABLE error from Scenario 4 ([screenshot](screenshots/05-serializable-write-skew.png))
 - [x] Screenshot of the deadlock error from Scenario 5 ([screenshot](screenshots/06-deadlock.png))
-- [ ] Re-run the two-terminal demo yourself, in two real terminal windows, and replace the test-run captures with your own
+- [x] Run myself in two real terminals (15 November 2026)
