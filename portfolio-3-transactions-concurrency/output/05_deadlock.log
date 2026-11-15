@@ -1,18 +1,18 @@
 Findings used: 43208 and 43789
 
-21:11:56.885 [A] locked finding 43208
-21:11:57.179 [B] locked finding 43789
-21:11:57.889 [A] now requesting finding 43789 ...
-21:11:58.183 [B] now requesting finding 43208 ...
+19:04:03.372 [A] locked finding 43208
+19:04:03.672 [B] locked finding 43789
+19:04:04.375 [A] now requesting finding 43789 ...
+19:04:04.675 [B] now requesting finding 43208 ...
 ERROR:  deadlock detected
-DETAIL:  Process 2199 waits for ShareLock on transaction 988; blocked by process 2204.
-Process 2204 waits for ShareLock on transaction 987; blocked by process 2199.
+DETAIL:  Process 395 waits for ShareLock on transaction 904; blocked by process 396.
+Process 396 waits for ShareLock on transaction 903; blocked by process 395.
 HINT:  See server log for query details.
 CONTEXT:  while locking tuple (679,3) in relation "finding"
-21:11:58.893 [A] chosen as deadlock victim, its transaction is rolled back
-21:11:58.893 [B] got finding 43208
-21:11:58.895 [A] finished
-21:11:58.898 [B] finished
+19:04:05.378 [A] chosen as deadlock victim, its transaction is rolled back
+19:04:05.378 [B] got finding 43208
+19:04:05.380 [A] finished
+19:04:05.381 [B] finished
 
 Result (only the surviving transaction's change is kept):
 43208 in_progress

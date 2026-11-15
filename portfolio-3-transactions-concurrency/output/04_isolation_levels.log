@@ -1,36 +1,36 @@
 Engagement used for Part 1: 1
 
 === Part 1a: READ COMMITTED ===
-21:11:48.669 [Report] first read: 52 compliant controls
-21:11:49.379 [Analyst] upgraded all partial ratings to compliant and committed
-21:11:50.675 [Report] second read, same transaction: 68 compliant controls
+19:03:54.805 [Report] first read: 52 compliant controls
+19:03:55.509 [Analyst] upgraded all partial ratings to compliant and committed
+19:03:56.810 [Report] second read, same transaction: 68 compliant controls
 
 === Part 1b: REPEATABLE READ ===
-21:11:50.734 [Report] first read: 52 compliant controls
-21:11:51.436 [Analyst] upgraded all partial ratings to compliant and committed
-21:11:52.740 [Report] second read, same transaction: 52 compliant controls
+19:03:56.917 [Report] first read: 52 compliant controls
+19:03:57.608 [Analyst] upgraded all partial ratings to compliant and committed
+19:03:58.922 [Report] second read, same transaction: 52 compliant controls
 
 Engagement used for Part 2: 1 (analysts 18 and 19)
 
 === Part 2a: REPEATABLE READ (write skew is possible) ===
     Analysts before: 2
-21:11:52.968 [Manager A] sees 2 analysts, safe to remove one: t
-21:11:53.285 [Manager B] sees 2 analysts, safe to remove one: t
-21:11:54.473 [Manager A] removed consultant 18
-21:11:54.476 [Manager A] transaction ended
-21:11:54.790 [Manager B] removed consultant 19
-21:11:54.793 [Manager B] transaction ended
+19:03:59.311 [Manager A] sees 2 analysts, safe to remove one: t
+19:03:59.609 [Manager B] sees 2 analysts, safe to remove one: t
+19:04:00.816 [Manager A] removed consultant 18
+19:04:00.819 [Manager A] transaction ended
+19:04:01.113 [Manager B] removed consultant 19
+19:04:01.116 [Manager B] transaction ended
     Analysts after: 0  (the rule requires at least 1)
 
 === Part 2b: SERIALIZABLE (write skew is prevented) ===
     Analysts before: 2
-21:11:54.910 [Manager A] sees 2 analysts, safe to remove one: t
-21:11:55.214 [Manager B] sees 2 analysts, safe to remove one: t
-21:11:56.414 [Manager A] removed consultant 18
-21:11:56.417 [Manager A] transaction ended
+19:04:01.286 [Manager A] sees 2 analysts, safe to remove one: t
+19:04:01.593 [Manager B] sees 2 analysts, safe to remove one: t
+19:04:02.790 [Manager A] removed consultant 18
+19:04:02.793 [Manager A] transaction ended
 ERROR:  could not serialize access due to read/write dependencies among transactions
 DETAIL:  Reason code: Canceled on identification as a pivot, during write.
 HINT:  The transaction might succeed if retried.
-21:11:56.719 [Manager B] DELETE failed: serialisation failure, transaction rolled back
-21:11:56.721 [Manager B] transaction ended
+19:04:03.097 [Manager B] DELETE failed: serialisation failure, transaction rolled back
+19:04:03.099 [Manager B] transaction ended
     Analysts after: 1  (the rule requires at least 1)

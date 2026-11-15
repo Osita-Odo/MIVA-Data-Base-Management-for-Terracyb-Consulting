@@ -16,18 +16,18 @@ UPDATE 1
 >>> Inside the transaction, before COMMIT (this session sees the change):
  finding_id | status |  fixed_on  
 ------------+--------+------------
-      43252 | fixed  | 2026-11-14
+      43252 | fixed  | 2026-11-15
 (1 row)
 
 COMMIT
 >>> After COMMIT: change is durable and audited
  finding_id | status |  found_on  |  fixed_on  
 ------------+--------+------------+------------
-      43252 | fixed  | 2026-01-01 | 2026-11-14
+      43252 | fixed  | 2026-01-01 | 2026-11-15
 (1 row)
 
  log_id | action | old_status | new_status | changed_by |          changed_at           
 --------+--------+------------+------------+------------+-------------------------------
-      1 | UPDATE | open       | fixed      | postgres   | 2026-11-14 21:11:44.159541+01
+      1 | UPDATE | open       | fixed      | postgres   | 2026-11-15 19:03:50.105395+00
 (1 row)
 

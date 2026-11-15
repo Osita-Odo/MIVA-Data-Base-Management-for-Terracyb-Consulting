@@ -2,22 +2,22 @@ Target row: engagement 1, consultant 6
 
 === Run 1: no lock (lost update) ===
     Start: hours_allocated = 100
-21:11:44.341 [A] read 100.0, now thinking for 2 seconds
-21:11:44.844 [B] reading ...
-21:11:44.847 [B] read 100.0
-21:11:44.849 [B] wrote 100.0 + 5
-21:11:44.852 [B] committed
-21:11:46.347 [A] wrote 100.0 + 10
-21:11:46.351 [A] committed
+19:03:50.374 [A] read 100.0, now thinking for 2 seconds
+19:03:50.878 [B] reading ...
+19:03:50.880 [B] read 100.0
+19:03:50.883 [B] wrote 100.0 + 5
+19:03:50.885 [B] committed
+19:03:52.379 [A] wrote 100.0 + 10
+19:03:52.383 [A] committed
     Final hours_allocated: 110.0  (expected 115.0)
 
 === Run 2: SELECT ... FOR UPDATE (B waits for A) ===
     Start: hours_allocated = 100
-21:11:46.435 [A] read 100.0, now thinking for 2 seconds
-21:11:46.939 [B] reading ...
-21:11:48.441 [A] wrote 100.0 + 10
-21:11:48.445 [A] committed
-21:11:48.445 [B] read 110.0
-21:11:48.449 [B] wrote 110.0 + 5
-21:11:48.452 [B] committed
+19:03:52.519 [A] read 100.0, now thinking for 2 seconds
+19:03:53.015 [B] reading ...
+19:03:54.523 [A] wrote 100.0 + 10
+19:03:54.527 [B] read 110.0
+19:03:54.528 [A] committed
+19:03:54.532 [B] wrote 110.0 + 5
+19:03:54.536 [B] committed
     Final hours_allocated: 115.0  (expected 115.0)
