@@ -1,0 +1,310 @@
+
+=== Q1  Evidence for engagement 1, control ISO27001:A.8.8 (projection) ===
+{
+  _id: 'EV-2026-01839',
+  type: 'vuln_scan',
+  collected_at: ISODate('2026-08-04T00:00:00.000Z'),
+  scanner: {
+    name: 'Nessus'
+  }
+}
+{
+  _id: 'EV-2026-00001',
+  type: 'vuln_scan',
+  collected_at: ISODate('2026-03-02T09:14:00.000Z'),
+  scanner: {
+    name: 'OpenVAS'
+  }
+}
+{
+  _id: 'EV-2026-00024',
+  type: 'vuln_scan',
+  collected_at: ISODate('2026-02-23T00:00:00.000Z'),
+  scanner: {
+    name: 'OpenVAS'
+  }
+}
+{
+  _id: 'EV-2026-01900',
+  type: 'vuln_scan',
+  collected_at: ISODate('2026-02-17T00:00:00.000Z'),
+  scanner: {
+    name: 'Nmap NSE'
+  }
+}
+{
+  _id: 'EV-2026-00386',
+  type: 'vuln_scan',
+  collected_at: ISODate('2025-10-07T00:00:00.000Z'),
+  scanner: {
+    name: 'Nmap NSE'
+  }
+}
+
+=== Q2  Scans with an OPEN result on port 3389 scoring 8 or more ($elemMatch) ===
+Matching documents: 1200
+
+=== Q3  Top 10 hosts by number of open high or critical results (aggregation) ===
+{
+  _id: {
+    client: 7,
+    host: 'rivers-17-010'
+  },
+  open_high_or_critical: 51,
+  max_cvss: 10,
+  cves: [
+    'CVE-2021-34527',
+    'CVE-2021-44228',
+    'CVE-2023-4966',
+    'CVE-2024-3400'
+  ]
+}
+{
+  _id: {
+    client: 5,
+    host: 'deltam-11-011'
+  },
+  open_high_or_critical: 50,
+  max_cvss: 10,
+  cves: [
+    'CVE-2023-4966',
+    'CVE-2021-44228',
+    'CVE-2021-34527',
+    'CVE-2024-3400'
+  ]
+}
+{
+  _id: {
+    client: 19,
+    host: 'meridi-46-012'
+  },
+  open_high_or_critical: 48,
+  max_cvss: 10,
+  cves: [
+    'CVE-2023-4966',
+    'CVE-2021-44228',
+    'CVE-2021-34527',
+    'CVE-2024-3400'
+  ]
+}
+{
+  _id: {
+    client: 3,
+    host: 'benuev-7-005'
+  },
+  open_high_or_critical: 47,
+  max_cvss: 10,
+  cves: [
+    'CVE-2021-34527',
+    'CVE-2021-44228',
+    'CVE-2023-4966',
+    'CVE-2024-3400'
+  ]
+}
+{
+  _id: {
+    client: 9,
+    host: 'oyohea-22-002'
+  },
+  open_high_or_critical: 46,
+  max_cvss: 10,
+  cves: [
+    'CVE-2021-44228',
+    'CVE-2023-4966',
+    'CVE-2024-3400',
+    'CVE-2021-34527'
+  ]
+}
+{
+  _id: {
+    client: 11,
+    host: 'greenf-26-004'
+  },
+  open_high_or_critical: 45,
+  max_cvss: 10,
+  cves: [
+    'CVE-2023-4966',
+    'CVE-2021-44228',
+    'CVE-2021-34527',
+    'CVE-2024-3400'
+  ]
+}
+{
+  _id: {
+    client: 11,
+    host: 'greenf-26-006'
+  },
+  open_high_or_critical: 45,
+  max_cvss: 10,
+  cves: [
+    'CVE-2021-44228',
+    'CVE-2021-34527',
+    'CVE-2024-3400',
+    'CVE-2023-4966'
+  ]
+}
+{
+  _id: {
+    client: 5,
+    host: 'deltam-12-010'
+  },
+  open_high_or_critical: 45,
+  max_cvss: 10,
+  cves: [
+    'CVE-2021-34527',
+    'CVE-2024-3400',
+    'CVE-2023-4966',
+    'CVE-2021-44228'
+  ]
+}
+{
+  _id: {
+    client: 15,
+    host: 'novare-36-001'
+  },
+  open_high_or_critical: 45,
+  max_cvss: 10,
+  cves: [
+    'CVE-2021-34527',
+    'CVE-2024-3400',
+    'CVE-2023-4966',
+    'CVE-2021-44228'
+  ]
+}
+{
+  _id: {
+    client: 3,
+    host: 'benuev-7-006'
+  },
+  open_high_or_critical: 44,
+  max_cvss: 10,
+  cves: [
+    'CVE-2021-44228',
+    'CVE-2021-34527',
+    'CVE-2023-4966',
+    'CVE-2024-3400'
+  ]
+}
+
+=== Q4  Evidence coverage per control for engagement 1 (group by control and type) ===
+{
+  _id: 'ISO27001:A.5.1',
+  items: 1,
+  types: [
+    'policy_document'
+  ]
+}
+{
+  _id: 'ISO27001:A.5.17',
+  items: 1,
+  types: [
+    'screenshot'
+  ]
+}
+{
+  _id: 'ISO27001:A.6.3',
+  items: 1,
+  types: [
+    'interview_note'
+  ]
+}
+{
+  _id: 'ISO27001:A.8.16',
+  items: 11,
+  types: [
+    'vuln_scan'
+  ]
+}
+{
+  _id: 'ISO27001:A.8.20',
+  items: 17,
+  types: [
+    'config_snapshot',
+    'vuln_scan'
+  ]
+}
+{
+  _id: 'ISO27001:A.8.21',
+  items: 18,
+  types: [
+    'vuln_scan'
+  ]
+}
+{
+  _id: 'ISO27001:A.8.8',
+  items: 14,
+  types: [
+    'vuln_scan'
+  ]
+}
+{
+  _id: 'ISO27001:A.8.9',
+  items: 11,
+  types: [
+    'vuln_scan'
+  ]
+}
+{
+  _id: 'NDPA:S.28',
+  items: 1,
+  types: [
+    'policy_document'
+  ]
+}
+
+=== Q5  Mark every Log4Shell result in engagement 1 as fixed (arrayFilters) ===
+{
+  matched: 55,
+  modified: 55
+}
+
+=== Indexes: explain('executionStats') BEFORE ===
+{
+  query: 'engagement + control',
+  stages: 'COLLSCAN',
+  docsExamined: 3006,
+  keysExamined: 0,
+  returned: 21,
+  timeMs: 1
+}
+{
+  query: 'results.cve (nested)',
+  stages: 'COLLSCAN',
+  docsExamined: 3006,
+  keysExamined: 0,
+  returned: 2387,
+  timeMs: 7
+}
+
+=== Indexes: explain('executionStats') AFTER ===
+{
+  query: 'engagement + control',
+  stages: 'FETCH <- IXSCAN',
+  docsExamined: 21,
+  keysExamined: 21,
+  returned: 21,
+  timeMs: 0
+}
+{
+  query: 'results.cve (nested)',
+  stages: 'FETCH <- IXSCAN',
+  docsExamined: 2387,
+  keysExamined: 2387,
+  returned: 2387,
+  timeMs: 4
+}
+
+=== Text search with the text index: 'security policy' ===
+{
+  _id: 'EV-2026-00002',
+  type: 'policy_document',
+  document: {
+    title: 'Information Security Policy'
+  }
+}
+
+=== Index list ===
+_id_  {"_id":1}
+idx_engagement_control  {"engagement_id":1,"control_ref":1}
+idx_results_cve  {"results.cve":1}
+idx_text  {"_fts":"text","_ftsx":1}

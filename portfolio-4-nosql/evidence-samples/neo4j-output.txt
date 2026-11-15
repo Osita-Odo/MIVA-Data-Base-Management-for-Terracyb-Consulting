@@ -1,0 +1,21 @@
+entry_point, exploited_with, path, hops, target
+"lagoon-1-003", "PAN-OS GlobalProtect injection", ["lagoon-1-003", "lagoon-1-002", "lagoon-1-001"], 2, "lagoon-1-001"
+"lagoon-1-007", "BlueKeep", ["lagoon-1-007", "lagoon-1-002", "lagoon-1-001"], 2, "lagoon-1-001"
+"lagoon-1-010", "Log4Shell", ["lagoon-1-010", "lagoon-1-009", "lagoon-2-014", "lagoon-2-012"], 3, "lagoon-2-012"
+"lagoon-1-003", "PAN-OS GlobalProtect injection", ["lagoon-1-003", "lagoon-1-002", "lagoon-1-009", "lagoon-2-014", "lagoon-2-012"], 4, "lagoon-2-012"
+"lagoon-1-007", "BlueKeep", ["lagoon-1-007", "lagoon-1-002", "lagoon-1-009", "lagoon-2-014", "lagoon-2-012"], 4, "lagoon-2-012"
+"lagoon-1-010", "Log4Shell", ["lagoon-1-010", "lagoon-1-009", "lagoon-2-014", "lagoon-2-006", "lagoon-2-009"], 4, "lagoon-2-009"
+"lagoon-1-010", "Log4Shell", ["lagoon-1-010", "lagoon-1-009", "lagoon-2-014", "lagoon-2-006", "lagoon-2-016"], 4, "lagoon-2-016"
+entry_point, shortest_path, hops
+"lagoon-1-010", ["lagoon-1-010", "lagoon-1-009", "lagoon-2-014", "lagoon-2-006", "lagoon-2-009"], 4
+"lagoon-1-003", ["lagoon-1-003", "lagoon-1-002", "lagoon-1-009", "lagoon-2-014", "lagoon-2-006", "lagoon-2-009"], 5
+"lagoon-1-007", ["lagoon-1-007", "lagoon-1-002", "lagoon-1-009", "lagoon-2-014", "lagoon-2-006", "lagoon-2-009"], 5
+entry_point, cve, reachable_assets
+"lagoon-1-003", "CVE-2024-3400", 5
+"lagoon-1-007", "CVE-2019-0708", 5
+"lagoon-1-010", "CVE-2021-44228", 4
+choke_point, type, paths_through
+"lagoon-1-009", "server", 5
+"lagoon-2-014", "network", 5
+"lagoon-1-002", "network", 4
+"lagoon-2-006", "network", 2
