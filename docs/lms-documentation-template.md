@@ -6,7 +6,8 @@ Copy this into Word or Google Docs, fill every _italic_ placeholder with your ow
 
 ## MIT 8103 Advanced Database Systems: Portfolio Documentation
 
-**Student:** Osita Kingsley Odo
+**Student:** Osita Kingsley Odo  
+**Student ID:** 301923188
 **GitHub repository:** _https://github.com/<your-username>/terracyb-advanced-database-portfolio_ (private; assessor added as collaborator on _date_)
 
 ### 1. Selected organisation
