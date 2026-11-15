@@ -256,24 +256,40 @@ All names, organisations, hostnames and IP addresses in the seed data are fictit
 
 ## 7. Results and screenshots
 
-The screenshots below were captured from a test run on 14 November 2026 (PostgreSQL 16.15). Each one shows the command that was run and its unedited output.
+The screenshots below are screen captures from my own run in GitHub Codespaces on 15 November 2026 (PostgreSQL 16 in Docker, `psql` 16.15). Each one shows the command that was run and its unedited output.
+
+**Database created and schema built.** The `NOTICE` is expected: `schema.sql` starts with `DROP SCHEMA IF EXISTS ead CASCADE` so it can be re-run safely, and on the first run there is nothing to drop:
+
+![createdb and schema.sql](screenshots/00-createdb-and-schema.png)
 
 **The 18 tables exist in schema `ead`:**
 
 ![psql listing of the 18 EAD tables](screenshots/01-tables.png)
 
-**Seed data loaded, with the row count of every table:**
+**Seed data loaded, with the row count of every table.** The counts are identical on every run because `seed.sql` fixes its random generator with `setseed(0.42)`:
 
 ![Row counts printed by seed.sql](screenshots/02-seed-row-counts.png)
 
-**All 12 constraint tests are rejected.** Each test breaks exactly one rule, and the error names the constraint or trigger that stopped it. No test row was stored:
+**All 12 constraint tests are rejected.** Each test breaks exactly one rule, and the error names the constraint or trigger that stopped it. No test row was stored. Tests T1 to T9:
 
-![Output of test_constraints.sql showing 12 errors](screenshots/03-constraint-tests.png)
+![Output of test_constraints.sql, tests T1 to T9](screenshots/03a-constraint-tests-t1-t9.png)
+
+Tests T5 to T12, ending with the summary line:
+
+![Output of test_constraints.sql, tests T5 to T12](screenshots/03b-constraint-tests-t5-t12.png)
+
+| Tests | Rule type | What was rejected |
+| --- | --- | --- |
+| T1, T2 | Primary key, unique | Duplicate service ID; duplicate consultant email |
+| T3, T12 | Foreign key | Engagement for client 9999; client in state code "XX" |
+| T4 to T8 | CHECK | CVSS 11.5; end date before start date; "fixed" without a date; invalid sector; malformed CVE |
+| T9, T10 | Trigger | Asset belonging to another client; payment of NGN 5,250,001 exceeding the invoice |
+| T11 | Generated column | Writing `severity` directly |
 
 ## 8. Evidence checklist
 
 - [x] `erd.png` generated from `erd.dbml` ([make_erd.py](make_erd.py))
 - [x] Screenshot of `\dt ead.*` listing the 18 tables ([screenshots/01-tables.png](screenshots/01-tables.png))
 - [x] Screenshot of the seed row counts ([screenshots/02-seed-row-counts.png](screenshots/02-seed-row-counts.png))
-- [x] `constraint-test-output.txt` showing the 12 expected errors ([screenshot](screenshots/03-constraint-tests.png))
-- [ ] Re-run on your own machine and replace the test-run captures with your own
+- [x] `constraint-test-output.txt` showing the 12 expected errors (screenshots [03a](screenshots/03a-constraint-tests-t1-t9.png) and [03b](screenshots/03b-constraint-tests-t5-t12.png))
+- [x] Run on my own codespace and captured as screenshots (15 November 2026)
