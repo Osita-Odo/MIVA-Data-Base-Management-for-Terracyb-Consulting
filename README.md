@@ -98,13 +98,15 @@ MIVA-Data-Base-Management-for-Terracyb-Consulting/
 ├── portfolio-3-transactions-concurrency/ 5 scenarios, two-terminal lock demo, logs, screenshots
 ├── portfolio-4-nosql/                    MongoDB and Neo4j scripts, Docker setup
 ├── portfolio-5-distributed-cloud/        7-node Docker setup, sharding and failover, logs, screenshots
-├── docs/                                 explainer (Word), design decisions, site selection, LMS template
+├── docs/                                 explainer, LMS document and screenshot evidence (Word), design decisions, site selection
 └── README.md                             this file
 ```
 
 | Folder or file | Contents |
 | --- | --- |
 | [docs/TerraCyb_Database_Project_Explainer.docx](docs/TerraCyb_Database_Project_Explainer.docx) | Plain-language explainer of the whole project (Word) |
+| [docs/TerraCyb_Screenshot_Evidence.docx](docs/TerraCyb_Screenshot_Evidence.docx) | All 39 screenshots, grouped by portfolio, each with a short explanation (Word) |
+| [docs/TerraCyb_LMS_Document_Draft.docx](docs/TerraCyb_LMS_Document_Draft.docx) | The 2-3 page LMS document (Word) |
 | [docs/design-decisions.md](docs/design-decisions.md) | Register of 71 decisions (D01 to D71), each with alternatives considered and the reason |
 | [docs/site-selection.md](docs/site-selection.md) | Evidence and scoring behind Lagos, Abuja and Port Harcourt |
 | [docs/lms-documentation-template.md](docs/lms-documentation-template.md) | Template for the 2-3 page LMS document |
