@@ -139,7 +139,7 @@ Screen captures from my own run in GitHub Codespaces on 15 November 2026.
 - [x] `results/query-results/` committed (my Codespaces run)
 - [x] `plans/before/` and `plans/after/` committed (my Codespaces run)
 - [x] `results/timings.md` committed and copied into section 5
-- [x] Screenshot of one before/after plan pair ([Q1](screenshots/01-q1-plan-before-after.png))
+- [x] Screenshot of one before/after plan pair (Q1)
 - [x] `plans/join-strategies.txt` committed
 - [x] Run in my own codespace; section 5 updated with my timings (15 November 2026)
 

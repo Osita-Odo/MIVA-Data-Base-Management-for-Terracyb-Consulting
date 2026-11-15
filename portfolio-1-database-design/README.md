@@ -297,7 +297,7 @@ Tests T5 to T12, ending with the summary line:
 ## 8. Evidence checklist
 
 - [x] `erd.png` generated from `erd.dbml` ([make_erd.py](make_erd.py))
-- [x] Screenshot of `\dt ead.*` listing the 18 tables ([screenshots/01-tables.png](screenshots/01-tables.png))
-- [x] Screenshot of the seed row counts ([screenshots/02-seed-row-counts.png](screenshots/02-seed-row-counts.png))
-- [x] `constraint-test-output.txt` showing the 12 expected errors (screenshots [03a](screenshots/03a-constraint-tests-t1-t9.png) and [03b](screenshots/03b-constraint-tests-t5-t12.png))
+- [x] Screenshot of `\dt ead.*` listing the 18 tables (01-tables.png)
+- [x] Screenshot of the seed row counts (02-seed-row-counts.png)
+- [x] `constraint-test-output.txt` showing the 12 expected errors (screenshots 03a and 03b)
 - [x] Run on my own codespace and captured as screenshots (15 November 2026); output committed and pushed (screenshot 04)

@@ -249,7 +249,7 @@ The "seconds behind the primary" figures in step 4 are calculated from the opera
 
 ## 7. Evidence checklist
 
-- [x] `docker compose ps` with all containers running ([screenshot](screenshots/01-compose-ps-healthy.png))
+- [x] `docker compose ps` with all containers running (shown above)
 - [x] Sharding log [`output/geo_sharding.log`](output/geo_sharding.log) and screenshots
 - [x] Replication and failover log [`output/replication_failover.log`](output/replication_failover.log), with the read-only error and the successful write after promotion
 - [x] [`output/mongo_rs_before_failure.log`](output/mongo_rs_before_failure.log) and [`output/mongo_rs_after_failure.log`](output/mongo_rs_after_failure.log), with screenshots

@@ -205,6 +205,6 @@ A first attempt is worth noting: when B was started after A had already committe
 
 - [x] `output/01` to `output/05` logs committed (my Codespaces run)
 - [x] Two-terminal screenshots of the lock wait, during and after ([section 5.1](#51-two-terminals-a-row-lock-in-action))
-- [x] Screenshot of the SERIALIZABLE error from Scenario 4 ([screenshot](screenshots/05-serializable-write-skew.png))
-- [x] Screenshot of the deadlock error from Scenario 5 ([screenshot](screenshots/06-deadlock.png))
+- [x] Screenshot of the SERIALIZABLE error from Scenario 4 (shown above)
+- [x] Screenshot of the deadlock error from Scenario 5 (shown above)
 - [x] Run myself in two real terminals (15 November 2026)
