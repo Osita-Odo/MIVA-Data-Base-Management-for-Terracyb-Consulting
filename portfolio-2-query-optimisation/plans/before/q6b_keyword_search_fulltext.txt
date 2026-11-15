@@ -1,20 +1,20 @@
                                                               QUERY PLAN                                                               
 ---------------------------------------------------------------------------------------------------------------------------------------
- Finalize Aggregate  (cost=12255.84..12255.85 rows=1 width=8) (actual time=120.484..122.937 rows=1 loops=1)
+ Finalize Aggregate  (cost=12255.84..12255.85 rows=1 width=8) (actual time=180.841..183.125 rows=1 loops=1)
    Buffers: shared hit=1153
-   ->  Gather  (cost=12255.72..12255.83 rows=1 width=8) (actual time=120.427..122.928 rows=2 loops=1)
+   ->  Gather  (cost=12255.72..12255.83 rows=1 width=8) (actual time=180.691..183.120 rows=2 loops=1)
          Workers Planned: 1
          Workers Launched: 1
          Buffers: shared hit=1153
-         ->  Partial Aggregate  (cost=11255.72..11255.73 rows=1 width=8) (actual time=118.859..118.861 rows=1 loops=2)
+         ->  Partial Aggregate  (cost=11255.72..11255.73 rows=1 width=8) (actual time=178.762..178.762 rows=1 loops=2)
                Buffers: shared hit=1153
-               ->  Parallel Seq Scan on finding  (cost=0.00..11255.24 rows=195 width=0) (actual time=0.194..118.703 rows=1695 loops=2)
+               ->  Parallel Seq Scan on finding  (cost=0.00..11255.24 rows=195 width=0) (actual time=0.351..178.607 rows=1695 loops=2)
                      Filter: (to_tsvector('english'::regconfig, title) @@ '''password'''::tsquery)
                      Rows Removed by Filter: 31425
                      Buffers: shared hit=1153
  Planning:
-   Buffers: shared hit=105
- Planning Time: 0.931 ms
- Execution Time: 123.013 ms
+   Buffers: shared hit=104
+ Planning Time: 1.166 ms
+ Execution Time: 183.192 ms
 (16 rows)
 

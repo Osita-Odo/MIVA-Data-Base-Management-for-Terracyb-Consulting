@@ -1,45 +1,45 @@
                                                                       QUERY PLAN                                                                       
 -------------------------------------------------------------------------------------------------------------------------------------------------------
- Sort  (cost=1199.85..1201.93 rows=834 width=55) (actual time=3.065..3.101 rows=784 loops=1)
+ Sort  (cost=1194.81..1196.80 rows=795 width=55) (actual time=3.173..3.211 rows=784 loops=1)
    Sort Key: f.found_on
    Sort Method: quicksort  Memory: 90kB
    Buffers: shared hit=1011
-   ->  Hash Join  (cost=73.85..1159.38 rows=834 width=55) (actual time=0.560..2.875 rows=784 loops=1)
+   ->  Hash Join  (cost=73.00..1156.51 rows=795 width=55) (actual time=0.630..2.962 rows=784 loops=1)
          Hash Cond: (s.client_id = c.client_id)
          Buffers: shared hit=1008
-         ->  Hash Join  (cost=72.40..1155.27 rows=834 width=35) (actual time=0.485..2.712 rows=784 loops=1)
+         ->  Hash Join  (cost=71.55..1152.53 rows=795 width=35) (actual time=0.603..2.790 rows=784 loops=1)
                Hash Cond: (a.site_id = s.site_id)
                Buffers: shared hit=1007
-               ->  Hash Join  (cost=70.27..1150.77 rows=834 width=35) (actual time=0.464..2.599 rows=784 loops=1)
+               ->  Hash Join  (cost=69.42..1148.14 rows=795 width=35) (actual time=0.569..2.628 rows=784 loops=1)
                      Hash Cond: (f.asset_id = a.asset_id)
                      Buffers: shared hit=1006
-                     ->  Bitmap Heap Scan on finding f  (cost=42.15..1120.45 rows=834 width=22) (actual time=0.275..2.277 rows=784 loops=1)
+                     ->  Bitmap Heap Scan on finding f  (cost=41.30..1117.92 rows=795 width=22) (actual time=0.343..2.234 rows=784 loops=1)
                            Recheck Cond: (cve_id = 'CVE-2021-44228'::text)
                            Filter: (status <> 'fixed'::text)
                            Rows Removed by Filter: 2523
                            Heap Blocks: exact=993
                            Buffers: shared hit=997
-                           ->  Bitmap Index Scan on idx_finding_cve  (cost=0.00..41.94 rows=3420 width=0) (actual time=0.176..0.176 rows=3307 loops=1)
+                           ->  Bitmap Index Scan on idx_finding_cve  (cost=0.00..41.10 rows=3308 width=0) (actual time=0.226..0.227 rows=3307 loops=1)
                                  Index Cond: (cve_id = 'CVE-2021-44228'::text)
                                  Buffers: shared hit=4
-                     ->  Hash  (cost=17.50..17.50 rows=850 width=21) (actual time=0.178..0.179 rows=850 loops=1)
+                     ->  Hash  (cost=17.50..17.50 rows=850 width=21) (actual time=0.210..0.211 rows=850 loops=1)
                            Buckets: 1024  Batches: 1  Memory Usage: 55kB
                            Buffers: shared hit=9
-                           ->  Seq Scan on asset a  (cost=0.00..17.50 rows=850 width=21) (actual time=0.002..0.064 rows=850 loops=1)
+                           ->  Seq Scan on asset a  (cost=0.00..17.50 rows=850 width=21) (actual time=0.003..0.084 rows=850 loops=1)
                                  Buffers: shared hit=9
-               ->  Hash  (cost=1.50..1.50 rows=50 width=8) (actual time=0.010..0.011 rows=50 loops=1)
+               ->  Hash  (cost=1.50..1.50 rows=50 width=8) (actual time=0.016..0.016 rows=50 loops=1)
                      Buckets: 1024  Batches: 1  Memory Usage: 10kB
                      Buffers: shared hit=1
-                     ->  Seq Scan on client_site s  (cost=0.00..1.50 rows=50 width=8) (actual time=0.002..0.005 rows=50 loops=1)
+                     ->  Seq Scan on client_site s  (cost=0.00..1.50 rows=50 width=8) (actual time=0.002..0.006 rows=50 loops=1)
                            Buffers: shared hit=1
-         ->  Hash  (cost=1.20..1.20 rows=20 width=28) (actual time=0.065..0.065 rows=20 loops=1)
+         ->  Hash  (cost=1.20..1.20 rows=20 width=28) (actual time=0.015..0.015 rows=20 loops=1)
                Buckets: 1024  Batches: 1  Memory Usage: 10kB
                Buffers: shared hit=1
-               ->  Seq Scan on client c  (cost=0.00..1.20 rows=20 width=28) (actual time=0.005..0.019 rows=20 loops=1)
+               ->  Seq Scan on client c  (cost=0.00..1.20 rows=20 width=28) (actual time=0.003..0.005 rows=20 loops=1)
                      Buffers: shared hit=1
  Planning:
-   Buffers: shared hit=496
- Planning Time: 1.465 ms
- Execution Time: 3.202 ms
+   Buffers: shared hit=493
+ Planning Time: 1.430 ms
+ Execution Time: 3.330 ms
 (41 rows)
 

@@ -1,61 +1,61 @@
                                                                      QUERY PLAN                                                                     
 ----------------------------------------------------------------------------------------------------------------------------------------------------
- GroupAggregate  (cost=2779.88..2993.81 rows=22 width=71) (actual time=11.347..14.024 rows=10 loops=1)
+ GroupAggregate  (cost=2775.26..2988.17 rows=22 width=71) (actual time=16.804..21.407 rows=10 loops=1)
    Group Key: o.office_code, st.geopolitical_zone
    Group Key: o.office_code
    Group Key: ()
    Buffers: shared hit=1049
-   ->  Sort  (cost=2779.88..2806.58 rows=10680 width=25) (actual time=10.697..11.104 rows=10661 loops=1)
+   ->  Sort  (cost=2775.26..2801.84 rows=10629 width=25) (actual time=15.784..16.268 rows=10661 loops=1)
          Sort Key: o.office_code, st.geopolitical_zone
          Sort Method: quicksort  Memory: 968kB
          Buffers: shared hit=1046
-         ->  Hash Join  (cost=35.22..2065.25 rows=10680 width=25) (actual time=0.242..8.485 rows=10661 loops=1)
+         ->  Hash Join  (cost=35.22..2064.41 rows=10629 width=25) (actual time=0.382..12.910 rows=10661 loops=1)
                Hash Cond: (a.site_id = s.site_id)
                Buffers: shared hit=1040
-               ->  Hash Join  (cost=28.12..1911.30 rows=10680 width=10) (actual time=0.148..7.160 rows=10661 loops=1)
+               ->  Hash Join  (cost=28.12..1911.17 rows=10629 width=10) (actual time=0.213..10.981 rows=10661 loops=1)
                      Hash Cond: (f.asset_id = a.asset_id)
                      Buffers: shared hit=1036
-                     ->  Seq Scan on finding f  (cost=0.00..1855.00 rows=10680 width=10) (actual time=0.004..5.644 rows=10661 loops=1)
+                     ->  Seq Scan on finding f  (cost=0.00..1855.00 rows=10629 width=10) (actual time=0.006..8.954 rows=10661 loops=1)
                            Filter: (status = ANY ('{open,in_progress}'::text[]))
                            Rows Removed by Filter: 55579
                            Buffers: shared hit=1027
-                     ->  Hash  (cost=17.50..17.50 rows=850 width=8) (actual time=0.132..0.133 rows=850 loops=1)
+                     ->  Hash  (cost=17.50..17.50 rows=850 width=8) (actual time=0.190..0.191 rows=850 loops=1)
                            Buckets: 1024  Batches: 1  Memory Usage: 42kB
                            Buffers: shared hit=9
-                           ->  Seq Scan on asset a  (cost=0.00..17.50 rows=850 width=8) (actual time=0.002..0.059 rows=850 loops=1)
+                           ->  Seq Scan on asset a  (cost=0.00..17.50 rows=850 width=8) (actual time=0.003..0.080 rows=850 loops=1)
                                  Buffers: shared hit=9
-               ->  Hash  (cost=6.47..6.47 rows=50 width=23) (actual time=0.086..0.089 rows=50 loops=1)
+               ->  Hash  (cost=6.47..6.47 rows=50 width=23) (actual time=0.157..0.159 rows=50 loops=1)
                      Buckets: 1024  Batches: 1  Memory Usage: 11kB
                      Buffers: shared hit=4
-                     ->  Hash Join  (cost=4.35..6.47 rows=50 width=23) (actual time=0.058..0.081 rows=50 loops=1)
+                     ->  Hash Join  (cost=4.35..6.47 rows=50 width=23) (actual time=0.115..0.145 rows=50 loops=1)
                            Hash Cond: (st.serving_office_id = o.office_id)
                            Buffers: shared hit=4
-                           ->  Hash Join  (cost=3.28..5.08 rows=50 width=23) (actual time=0.039..0.056 rows=50 loops=1)
+                           ->  Hash Join  (cost=3.28..5.08 rows=50 width=23) (actual time=0.093..0.115 rows=50 loops=1)
                                  Hash Cond: (c.state_code = st.state_code)
                                  Buffers: shared hit=3
-                                 ->  Hash Join  (cost=1.45..3.10 rows=50 width=11) (actual time=0.017..0.027 rows=50 loops=1)
+                                 ->  Hash Join  (cost=1.45..3.10 rows=50 width=11) (actual time=0.059..0.071 rows=50 loops=1)
                                        Hash Cond: (s.client_id = c.client_id)
                                        Buffers: shared hit=2
-                                       ->  Seq Scan on client_site s  (cost=0.00..1.50 rows=50 width=8) (actual time=0.001..0.004 rows=50 loops=1)
+                                       ->  Seq Scan on client_site s  (cost=0.00..1.50 rows=50 width=8) (actual time=0.002..0.005 rows=50 loops=1)
                                              Buffers: shared hit=1
-                                       ->  Hash  (cost=1.20..1.20 rows=20 width=7) (actual time=0.005..0.006 rows=20 loops=1)
+                                       ->  Hash  (cost=1.20..1.20 rows=20 width=7) (actual time=0.037..0.037 rows=20 loops=1)
                                              Buckets: 1024  Batches: 1  Memory Usage: 9kB
                                              Buffers: shared hit=1
-                                             ->  Seq Scan on client c  (cost=0.00..1.20 rows=20 width=7) (actual time=0.001..0.002 rows=20 loops=1)
+                                             ->  Seq Scan on client c  (cost=0.00..1.20 rows=20 width=7) (actual time=0.002..0.004 rows=20 loops=1)
                                                    Buffers: shared hit=1
-                                 ->  Hash  (cost=1.37..1.37 rows=37 width=18) (actual time=0.012..0.013 rows=37 loops=1)
+                                 ->  Hash  (cost=1.37..1.37 rows=37 width=18) (actual time=0.016..0.016 rows=37 loops=1)
                                        Buckets: 1024  Batches: 1  Memory Usage: 10kB
                                        Buffers: shared hit=1
-                                       ->  Seq Scan on state st  (cost=0.00..1.37 rows=37 width=18) (actual time=0.002..0.004 rows=37 loops=1)
+                                       ->  Seq Scan on state st  (cost=0.00..1.37 rows=37 width=18) (actual time=0.003..0.007 rows=37 loops=1)
                                              Buffers: shared hit=1
-                           ->  Hash  (cost=1.03..1.03 rows=3 width=8) (actual time=0.010..0.010 rows=3 loops=1)
+                           ->  Hash  (cost=1.03..1.03 rows=3 width=8) (actual time=0.007..0.008 rows=3 loops=1)
                                  Buckets: 1024  Batches: 1  Memory Usage: 9kB
                                  Buffers: shared hit=1
-                                 ->  Seq Scan on office o  (cost=0.00..1.03 rows=3 width=8) (actual time=0.004..0.004 rows=3 loops=1)
+                                 ->  Seq Scan on office o  (cost=0.00..1.03 rows=3 width=8) (actual time=0.003..0.004 rows=3 loops=1)
                                        Buffers: shared hit=1
  Planning:
    Buffers: shared hit=471
- Planning Time: 1.172 ms
- Execution Time: 14.119 ms
+ Planning Time: 1.597 ms
+ Execution Time: 21.614 ms
 (57 rows)
 

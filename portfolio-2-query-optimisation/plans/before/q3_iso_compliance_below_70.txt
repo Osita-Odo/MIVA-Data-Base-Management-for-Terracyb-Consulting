@@ -1,56 +1,56 @@
                                                                                                         QUERY PLAN                                                                                                        
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
- Sort  (cost=80.12..80.13 rows=7 width=78) (actual time=1.396..1.404 rows=13 loops=1)
+ Sort  (cost=80.12..80.13 rows=7 width=78) (actual time=1.367..1.371 rows=13 loops=1)
    Sort Key: (round(((100.0 * (iso.compliant)::numeric) / (iso.assessed)::numeric), 1))
    Sort Method: quicksort  Memory: 26kB
    Buffers: shared hit=26
-   ->  Hash Join  (cost=78.67..80.02 rows=7 width=78) (actual time=1.349..1.368 rows=13 loops=1)
+   ->  Hash Join  (cost=78.67..80.02 rows=7 width=78) (actual time=1.321..1.334 rows=13 loops=1)
          Hash Cond: (c.client_id = iso.client_id)
          Buffers: shared hit=23
-         ->  Seq Scan on client c  (cost=0.00..1.20 rows=20 width=34) (actual time=0.009..0.012 rows=20 loops=1)
+         ->  Seq Scan on client c  (cost=0.00..1.20 rows=20 width=34) (actual time=0.006..0.008 rows=20 loops=1)
                Buffers: shared hit=1
-         ->  Hash  (cost=78.58..78.58 rows=7 width=20) (actual time=1.319..1.325 rows=13 loops=1)
+         ->  Hash  (cost=78.58..78.58 rows=7 width=20) (actual time=1.300..1.302 rows=13 loops=1)
                Buckets: 1024  Batches: 1  Memory Usage: 9kB
                Buffers: shared hit=22
-               ->  Subquery Scan on iso  (cost=78.01..78.58 rows=7 width=20) (actual time=1.295..1.311 rows=13 loops=1)
+               ->  Subquery Scan on iso  (cost=78.01..78.58 rows=7 width=20) (actual time=1.278..1.290 rows=13 loops=1)
                      Buffers: shared hit=22
-                     ->  HashAggregate  (cost=78.01..78.51 rows=7 width=20) (actual time=1.294..1.308 rows=13 loops=1)
+                     ->  HashAggregate  (cost=78.01..78.51 rows=7 width=20) (actual time=1.278..1.288 rows=13 loops=1)
                            Group Key: e.client_id
                            Filter: (((100.0 * (count(*) FILTER (WHERE (ca.rating = 'compliant'::text)))::numeric) / (NULLIF(count(*) FILTER (WHERE (ca.rating <> 'not_applicable'::text)), 0))::numeric) < '70'::numeric)
                            Batches: 1  Memory Usage: 24kB
                            Rows Removed by Filter: 7
                            Buffers: shared hit=22
-                           ->  Hash Join  (cost=8.03..68.26 rows=780 width=14) (actual time=0.109..0.953 rows=1860 loops=1)
+                           ->  Hash Join  (cost=8.03..68.26 rows=780 width=14) (actual time=0.149..0.935 rows=1860 loops=1)
                                  Hash Cond: (ca.engagement_id = e.engagement_id)
                                  Buffers: shared hit=22
-                                 ->  Hash Join  (cost=5.68..63.72 rows=780 width=14) (actual time=0.074..0.663 rows=1860 loops=1)
+                                 ->  Hash Join  (cost=5.68..63.72 rows=780 width=14) (actual time=0.088..0.605 rows=1860 loops=1)
                                        Hash Cond: (ca.control_id = ct.control_id)
                                        Buffers: shared hit=21
-                                       ->  Seq Scan on control_assessment ca  (cost=0.00..41.40 rows=2340 width=18) (actual time=0.003..0.184 rows=2340 loops=1)
+                                       ->  Seq Scan on control_assessment ca  (cost=0.00..41.40 rows=2340 width=18) (actual time=0.006..0.141 rows=2340 loops=1)
                                              Buffers: shared hit=18
-                                       ->  Hash  (cost=5.14..5.14 rows=43 width=4) (actual time=0.060..0.063 rows=93 loops=1)
+                                       ->  Hash  (cost=5.14..5.14 rows=43 width=4) (actual time=0.064..0.065 rows=93 loops=1)
                                              Buckets: 1024  Batches: 1  Memory Usage: 12kB
                                              Buffers: shared hit=3
                                              ->  Hash Join  (cost=1.05..5.14 rows=43 width=4) (actual time=0.027..0.052 rows=93 loops=1)
                                                    Hash Cond: (ct.framework_id = fw.framework_id)
                                                    Buffers: shared hit=3
-                                                   ->  Seq Scan on control ct  (cost=0.00..3.28 rows=128 width=8) (actual time=0.005..0.013 rows=128 loops=1)
+                                                   ->  Seq Scan on control ct  (cost=0.00..3.28 rows=128 width=8) (actual time=0.003..0.011 rows=128 loops=1)
                                                          Buffers: shared hit=2
-                                                   ->  Hash  (cost=1.04..1.04 rows=1 width=4) (actual time=0.009..0.009 rows=1 loops=1)
+                                                   ->  Hash  (cost=1.04..1.04 rows=1 width=4) (actual time=0.006..0.007 rows=1 loops=1)
                                                          Buckets: 1024  Batches: 1  Memory Usage: 9kB
                                                          Buffers: shared hit=1
-                                                         ->  Seq Scan on framework fw  (cost=0.00..1.04 rows=1 width=4) (actual time=0.005..0.005 rows=1 loops=1)
+                                                         ->  Seq Scan on framework fw  (cost=0.00..1.04 rows=1 width=4) (actual time=0.003..0.004 rows=1 loops=1)
                                                                Filter: (name = 'ISO/IEC 27001'::text)
                                                                Rows Removed by Filter: 2
                                                                Buffers: shared hit=1
-                                 ->  Hash  (cost=1.60..1.60 rows=60 width=8) (actual time=0.024..0.025 rows=60 loops=1)
+                                 ->  Hash  (cost=1.60..1.60 rows=60 width=8) (actual time=0.046..0.046 rows=60 loops=1)
                                        Buckets: 1024  Batches: 1  Memory Usage: 11kB
                                        Buffers: shared hit=1
-                                       ->  Seq Scan on engagement e  (cost=0.00..1.60 rows=60 width=8) (actual time=0.005..0.010 rows=60 loops=1)
+                                       ->  Seq Scan on engagement e  (cost=0.00..1.60 rows=60 width=8) (actual time=0.004..0.031 rows=60 loops=1)
                                              Buffers: shared hit=1
  Planning:
-   Buffers: shared hit=337
- Planning Time: 1.268 ms
- Execution Time: 1.531 ms
+   Buffers: shared hit=339
+ Planning Time: 1.244 ms
+ Execution Time: 1.499 ms
 (52 rows)
 

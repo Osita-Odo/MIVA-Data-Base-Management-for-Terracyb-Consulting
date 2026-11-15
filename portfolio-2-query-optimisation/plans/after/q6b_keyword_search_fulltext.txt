@@ -1,17 +1,17 @@
                                                                 QUERY PLAN                                                                 
 -------------------------------------------------------------------------------------------------------------------------------------------
- Aggregate  (cost=1974.73..1974.74 rows=1 width=8) (actual time=2.188..2.190 rows=1 loops=1)
+ Aggregate  (cost=1959.32..1959.33 rows=1 width=8) (actual time=2.411..2.412 rows=1 loops=1)
    Buffers: shared hit=1002
-   ->  Bitmap Heap Scan on finding  (cost=30.83..1966.08 rows=3460 width=0) (actual time=0.372..2.040 rows=3390 loops=1)
+   ->  Bitmap Heap Scan on finding  (cost=30.53..1950.81 rows=3403 width=0) (actual time=0.523..2.219 rows=3390 loops=1)
          Recheck Cond: (to_tsvector('english'::regconfig, title) @@ '''password'''::tsquery)
          Heap Blocks: exact=999
          Buffers: shared hit=1002
-         ->  Bitmap Index Scan on idx_finding_title_fts  (cost=0.00..29.96 rows=3460 width=0) (actual time=0.280..0.280 rows=3390 loops=1)
+         ->  Bitmap Index Scan on idx_finding_title_fts  (cost=0.00..29.68 rows=3403 width=0) (actual time=0.409..0.409 rows=3390 loops=1)
                Index Cond: (to_tsvector('english'::regconfig, title) @@ '''password'''::tsquery)
                Buffers: shared hit=3
  Planning:
    Buffers: shared hit=189
- Planning Time: 1.219 ms
- Execution Time: 2.233 ms
+ Planning Time: 1.460 ms
+ Execution Time: 2.487 ms
 (13 rows)
 

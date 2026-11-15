@@ -1,14 +1,14 @@
                                                 QUERY PLAN                                                
 ----------------------------------------------------------------------------------------------------------
- Sort  (cost=1.99..2.07 rows=29 width=76) (actual time=0.043..0.045 rows=29 loops=1)
+ Sort  (cost=1.99..2.07 rows=29 width=76) (actual time=0.079..0.082 rows=29 loops=1)
    Sort Key: service_line, quarter
    Sort Method: quicksort  Memory: 27kB
    Buffers: shared hit=7
-   ->  Seq Scan on mv_mttr  (cost=0.00..1.29 rows=29 width=76) (actual time=0.007..0.009 rows=29 loops=1)
+   ->  Seq Scan on mv_mttr  (cost=0.00..1.29 rows=29 width=76) (actual time=0.013..0.016 rows=29 loops=1)
          Buffers: shared hit=1
  Planning:
    Buffers: shared hit=86
- Planning Time: 0.212 ms
- Execution Time: 0.059 ms
+ Planning Time: 0.404 ms
+ Execution Time: 0.111 ms
 (10 rows)
 

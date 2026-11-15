@@ -2,57 +2,57 @@ SET
 === 1. Planner default ===
                                                              QUERY PLAN                                                             
 ------------------------------------------------------------------------------------------------------------------------------------
- HashAggregate  (cost=10.11..10.86 rows=60 width=36) (actual time=0.229..0.245 rows=60 loops=1)
+ HashAggregate  (cost=10.11..10.86 rows=60 width=36) (actual time=0.228..0.242 rows=60 loops=1)
    Group Key: e.engagement_id
    Batches: 1  Memory Usage: 48kB
    Buffers: shared hit=4
-   ->  Hash Left Join  (cost=3.89..8.76 rows=180 width=16) (actual time=0.071..0.147 rows=180 loops=1)
+   ->  Hash Left Join  (cost=3.89..8.76 rows=180 width=16) (actual time=0.077..0.150 rows=180 loops=1)
          Hash Cond: (es.consultant_id = co.consultant_id)
          Buffers: shared hit=4
-         ->  Hash Right Join  (cost=2.35..6.66 rows=180 width=13) (actual time=0.050..0.099 rows=180 loops=1)
+         ->  Hash Right Join  (cost=2.35..6.66 rows=180 width=13) (actual time=0.050..0.096 rows=180 loops=1)
                Hash Cond: (es.engagement_id = e.engagement_id)
                Buffers: shared hit=3
-               ->  Seq Scan on engagement_staff es  (cost=0.00..3.80 rows=180 width=13) (actual time=0.004..0.018 rows=180 loops=1)
+               ->  Seq Scan on engagement_staff es  (cost=0.00..3.80 rows=180 width=13) (actual time=0.011..0.021 rows=180 loops=1)
                      Buffers: shared hit=2
-               ->  Hash  (cost=1.60..1.60 rows=60 width=4) (actual time=0.030..0.031 rows=60 loops=1)
+               ->  Hash  (cost=1.60..1.60 rows=60 width=4) (actual time=0.018..0.019 rows=60 loops=1)
                      Buckets: 1024  Batches: 1  Memory Usage: 11kB
                      Buffers: shared hit=1
-                     ->  Seq Scan on engagement e  (cost=0.00..1.60 rows=60 width=4) (actual time=0.006..0.011 rows=60 loops=1)
+                     ->  Seq Scan on engagement e  (cost=0.00..1.60 rows=60 width=4) (actual time=0.005..0.009 rows=60 loops=1)
                            Buffers: shared hit=1
-         ->  Hash  (cost=1.24..1.24 rows=24 width=11) (actual time=0.009..0.009 rows=24 loops=1)
+         ->  Hash  (cost=1.24..1.24 rows=24 width=11) (actual time=0.011..0.011 rows=24 loops=1)
                Buckets: 1024  Batches: 1  Memory Usage: 10kB
                Buffers: shared hit=1
-               ->  Seq Scan on consultant co  (cost=0.00..1.24 rows=24 width=11) (actual time=0.002..0.004 rows=24 loops=1)
+               ->  Seq Scan on consultant co  (cost=0.00..1.24 rows=24 width=11) (actual time=0.002..0.005 rows=24 loops=1)
                      Buffers: shared hit=1
  Planning:
-   Buffers: shared hit=216
- Planning Time: 0.686 ms
- Execution Time: 0.337 ms
+   Buffers: shared hit=217
+ Planning Time: 0.750 ms
+ Execution Time: 0.327 ms
 (26 rows)
 
 === 2. Hash joins disabled ===
 SET
                                                                     QUERY PLAN                                                                     
 ---------------------------------------------------------------------------------------------------------------------------------------------------
- GroupAggregate  (cost=14.06..28.18 rows=60 width=36) (actual time=0.096..0.273 rows=60 loops=1)
+ GroupAggregate  (cost=14.06..28.18 rows=60 width=36) (actual time=0.085..0.304 rows=60 loops=1)
    Group Key: e.engagement_id
    Buffers: shared hit=45
-   ->  Nested Loop Left Join  (cost=14.06..26.08 rows=180 width=16) (actual time=0.082..0.199 rows=180 loops=1)
+   ->  Nested Loop Left Join  (cost=14.06..26.08 rows=180 width=16) (actual time=0.074..0.231 rows=180 loops=1)
          Buffers: shared hit=45
-         ->  Merge Left Join  (cost=13.91..16.91 rows=180 width=13) (actual time=0.073..0.117 rows=180 loops=1)
+         ->  Merge Left Join  (cost=13.91..16.91 rows=180 width=13) (actual time=0.064..0.113 rows=180 loops=1)
                Merge Cond: (e.engagement_id = es.engagement_id)
                Buffers: shared hit=3
-               ->  Sort  (cost=3.37..3.52 rows=60 width=4) (actual time=0.019..0.023 rows=60 loops=1)
+               ->  Sort  (cost=3.37..3.52 rows=60 width=4) (actual time=0.016..0.019 rows=60 loops=1)
                      Sort Key: e.engagement_id
                      Sort Method: quicksort  Memory: 25kB
                      Buffers: shared hit=1
-                     ->  Seq Scan on engagement e  (cost=0.00..1.60 rows=60 width=4) (actual time=0.005..0.009 rows=60 loops=1)
+                     ->  Seq Scan on engagement e  (cost=0.00..1.60 rows=60 width=4) (actual time=0.004..0.008 rows=60 loops=1)
                            Buffers: shared hit=1
-               ->  Sort  (cost=10.54..10.99 rows=180 width=13) (actual time=0.049..0.058 rows=180 loops=1)
+               ->  Sort  (cost=10.54..10.99 rows=180 width=13) (actual time=0.047..0.056 rows=180 loops=1)
                      Sort Key: es.engagement_id
                      Sort Method: quicksort  Memory: 32kB
                      Buffers: shared hit=2
-                     ->  Seq Scan on engagement_staff es  (cost=0.00..3.80 rows=180 width=13) (actual time=0.003..0.017 rows=180 loops=1)
+                     ->  Seq Scan on engagement_staff es  (cost=0.00..3.80 rows=180 width=13) (actual time=0.003..0.018 rows=180 loops=1)
                            Buffers: shared hit=2
          ->  Memoize  (cost=0.15..0.23 rows=1 width=11) (actual time=0.000..0.000 rows=1 loops=180)
                Cache Key: es.consultant_id
@@ -64,25 +64,25 @@ SET
                      Buffers: shared hit=42
  Planning:
    Buffers: shared hit=8
- Planning Time: 0.187 ms
- Execution Time: 0.314 ms
+ Planning Time: 0.159 ms
+ Execution Time: 0.343 ms
 (32 rows)
 
 === 3. Hash and merge joins disabled (nested loops only) ===
 SET
                                                                           QUERY PLAN                                                                           
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------
- HashAggregate  (cost=41.76..42.51 rows=60 width=36) (actual time=0.322..0.331 rows=60 loops=1)
+ HashAggregate  (cost=41.76..42.51 rows=60 width=36) (actual time=0.290..0.303 rows=60 loops=1)
    Group Key: e.engagement_id
    Batches: 1  Memory Usage: 48kB
    Buffers: shared hit=180
-   ->  Nested Loop Left Join  (cost=0.29..40.41 rows=180 width=16) (actual time=0.017..0.252 rows=180 loops=1)
+   ->  Nested Loop Left Join  (cost=0.29..40.41 rows=180 width=16) (actual time=0.016..0.219 rows=180 loops=1)
          Buffers: shared hit=180
-         ->  Nested Loop Left Join  (cost=0.14..31.25 rows=180 width=13) (actual time=0.011..0.143 rows=180 loops=1)
+         ->  Nested Loop Left Join  (cost=0.14..31.25 rows=180 width=13) (actual time=0.010..0.135 rows=180 loops=1)
                Buffers: shared hit=138
-               ->  Seq Scan on engagement e  (cost=0.00..1.60 rows=60 width=4) (actual time=0.002..0.006 rows=60 loops=1)
+               ->  Seq Scan on engagement e  (cost=0.00..1.60 rows=60 width=4) (actual time=0.003..0.007 rows=60 loops=1)
                      Buffers: shared hit=1
-               ->  Index Scan using engagement_staff_pkey on engagement_staff es  (cost=0.14..0.46 rows=3 width=13) (actual time=0.001..0.002 rows=3 loops=60)
+               ->  Index Scan using engagement_staff_pkey on engagement_staff es  (cost=0.14..0.46 rows=3 width=13) (actual time=0.001..0.001 rows=3 loops=60)
                      Index Cond: (engagement_id = e.engagement_id)
                      Buffers: shared hit=137
          ->  Memoize  (cost=0.15..0.23 rows=1 width=11) (actual time=0.000..0.000 rows=1 loops=180)
@@ -94,7 +94,7 @@ SET
                      Index Cond: (consultant_id = es.consultant_id)
                      Buffers: shared hit=42
  Planning Time: 0.102 ms
- Execution Time: 0.369 ms
+ Execution Time: 0.341 ms
 (23 rows)
 
 RESET
@@ -102,11 +102,11 @@ RESET
 === 4. Estimate vs actual on a skewed filter (planner statistics) ===
                                                    QUERY PLAN                                                   
 ----------------------------------------------------------------------------------------------------------------
- Aggregate  (cost=2025.07..2025.08 rows=1 width=8) (actual time=4.271..4.271 rows=1 loops=1)
-   ->  Seq Scan on finding  (cost=0.00..2020.60 rows=1790 width=0) (actual time=0.003..4.202 rows=1797 loops=1)
+ Aggregate  (cost=2025.05..2025.06 rows=1 width=8) (actual time=6.533..6.533 rows=1 loops=1)
+   ->  Seq Scan on finding  (cost=0.00..2020.60 rows=1781 width=0) (actual time=0.005..6.448 rows=1797 loops=1)
          Filter: ((status = 'accepted'::text) AND (severity = 'critical'::text))
          Rows Removed by Filter: 64443
- Planning Time: 0.245 ms
- Execution Time: 4.280 ms
+ Planning Time: 0.339 ms
+ Execution Time: 6.542 ms
 (6 rows)
 
