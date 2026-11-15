@@ -43,8 +43,6 @@ The assessment brief asks for five practical portfolios, all built on the same o
 
 ### 2.3 Why this organisation was chosen
 
-The brief asks for an organisation "with enough data and processes" for all five portfolios. 
-
 | Portfolio need | Where TerraCyb provides it |
 | --- | --- |
 | Many related entities (Portfolio 1) | Clients, sites, assets, engagements, findings, controls, invoices |
@@ -53,8 +51,6 @@ The brief asks for an organisation "with enough data and processes" for all five
 | Data of varying shape (Portfolio 4) | Audit evidence: scan reports, policies, firewall configurations, interview notes |
 | Network relationships (Portfolio 4) | Which client machine can reach which: attack paths |
 | Multiple sites (Portfolio 5) | Offices and data centres in Lagos, Abuja and Port Harcourt |
-
-It is also a field the student works in, which makes every design choice explainable in a verification call.
 
 **About the data:** all clients, people, hostnames and IP addresses are fictitious. Real client data would breach confidentiality and the NDPA. The vulnerability identifiers (for example CVE-2021-44228, known as Log4Shell) are real public CVEs, used to make the findings realistic.
 
@@ -214,8 +210,6 @@ Each portfolio README gives the full steps, the expected output and an evidence 
 
 
 ## 10. References
-
-References follow APA 7th edition. Documentation pages that are updated continuously have no fixed date (n.d.) and show the date they were retrieved.
 
 Docker, Inc. (n.d.). *Docker Compose documentation*. Retrieved November 15, 2026, from https://docs.docker.com/compose/
 
