@@ -81,7 +81,7 @@ Lagos was fixed as the primary first, because it leads on every infrastructure m
 
 **Why the data is split by sector, not by region.** All three sites are inside Nigeria. The NDPA regulates transfers of personal data **outside** Nigeria (sections 41 to 43), so it does not force data into one region or another. The rules that do care where data is hosted are **sector** rules: NITDA's cloud policy for government data, and the Central Bank of Nigeria's requirement that payment data be hosted locally from 1 January 2027.
 
-![TerraCyb architecture: Lagos primary, Port Harcourt standby, Abuja public-sector shard, MongoDB across all three sites](docs/images/architecture.png)
+<img width="1073" height="796" alt="image" src="https://github.com/user-attachments/assets/27618d75-5e8d-4bfb-8f72-5dd4dd990641" />
 
 *Blue: PostgreSQL. Green: MongoDB. Amber, red and blue boxes: the Lagos, Port Harcourt and Abuja sites. Diagram source: [docs/images/architecture.mmd](docs/images/architecture.mmd).*
 
