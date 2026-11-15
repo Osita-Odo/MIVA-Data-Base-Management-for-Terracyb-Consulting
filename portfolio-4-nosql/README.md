@@ -11,7 +11,7 @@
 | NoSQL model based on the same case study | Section 2: audit evidence as documents, network exposure as a graph |
 | Document example | [`mongo/`](mongo): collection with a `$jsonSchema` validator, 3,006 documents, queries, aggregation, indexes |
 | Graph example | [`graph/`](graph): assets, vulnerabilities and network paths in Neo4j |
-| Implementation evidence | `evidence-samples/*.txt` outputs and screenshots (section 4) |
+| Implementation evidence | `evidence-samples/*.txt` outputs and 12 screenshots (section 6) |
 | Explanation of suitability | Section 5 |
 
 ## Key decisions and reasons
@@ -116,21 +116,32 @@ The graph covers client 1 (Lagoon Community Food Network, an NGO with a head off
 
 ## 4. How to run
 
+The test run on 15 November 2026 used GitHub Codespaces (the repository's `.devcontainer` includes Docker). The same commands work on any machine with Docker.
+
 ```bash
-docker compose up -d
+cd portfolio-4-nosql
+docker compose up -d                     # starts tc-mongo (MongoDB 7.0) and tc-neo4j (Neo4j 5)
+docker compose ps                        # both containers should show "Up"
 
 # MongoDB
-./mongo/export_assets.sh                       # needs the Portfolio 1 database; assets.json is already committed
-docker exec -it tc-mongo mongosh terracyb /scripts/01_create_collection.js
-docker exec -it tc-mongo mongosh terracyb /scripts/02_load_evidence.js
-docker exec -it tc-mongo mongosh terracyb /scripts/03_queries.js > evidence-samples/mongo-output.txt
+./mongo/export_assets.sh                 # optional: needs the Portfolio 1 database; assets.json is already committed
+docker exec tc-mongo mongosh terracyb /scripts/01_create_collection.js
+docker exec tc-mongo mongosh terracyb /scripts/02_load_evidence.js
+docker exec tc-mongo mongosh terracyb /scripts/03_queries.js | tee evidence-samples/mongo-output.txt
 
-# Neo4j
+# Neo4j (wait about 30 seconds after start-up)
 docker exec tc-neo4j cypher-shell -u neo4j -p terracyb-demo -f /scripts/01_create_graph.cypher
-docker exec tc-neo4j cypher-shell -u neo4j -p terracyb-demo -f /scripts/02_attack_paths.cypher > evidence-samples/neo4j-output.txt
+docker exec tc-neo4j cypher-shell -u neo4j -p terracyb-demo -f /scripts/02_attack_paths.cypher | tee evidence-samples/neo4j-output.txt
 ```
 
-Open http://localhost:7474 and run `MATCH (n) RETURN n` to see the graph. Screenshot it for the LMS.
+`tee` shows the output on screen and saves it to the file at the same time. `-it` is left out on purpose: an interactive terminal adds control characters to a saved file.
+
+**Seeing the graph.** On a local machine, open http://localhost:7474 and log in with `neo4j` / `terracyb-demo`. In Codespaces, the browser cannot reach port 7687 directly, so:
+
+1. In the **Ports** tab, set ports 7474 and 7687 to **Public** (only while the demo runs; the database holds synthetic data only).
+2. Open the forwarded address of port 7474 and add `/browser/`.
+3. Connect with protocol `neo4j+s://` and the forwarded address of port **7687** followed by `:443` (for example `<codespace-name>-7687.app.github.dev:443`). The address Neo4j suggests by default (the 7474 address with `:7687`) does not work through the Codespaces proxy.
+4. Run `MATCH (a)-[r]->(b) RETURN a, r, b`. This version of Neo4j Browser does not draw relationships for `MATCH (n) RETURN n`, so return the relationships explicitly.
 
 ### MongoDB operations (`03_queries.js`)
 
@@ -143,7 +154,7 @@ Open http://localhost:7474 and run `MATCH (n) RETURN n` to see the graph. Screen
 | Q5 | Mark Log4Shell results as fixed | `updateMany` with `arrayFilters` |
 | Indexes | Compound, multikey (`results.cve`) and text indexes | `explain("executionStats")` before and after |
 
-The script prints the plan stages and `docsExamined` before and after indexing. Before: `COLLSCAN`, all 3,006 documents examined. After: `IXSCAN`, only matching documents examined.
+The script prints the plan stages and `docsExamined` before and after indexing. The measured results are in section 6.
 
 ### Neo4j queries (`02_attack_paths.cypher`)
 
@@ -168,11 +179,78 @@ The script prints the plan stages and `docsExamined` before and after indexing. 
 
 **PostgreSQL JSONB as an alternative.** PostgreSQL could store evidence in a `JSONB` column with a GIN index. That would avoid a second database. MongoDB still wins here for aggregation pipelines over arrays, built-in sharding, and partial updates such as `arrayFilters`. Mention this trade-off in your reflection.
 
-## 6. Evidence checklist
+## 6. Results of the test run (15 November 2026)
 
-**Status:** these items need Docker on your own machine. The MongoDB and Neo4j images could not be downloaded in the test environment used for the other portfolios, so no outputs or screenshots have been added here yet. The scripts were checked for syntax, and the MongoDB loader was tested against a MongoDB-compatible test server.
+Run in GitHub Codespaces with MongoDB 7.0 and Neo4j 5.26.33 in Docker. Full output: [`evidence-samples/mongo-output.txt`](evidence-samples/mongo-output.txt) and [`evidence-samples/neo4j-output.txt`](evidence-samples/neo4j-output.txt). The screenshots are unedited captures of the codespace terminal and of Neo4j Browser.
 
-- [ ] `evidence-samples/mongo-output.txt`, including the validator rejection and before/after explain summaries
-- [ ] `evidence-samples/neo4j-output.txt`
-- [ ] Screenshot of MongoDB Compass or mongosh showing a scan document
-- [ ] Screenshot of the Neo4j Browser graph, ideally the G1 paths highlighted
+### 6.1 MongoDB
+
+**Collection and validator.** `01_create_collection.js` created the `evidence` collection with its `$jsonSchema` validator, then tried to insert a document that breaks the rules. MongoDB refused it with `Document failed validation`, which proves the validator is enforced.
+
+**Data.** `02_load_evidence.js` inserted 6 hand-written documents (one of each evidence type, to show the different shapes) and 3,000 generated scan documents: 3,006 in total.
+
+**Queries.**
+
+| # | Result |
+| --- | --- |
+| Q1 | Newest evidence for engagement 1, control ISO27001:A.8.8, with a projection of type, date and scanner |
+| Q2 | 1,200 scans have an open RDP (port 3389) result scoring 8 or more inside the same array element (`$elemMatch`) |
+| Q3 | Top host `rivers-17-010` (client 7) has 51 open high or critical results, maximum CVSS 10, across four CVEs |
+| Q4 | Engagement 1 has evidence for nine controls; A.8.21 has the most items (18) |
+| Q5 | `arrayFilters` marked every Log4Shell result in engagement 1 as fixed: 55 documents matched and modified, and only the matching array elements changed |
+| Text | The text index finds the Information Security Policy for the search "security policy" |
+
+**Indexes: `explain("executionStats")` before and after.**
+
+| Query | Before | After | Interpretation |
+| --- | --- | --- | --- |
+| Engagement 10 + control A.8.8 | `COLLSCAN`: 3,006 documents examined, 21 returned, 1 ms | `IXSCAN` on `idx_engagement_control`: 21 examined, 21 returned, 0 ms | The compound index reads only the matching documents: about 143 times fewer documents examined |
+| Nested `results.cve` = CVE-2024-3400 | `COLLSCAN`: 3,006 examined, 2,387 returned, 7 ms | `IXSCAN` on the multikey index: 2,387 examined, 2,387 returned, 4 ms | The index works, but saves little, because 79% of the documents match. An index pays off only when a query is selective (the same lesson as Q3 and Q6a in Portfolio 2) |
+
+Times this small vary between runs; the `docsExamined` counts are the reliable measure.
+
+### 6.2 Neo4j
+
+The graph holds 20 nodes (1 client, 2 sites, 13 assets, 4 vulnerabilities) and 31 relationships (13 `HOSTS`, 12 `CONNECTS_TO`, 4 `AFFECTED_BY`, 2 `HAS_SITE`).
+
+| Query | Result |
+| --- | --- |
+| G1 Attack paths | 7 paths from the three exploitable entry points to critical assets. The shortest are 2 hops: `lagoon-1-003` (PAN-OS GlobalProtect) and `lagoon-1-007` (BlueKeep), both through `lagoon-1-002` to `lagoon-1-001` |
+| G2 Shortest route to the cloud asset `lagoon-2-009` | 4 hops from `lagoon-1-010` (Log4Shell); 5 hops from the other two entry points |
+| G3 Blast radius (3 hops) | `lagoon-1-003` (CVE-2024-3400) and `lagoon-1-007` (CVE-2019-0708) reach 5 assets each; `lagoon-1-010` (CVE-2021-44228) reaches 4 |
+| G4 Choke points | `lagoon-1-009` (server) and `lagoon-2-014` (network device) each lie on 5 attack paths; `lagoon-1-002` on 4 |
+
+**What TerraCyb would tell the client:** patch the three internet-facing entry points first, and segment `lagoon-1-009` and `lagoon-2-014`, because together they sit on most of the routes into the data centre.
+
+### 6.3 Screenshots
+
+| # | Shows |
+| --- | --- |
+| 1 | [Both containers running](screenshots/01-docker-compose-ps.png) |
+| 2 | [Collection created; invalid document rejected by the validator](screenshots/02-create-collection-validator.png) |
+| 3 | [3,006 documents loaded](screenshots/03-load-evidence-3006.png) |
+| 4 | [Index test before: `COLLSCAN`, 3,006 documents examined](screenshots/04-index-before-collscan.png) |
+| 5 | [Index test after: `IXSCAN`, 21 documents examined](screenshots/05-index-after-ixscan.png) |
+| 6 | [Aggregation (Q4) and the `arrayFilters` update (Q5)](screenshots/06-aggregation-and-arrayfilters-update.png) |
+| 7 | [Text search and the list of indexes](screenshots/07-text-search-and-index-list.png) |
+| 8 | [Neo4j G1 to G4 results in cypher-shell](screenshots/08-neo4j-attack-path-queries.png) |
+| 9 | [Codespaces ports 7474 and 7687 made public for Neo4j Browser](screenshots/09-codespaces-ports-public.png) |
+| 10 | [Neo4j Browser connected: 20 nodes](screenshots/10-neo4j-browser-connected.png) |
+| 11 | [Full graph: 20 nodes, 31 relationships](screenshots/11-neo4j-full-graph.png) |
+| 12 | [G1 attack paths with the CVEs that open them](screenshots/12-neo4j-g1-attack-paths.png) |
+
+![Full attack-surface graph in Neo4j Browser](screenshots/11-neo4j-full-graph.png)
+
+*Figure: the full graph for Lagoon Community Food Network in Neo4j Browser (screenshot 11).*
+
+![G1 attack paths](screenshots/12-neo4j-g1-attack-paths.png)
+
+*Figure: G1, the routes from the three exploitable internet-facing assets (each linked to its CVE) to the critical assets (screenshot 12).*
+
+## 7. Evidence checklist
+
+- [x] `evidence-samples/mongo-output.txt`, with the before and after explain summaries
+- [x] `evidence-samples/neo4j-output.txt`
+- [x] Screenshot of the validator rejecting an invalid document (screenshot 2)
+- [x] Screenshots of mongosh output: queries, aggregation, update and indexes (screenshots 4 to 7)
+- [x] Screenshot of the Neo4j Browser graph, with the G1 paths (screenshots 11 and 12)

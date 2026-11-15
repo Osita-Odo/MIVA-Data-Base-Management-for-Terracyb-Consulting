@@ -112,14 +112,14 @@ Every portfolio README follows the same pattern: what the portfolio delivers, it
 
 ## 5. Evidence at a glance
 
-The screenshots and output files below were captured from **test runs on 14 November 2026** (PostgreSQL 16.15). Each screenshot shows the exact command that was run and its unedited output; the caption under each one says how it was captured. See also the [AI-use declaration](#11-ai-use-declaration) in section 11.
+The screenshots and output files below were captured from **test runs on 14 November 2026** (PostgreSQL 16.15; Portfolios 1, 2, 3 and 5) and **15 November 2026** (MongoDB 7.0 and Neo4j 5 in GitHub Codespaces; Portfolio 4). Each screenshot shows the exact command that was run and its unedited output; the caption under each one says how it was captured. See also the [AI-use declaration](#11-ai-use-declaration) in section 11.
 
 | Portfolio | Screenshots | Output files |
 | --- | --- | --- |
 | 1 | [ER diagram](portfolio-1-database-design/erd.png), [18 tables](portfolio-1-database-design/screenshots/01-tables.png), [seed row counts](portfolio-1-database-design/screenshots/02-seed-row-counts.png), [12 constraint tests](portfolio-1-database-design/screenshots/03-constraint-tests.png) | `constraint-test-output.txt`, `output/seed-row-counts.txt` |
 | 2 | [Q1 plan before and after](portfolio-2-query-optimisation/screenshots/01-q1-plan-before-after.png), [benchmark](portfolio-2-query-optimisation/screenshots/02-benchmark.png), [Q8 result](portfolio-2-query-optimisation/screenshots/03-q8-result.png) | `results/timings.md`, `results/query-results/`, `plans/` |
 | 3 | [two-terminal lock wait](portfolio-3-transactions-concurrency/screenshots/01-lock-wait-two-terminals.png), [lock monitor](portfolio-3-transactions-concurrency/screenshots/02-lock-wait-monitor.png), [lost update](portfolio-3-transactions-concurrency/screenshots/03-lost-update-script.png), [isolation](portfolio-3-transactions-concurrency/screenshots/04-isolation-non-repeatable-read.png), [SERIALIZABLE](portfolio-3-transactions-concurrency/screenshots/05-serializable-write-skew.png), [deadlock](portfolio-3-transactions-concurrency/screenshots/06-deadlock.png) | `output/01` to `output/05` logs |
-| 4 | Not yet: needs Docker on your machine (MongoDB and Neo4j) | |
+| 4 | [containers running](portfolio-4-nosql/screenshots/01-docker-compose-ps.png), [validator rejection](portfolio-4-nosql/screenshots/02-create-collection-validator.png), [index before](portfolio-4-nosql/screenshots/04-index-before-collscan.png) and [after](portfolio-4-nosql/screenshots/05-index-after-ixscan.png), [attack-path queries](portfolio-4-nosql/screenshots/08-neo4j-attack-path-queries.png), [Neo4j graph](portfolio-4-nosql/screenshots/11-neo4j-full-graph.png), [G1 attack paths](portfolio-4-nosql/screenshots/12-neo4j-g1-attack-paths.png) (screen captures from GitHub Codespaces) | `evidence-samples/mongo-output.txt`, `evidence-samples/neo4j-output.txt` |
 | 5 | [replication](portfolio-5-distributed-cloud/screenshots/01-replication-status-and-read-only.png), [sharding](portfolio-5-distributed-cloud/screenshots/02-geo-sharding.png), [failover](portfolio-5-distributed-cloud/screenshots/03-failover-promotion.png) (three local PostgreSQL servers, not Docker) | `output/local-test-*.log` |
 
 ## 6. Design decisions
@@ -175,7 +175,7 @@ cd portfolio-5-distributed-cloud && docker compose up -d && cd ..
 
 Each portfolio README gives the full steps, the expected output and an evidence checklist. Stop the Portfolio 4 containers before starting Portfolio 5 if port 5432 is already in use, or change the host port in `portfolio-5-distributed-cloud/docker-compose.yml`.
 
-**Testing status:** every PostgreSQL script was run and checked, and the Portfolio 5 replication, sharding and failover steps were run on three local PostgreSQL servers. The MongoDB, Neo4j and Docker files were checked for syntax only, because Docker images could not be downloaded in the test environment; run them on your own machine.
+**Testing status:** every PostgreSQL script was run and checked, and the Portfolio 5 replication, sharding and failover steps were run on three local PostgreSQL servers. Portfolio 4 (MongoDB and Neo4j) was run with Docker in GitHub Codespaces on 15 November 2026. The Portfolio 5 Docker set-up (including the MongoDB replica set) was checked for syntax but not run.
 
 
 ## 9. Glossary
