@@ -96,25 +96,29 @@ FROM pg_stat_user_indexes WHERE relname = 'finding';
 
 ## 5. Results
 
-Measured with `run_benchmark.sh` in a test run on 14 November 2026: PostgreSQL 16.15, 2 virtual CPUs (Intel Xeon, 2.30 GHz), 7 GB RAM. The raw output is [`results/timings.md`](results/timings.md); full plans are in [`plans/before/`](plans/before) and [`plans/after/`](plans/after). Timings vary between machines; the ratios matter more than the absolute times.
+Measured with `run_benchmark.sh` in my own run in GitHub Codespaces on 15 November 2026: PostgreSQL 16.16 in Docker, 4-core codespace. The raw output is [`results/timings.md`](results/timings.md); full plans are in [`plans/before/`](plans/before) and [`plans/after/`](plans/after). Timings vary between machines and runs; the ratios matter more than the absolute times.
 
 | Query | Before (ms) | After (ms) | Speed-up | Access path after | Why |
 | --- | ---: | ---: | ---: | --- | --- |
-| Q1 | 11.571 | 0.371 | 31.2x | Index Scan using `idx_finding_open_critical` | Partial index holds only open critical findings, already sorted; the planner stops after 50 rows instead of sorting about 3,500 |
-| Q2 | 30.791 | 0.061 | 504.8x | Seq Scan on `mv_mttr` (materialised view) | Reads a few dozen precomputed rows instead of aggregating about 50,000 |
-| Q3 | 1.113 | 1.476 | 0.8x | Seq Scan on `control_assessment` | No index added on purpose: a small table read almost entirely; the difference is run-to-run noise |
-| Q4 | 10.590 | 4.759 | 2.2x | Index Only Scan using `idx_finding_unresolved_cover` | Covering index answers the query without reading the table; the aggregation still has to run |
-| Q5 | 0.709 | 0.605 | 1.2x | Seq Scan on `engagement` | No index added on purpose: small tables, hash joins already cheapest |
-| Q6a | 32.098 | 31.789 | 1.0x | Seq Scan on `finding` | `ILIKE '%password%'` cannot use a B-tree index because of the leading wildcard |
-| Q6b | 115.507 | 2.193 | 52.7x | Bitmap Index Scan on `idx_finding_title_fts` | GIN index replaces computing `to_tsvector` for every title |
-| Q7 | 5.774 | 3.202 | 1.8x | Bitmap Index Scan on `idx_finding_cve` | Partial index on the CVE column; small, because most findings have no CVE |
-| Q8 | 14.319 | 8.169 | 1.8x | Index Only Scan using `idx_finding_unresolved_cover` | Reuses the Q4 index: one well-chosen index serves several queries |
+| Q1 | 13.730 | 0.475 | 28.9x | Index Scan using `idx_finding_open_critical` | Partial index holds only open critical findings, already sorted; the planner stops after 50 rows instead of sorting 3,482 |
+| Q2 | 49.118 | 0.075 | 654.9x | Seq Scan on `mv_mttr` (materialised view) | Reads a few dozen precomputed rows instead of aggregating about 50,000 |
+| Q3 | 1.502 | 1.489 | 1.0x | Seq Scan on `control_assessment` | No index added on purpose: a small table read almost entirely |
+| Q4 | 15.400 | 6.758 | 2.3x | Index Only Scan using `idx_finding_unresolved_cover` | Covering index answers the query without reading the table; the aggregation still has to run |
+| Q5 | 0.845 | 0.838 | 1.0x | Seq Scan on `engagement` | No index added on purpose: small tables, hash joins already cheapest |
+| Q6a | 47.842 | 47.956 | 1.0x | Seq Scan on `finding` | `ILIKE '%password%'` cannot use a B-tree index because of the leading wildcard |
+| Q6b | 197.169 | 2.459 | 80.2x | Bitmap Index Scan on `idx_finding_title_fts` | GIN index replaces computing `to_tsvector` for every title |
+| Q7 | 8.581 | 3.353 | 2.6x | Bitmap Index Scan on `idx_finding_cve` | Partial index on the CVE column; small, because most findings have no CVE |
+| Q8 | 21.572 | 11.596 | 1.9x | Index Only Scan using `idx_finding_unresolved_cover` | Reuses the Q4 index: one well-chosen index serves several queries |
 
-**Interpretation (from the test run; rewrite in your own words after your own run):** the largest gains come where the slow part of the plan is reading or sorting rows the query does not need: Q1's partial index removes the sort, Q6b's GIN index removes per-row text processing, and Q2's materialised view removes the aggregation entirely. Covering and partial indexes (Q4, Q7, Q8) roughly halve the time because the remaining work, joining and aggregating, is unchanged. Q3, Q5 and Q6a show the other half of the analysis: on small tables, or with a leading-wildcard pattern, no index helps, and adding one would only slow down writes.
+**Join strategies (Q5, [`plans/join-strategies.txt`](plans/join-strategies.txt)).** With its free choice, the planner used hash joins and ran Q5 in 0.327 ms. With hash joins switched off it chose a merge join plus a nested loop (0.343 ms); with merge joins also switched off, nested loops only (0.341 ms). At this size the planner's first choice is already the cheapest, and the differences are within run-to-run noise. The estimated cost of the join step shows the gap more clearly: 8.76 for the hash join against 26.08 and 40.41 for the forced plans.
+
+**Interpretation (draft; rewrite in your own words):** the largest gains come where the slow part of the plan is reading or sorting rows the query does not need: Q1's partial index removes the sort, Q6b's GIN index removes per-row text processing, and Q2's materialised view removes the aggregation entirely. Covering and partial indexes (Q4, Q7, Q8) roughly halve the time because the remaining work, joining and aggregating, is unchanged. Q3, Q5 and Q6a show the other half of the analysis: on small tables, or with a leading-wildcard pattern, no index helps, and adding one would only slow down writes.
 
 ### Screenshots
 
-**Q1 before and after the partial index.** Before: a sequential scan of `finding`, then a sort. After: an index scan that returns rows already in order:
+Screen captures from my own run in GitHub Codespaces on 15 November 2026.
+
+**Q1 before and after the partial index.** Before: a sequential scan of `finding` reads 3,482 rows, then a top-N sort keeps 50 (13.692 ms). After: an index scan returns the 50 rows already in order, the Sort node disappears and the joins switch to index lookups (0.475 ms):
 
 ![Q1 execution plan before and after](screenshots/01-q1-plan-before-after.png)
 
@@ -122,15 +126,16 @@ Measured with `run_benchmark.sh` in a test run on 14 November 2026: PostgreSQL 1
 
 ![Output of run_benchmark.sh](screenshots/02-benchmark.png)
 
-**A query result: Q8, open risk per office and zone,** with ROLLUP subtotal rows (zone empty) and a grand total (office and zone empty):
+**A query result: Q8, open risk per office and zone,** with ROLLUP subtotal rows (zone empty) and a grand total (office and zone empty): 20 clients, 10,661 open findings, 3,482 critical, average CVSS 7.44:
 
 ![Result of Q8](screenshots/03-q8-result.png)
 
 ## 6. Evidence checklist
 
-- [x] `results/query-results/` committed (test run)
-- [x] `plans/before/` and `plans/after/` committed (test run)
+- [x] `results/query-results/` committed (my Codespaces run)
+- [x] `plans/before/` and `plans/after/` committed (my Codespaces run)
 - [x] `results/timings.md` committed and copied into section 5
 - [x] Screenshot of one before/after plan pair ([Q1](screenshots/01-q1-plan-before-after.png))
 - [x] `plans/join-strategies.txt` committed
-- [ ] Re-run on your own machine, update section 5 with your timings and hardware, and rewrite the interpretation in your own words
+- [x] Run in my own codespace; section 5 updated with my timings (15 November 2026)
+- [ ] Rewrite the interpretation in my own words

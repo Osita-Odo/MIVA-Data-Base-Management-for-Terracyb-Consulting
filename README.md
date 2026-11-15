@@ -112,7 +112,7 @@ Every portfolio README follows the same pattern: what the portfolio delivers, it
 
 ## 5. Evidence at a glance
 
-The screenshots and output files below were captured from **test runs on 14 November 2026** (PostgreSQL 16.15; Portfolios 2, 3 and 5) and **15 November 2026** (GitHub Codespaces: Portfolio 1 on PostgreSQL 16, Portfolio 4 on MongoDB 7.0 and Neo4j 5). Each screenshot shows the exact command that was run and its unedited output; the caption under each one says how it was captured. See also the [AI-use declaration](#11-ai-use-declaration) in section 11.
+The screenshots and output files below were captured from **test runs on 14 November 2026** (PostgreSQL 16.15; Portfolios 3 and 5) and **15 November 2026** (my own runs in GitHub Codespaces: Portfolios 1 and 2 on PostgreSQL 16, Portfolio 4 on MongoDB 7.0 and Neo4j 5). Each screenshot shows the exact command that was run and its unedited output; the caption under each one says how it was captured. See also the [AI-use declaration](#11-ai-use-declaration) in section 11.
 
 | Portfolio | Screenshots | Output files |
 | --- | --- | --- |
