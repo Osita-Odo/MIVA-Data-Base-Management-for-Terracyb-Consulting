@@ -247,6 +247,18 @@ The graph holds 20 nodes (1 client, 2 sites, 13 assets, 4 vulnerabilities) and 3
 
 *Figure: G1, the routes from the three exploitable internet-facing assets (each linked to its CVE) to the critical assets (screenshot 12).*
 
+**Additional screenshots** (also in [`docs/TerraCyb_Screenshot_Evidence.docx`](../docs/TerraCyb_Screenshot_Evidence.docx)):
+
+- [`01b-restart-after-name-change.png`](screenshots/01b-restart-after-name-change.png): git pull and container restart after the company name was corrected
+- [`09a-ports-private.png`](screenshots/09a-ports-private.png): the forwarded ports, private at first
+- [`09b-port-7687-public.png`](screenshots/09b-port-7687-public.png): port 7687 set to public
+- [`09c-neo4j-connection-form.png`](screenshots/09c-neo4j-connection-form.png): the Neo4j Browser connection form (neo4j+s://, 7687 address on port 443)
+- [`10b-neo4j-browser-node-table.png`](screenshots/10b-neo4j-browser-node-table.png): the 20 nodes in table view
+- [`10c-neo4j-browser-connection-info.png`](screenshots/10c-neo4j-browser-connection-info.png): server details: Neo4j 5.26.33
+- [`12a-neo4j-g1-query.png`](screenshots/12a-neo4j-g1-query.png): the G1 query typed into Neo4j Browser
+- [`12b-neo4j-g1-paths-without-cves.png`](screenshots/12b-neo4j-g1-paths-without-cves.png): the first G1 picture, before the AFFECTED_BY links were returned
+- [`13-pushed-output.png`](screenshots/13-pushed-output.png): output committed and pushed from the codespace
+
 ## 7. Evidence checklist
 
 - [x] `evidence-samples/mongo-output.txt`, with the before and after explain summaries

@@ -243,6 +243,10 @@ After `docker stop mongo-lagos` and a 15-second wait, **Port Harcourt had been e
 
 The "seconds behind the primary" figures in step 4 are calculated from the operation time each member last reported, which in a mostly idle set overstates the real delay; step 3 shows the document was already readable on a secondary (`secondary_local: 1`). Lagos was restarted afterwards and rejoins as a secondary.
 
+**Additional screenshots** (also in [`docs/TerraCyb_Screenshot_Evidence.docx`](../docs/TerraCyb_Screenshot_Evidence.docx)):
+
+- [`09-pushed-output.png`](screenshots/09-pushed-output.png): output committed and pushed from the codespace
+
 ## 7. Evidence checklist
 
 - [x] `docker compose ps` with all containers running ([screenshot](screenshots/01-compose-ps-healthy.png))

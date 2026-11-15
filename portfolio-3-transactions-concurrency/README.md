@@ -184,6 +184,13 @@ A first attempt is worth noting: when B was started after A had already committe
 
 ![Deadlock detected and resolved](screenshots/06-deadlock.png)
 
+**Additional screenshots** (also in [`docs/TerraCyb_Screenshot_Evidence.docx`](../docs/TerraCyb_Screenshot_Evidence.docx)):
+
+- [`00-two-terminals-setup.png`](screenshots/00-two-terminals-setup.png): the two split terminals being prepared
+- [`08-first-attempt-no-wait.png`](screenshots/08-first-attempt-no-wait.png): the first attempt, in which B started after A had committed, so no wait occurred
+- [`01c-lock-wait-completed-narrow.png`](screenshots/01c-lock-wait-completed-narrow.png): the successful run in the narrower split view
+- [`09-pushed-output.png`](screenshots/09-pushed-output.png): output committed and pushed from the codespace
+
 ## 6. Evidence checklist
 
 - [x] `output/01` to `output/05` logs committed (my Codespaces run)

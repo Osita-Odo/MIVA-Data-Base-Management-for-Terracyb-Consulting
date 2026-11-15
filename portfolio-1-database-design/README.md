@@ -286,6 +286,11 @@ Tests T5 to T12, ending with the summary line:
 | T9, T10 | Trigger | Asset belonging to another client; payment of NGN 5,250,001 exceeding the invoice |
 | T11 | Generated column | Writing `severity` directly |
 
+**Additional screenshots** (also in [`docs/TerraCyb_Screenshot_Evidence.docx`](../docs/TerraCyb_Screenshot_Evidence.docx)):
+
+- [`00a-postgres-container-ready.png`](screenshots/00a-postgres-container-ready.png): PostgreSQL 16 container started and accepting connections
+- [`04-pushed-output.png`](screenshots/04-pushed-output.png): output committed and pushed from the codespace
+
 ## 8. Evidence checklist
 
 - [x] `erd.png` generated from `erd.dbml` ([make_erd.py](make_erd.py))

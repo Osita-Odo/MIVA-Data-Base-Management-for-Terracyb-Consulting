@@ -130,6 +130,10 @@ Screen captures from my own run in GitHub Codespaces on 15 November 2026.
 
 ![Result of Q8](screenshots/03-q8-result.png)
 
+**Additional screenshots** (also in [`docs/TerraCyb_Screenshot_Evidence.docx`](../docs/TerraCyb_Screenshot_Evidence.docx)):
+
+- [`04-pushed-output.png`](screenshots/04-pushed-output.png): output committed and pushed from the codespace
+
 ## 6. Evidence checklist
 
 - [x] `results/query-results/` committed (my Codespaces run)
