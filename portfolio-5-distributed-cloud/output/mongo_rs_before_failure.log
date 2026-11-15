@@ -1,0 +1,22 @@
+=== 1. Replica set members ===
+  mongo-lagos:27017         PRIMARY    health=1
+  mongo-portharcourt:27017  SECONDARY  health=1
+  mongo-abuja:27017         SECONDARY  health=1
+
+=== 2. Write with writeConcern majority (acknowledged by 2 of 3 nodes) ===
+  acknowledged after 46 ms
+
+=== 3. Read the same document with different guarantees ===
+{
+  primary_majority: 1,
+  secondary_local: 1,
+  nearest_available: 1
+}
+  1 = found. A secondary read may return 0 if replication has not caught up yet (eventual consistency).
+
+=== 4. Replication lag per secondary ===
+  mongo-portharcourt:27017 is 9 s behind the primary
+  mongo-abuja:27017 is 9 s behind the primary
+
+=== 5. w: 3 needs every node; it times out if one is down ===
+  w:3 write acknowledged by all 3 nodes

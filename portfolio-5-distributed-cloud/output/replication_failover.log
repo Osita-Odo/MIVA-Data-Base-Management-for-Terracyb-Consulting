@@ -1,0 +1,110 @@
+
+=== 19:29:41 1. Replication status on the Lagos primary ===
+psql:/sql/replication_status_primary.sql:3: warning: \x: extra argument "--" ignored
+psql:/sql/replication_status_primary.sql:3: warning: \x: extra argument "expanded" ignored
+psql:/sql/replication_status_primary.sql:3: warning: \x: extra argument "display:" ignored
+psql:/sql/replication_status_primary.sql:3: Expanded display is on.
+warning: \x: extra argument "one" ignored
+psql:/sql/replication_status_primary.sql:3: warning: \x: extra argument "column" ignored
+psql:/sql/replication_status_primary.sql:3: warning: \x: extra argument "per" ignored
+psql:/sql/replication_status_primary.sql:3: warning: \x: extra argument "line," ignored
+psql:/sql/replication_status_primary.sql:3: warning: \x: extra argument "easier" ignored
+psql:/sql/replication_status_primary.sql:3: warning: \x: extra argument "to" ignored
+psql:/sql/replication_status_primary.sql:3: warning: \x: extra argument "read" ignored
+psql:/sql/replication_status_primary.sql:3: warning: \x: extra argument "for" ignored
+psql:/sql/replication_status_primary.sql:3: warning: \x: extra argument "wide" ignored
+psql:/sql/replication_status_primary.sql:3: warning: \x: extra argument "rows" ignored
+-[ RECORD 1 ]----+------------
+application_name | walreceiver
+client_addr      | 172.19.0.8
+state            | streaming
+sync_state       | async
+sent_lsn         | 0/5B0A408
+write_lsn        | 0/5B0A408
+flush_lsn        | 0/5B0A408
+replay_lsn       | 0/5B0A408
+replay_gap_bytes | 0
+write_lag        | 
+flush_lag        | 
+replay_lag       | 
+
+-[ RECORD 1 ]----------
+slot_name   | replica1
+slot_type   | physical
+active      | t
+restart_lsn | 0/5B0A408
+
+Expanded display is off.
+ is_standby | current_lsn 
+------------+-------------
+ f          | 0/5B0A408
+(1 row)
+
+
+=== 19:29:42 1. Replication status on the Port Harcourt replica ===
+ is_standby | received_lsn | replayed_lsn | time_since_last_replayed_commit 
+------------+--------------+--------------+---------------------------------
+ t          | 0/5B0A408    | 0/5B0A408    | 00:03:30.845962
+(1 row)
+
+  status   | sender_host | slot_name |     last_msg_receipt_time     
+-----------+-------------+-----------+-------------------------------
+ streaming | pg-lagos    | replica1  | 2026-11-15 19:29:16.422552+00
+(1 row)
+
+
+=== 19:29:42 2. Register a new client on the PRIMARY (Lagos) ===
+INSERT 0 1
+
+=== 19:29:43 2. Read it from the REPLICA (Port Harcourt) one second later ===
+ client_id |             name              | state_code 
+-----------+-------------------------------+------------
+        21 | Jos Plateau Solar Cooperative | PL
+        20 | Unity Property Partners       | EN
+        19 | Meridian Hotels               | FC
+(3 rows)
+
+
+=== 19:29:43 3. Try to write on the REPLICA (expected: read-only error) ===
+ERROR:  cannot execute INSERT in a read-only transaction
+
+=== 19:29:43 4. Simulate losing the Lagos site: docker stop pg-lagos ===
+pg-lagos
+
+=== 19:29:46 4. Port Harcourt still answers reads ===
+ findings_readable 
+-------------------
+             66240
+(1 row)
+
+
+=== 19:29:46 4. ... but it is still a standby, so writes fail ===
+ still_standby 
+---------------
+ t
+(1 row)
+
+ERROR:  cannot execute UPDATE in a read-only transaction
+
+=== 19:29:47 5. Promote Port Harcourt (manual failover) ===
+ promoted 
+----------
+ t
+(1 row)
+
+Promotion took 0.52 seconds
+ still_standby 
+---------------
+ f
+(1 row)
+
+
+=== 19:29:47 5. The new primary in Port Harcourt accepts writes ===
+ finding_id |   status    
+------------+-------------
+      43208 | in_progress
+(1 row)
+
+UPDATE 1
+
+Done. To rebuild the original topology run: docker compose down -v && docker compose up -d

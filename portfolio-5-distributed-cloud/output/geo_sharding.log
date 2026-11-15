@@ -1,0 +1,80 @@
+SET
+DROP TABLE
+psql:/sql/geo_sharding.sql:32: NOTICE:  table "finding_geo" does not exist, skipping
+psql:/sql/geo_sharding.sql:33: NOTICE:  server "abuja_node" does not exist, skipping
+DROP SERVER
+CREATE EXTENSION
+CREATE SERVER
+CREATE USER MAPPING
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+ALTER TABLE
+ALTER TABLE
+CREATE FOREIGN TABLE
+TRUNCATE TABLE
+Clearing the remote Abuja table ...
+DELETE 0
+INSERT 0 66240
+ANALYZE
+ANALYZE
+
+=== Rows per partition (tableoid shows where each row physically lives) ===
+      partition      | rows  
+---------------------+-------
+ finding_geo_private | 31870
+ finding_geo_ngo     | 16810
+ finding_geo_public  | 17560
+(3 rows)
+
+
+=== Partition pruning: a private-sector query touches only the local partition ===
+                                QUERY PLAN                                
+--------------------------------------------------------------------------
+ Aggregate
+   ->  Seq Scan on finding_geo_private finding_geo
+         Filter: ((sector = 'private'::text) AND (status = 'open'::text))
+(3 rows)
+
+
+=== A public-sector query is sent to the Abuja node (Foreign Scan + Remote SQL) ===
+                                                          QUERY PLAN                                                           
+-------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate
+   Output: finding_geo.client_id, count(*)
+   Group Key: finding_geo.client_id
+   ->  Sort
+         Output: finding_geo.client_id
+         Sort Key: finding_geo.client_id
+         ->  Foreign Scan on ead.finding_geo_public finding_geo
+               Output: finding_geo.client_id
+               Remote SQL: SELECT client_id FROM public.finding_geo_public WHERE ((sector = 'public')) AND ((status = 'open'))
+(9 rows)
+
+
+=== A query without the partition key fans out to every node ===
+                          QUERY PLAN                          
+--------------------------------------------------------------
+ HashAggregate
+   Group Key: finding_geo.office_code
+   ->  Append
+         ->  Seq Scan on finding_geo_ngo finding_geo_1
+               Filter: (cvss_score >= '9'::numeric)
+         ->  Seq Scan on finding_geo_private finding_geo_2
+               Filter: (cvss_score >= '9'::numeric)
+         ->  Foreign Scan on finding_geo_public finding_geo_3
+(8 rows)
+
+ office_code | sector  | critical_findings 
+-------------+---------+-------------------
+ ABV         | ngo     |              3395
+ ABV         | private |              3239
+ ABV         | public  |              2387
+ LOS         | ngo     |              1126
+ LOS         | private |              3919
+ LOS         | public  |              1249
+ PHC         | ngo     |              1157
+ PHC         | private |              3263
+ PHC         | public  |              2153
+(9 rows)
+
