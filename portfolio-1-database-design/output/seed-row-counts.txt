@@ -1,10 +1,38 @@
-$ psql -d ead -f schema.sql
-$ psql -d ead -f seed.sql
+SET
  setseed 
 ---------
  
 (1 row)
 
+BEGIN
+INSERT 0 3
+INSERT 0 37
+INSERT 0 24
+INSERT 0 3
+CREATE TABLE
+INSERT 0 20
+INSERT 0 20
+INSERT 0 50
+INSERT 0 850
+INSERT 0 60
+INSERT 0 60
+INSERT 0 120
+CREATE TABLE
+INSERT 0 20
+SELECT 20
+SELECT 66240
+INSERT 0 66240
+INSERT 0 3
+INSERT 0 93
+INSERT 0 35
+INSERT 0 2340
+INSERT 0 60
+INSERT 0 960
+INSERT 0 120
+INSERT 0 109
+INSERT 0 5
+COMMIT
+ANALYZE
      table_name     | count 
 --------------------+-------
  office             |     3

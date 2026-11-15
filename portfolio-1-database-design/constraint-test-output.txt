@@ -10,19 +10,19 @@ psql:test_constraints.sql:22: ERROR:  insert or update on table "engagement" vio
 DETAIL:  Key (client_id)=(9999) is not present in table "client".
 --- T4 CHECK: CVSS score above 10
 psql:test_constraints.sql:27: ERROR:  new row for relation "finding" violates check constraint "finding_cvss_score_check"
-DETAIL:  Failing row contains (66241, 21, 651, Bad score, null, 11.5, critical, open, 2026-11-14, null).
+DETAIL:  Failing row contains (66241, 21, 651, Bad score, null, 11.5, critical, open, 2026-11-15, null).
 --- T5 CHECK: engagement ends before it starts
 psql:test_constraints.sql:32: ERROR:  new row for relation "engagement" violates check constraint "ck_engagement_dates"
 DETAIL:  Failing row contains (62, 1, 1, 4, Backwards dates, 2026-05-01, 2026-04-01, planned, 1000.00).
 --- T6 CHECK: status fixed without a fixed_on date
 psql:test_constraints.sql:37: ERROR:  new row for relation "finding" violates check constraint "ck_finding_fixed"
-DETAIL:  Failing row contains (66242, 21, 651, Fixed but no date, null, 5.0, medium, fixed, 2026-11-14, null).
+DETAIL:  Failing row contains (66242, 21, 651, Fixed but no date, null, 5.0, medium, fixed, 2026-11-15, null).
 --- T7 CHECK: invalid sector value
 psql:test_constraints.sql:41: ERROR:  new row for relation "client" violates check constraint "client_sector_check"
-DETAIL:  Failing row contains (21, Test Org, charity, LA, 2026-11-14).
+DETAIL:  Failing row contains (21, Test Org, charity, LA, 2026-11-15).
 --- T8 CHECK: malformed CVE identifier
 psql:test_constraints.sql:46: ERROR:  new row for relation "finding" violates check constraint "finding_cve_id_check"
-DETAIL:  Failing row contains (66243, 21, 651, Bad CVE, CVE-21-1, 5.0, medium, open, 2026-11-14, null).
+DETAIL:  Failing row contains (66243, 21, 651, Bad CVE, CVE-21-1, 5.0, medium, open, 2026-11-15, null).
 --- T9 TRIGGER: asset belongs to a different client than the engagement
 psql:test_constraints.sql:56: ERROR:  Asset 1 does not belong to the client of engagement 22
 CONTEXT:  PL/pgSQL function fn_finding_asset_matches_client() line 11 at RAISE
