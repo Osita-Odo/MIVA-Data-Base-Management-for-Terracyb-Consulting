@@ -11,7 +11,7 @@ CREATE TABLE finding_geo_public (
     finding_id     BIGINT       PRIMARY KEY,
     sector         TEXT         NOT NULL CHECK (sector = 'public'),   -- this node accepts public-sector rows only
     client_id      INT          NOT NULL,
-    office_code    CHAR(3)      NOT NULL,          -- TerraCyber office serving the client
+    office_code    CHAR(3)      NOT NULL,          -- TerraCyb office serving the client
     engagement_id  INT          NOT NULL,
     asset_id       INT          NOT NULL,
     title          TEXT         NOT NULL,

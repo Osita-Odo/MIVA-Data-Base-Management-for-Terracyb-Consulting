@@ -1,6 +1,6 @@
 # Portfolio 3: Transactions and Concurrency
 
-**Case study:** TerraCyber Consulting EAD
+**Case study:** TerraCyb Consulting EAD
 **DBMS:** PostgreSQL 16 (default isolation level: READ COMMITTED)
 **Marks:** 7
 
@@ -23,7 +23,7 @@ Full register with alternatives: [docs/design-decisions.md](../docs/design-decis
 
 | Decision | Reason | ID |
 | --- | --- | --- |
-| Scenarios built on TerraCyber operations (closing findings, payments, staffing, compliance reports) | Each brief requirement is evidenced with a realistic case rather than an abstract example | D44 |
+| Scenarios built on TerraCyb operations (closing findings, payments, staffing, compliance reports) | Each brief requirement is evidenced with a realistic case rather than an abstract example | D44 |
 | Two scripted sessions timed with `pg_sleep` | Forces the same interleaving every time, so the logs are reproducible evidence | D45 |
 | `SELECT ... FOR UPDATE` to fix the lost update | The manager reads the hours before deciding; a row lock protects exactly this read-decide-write pattern | D46 |
 | SERIALIZABLE to stop write skew | The two managers update different rows, so ordinary row locks never conflict; SERIALIZABLE detects the pattern anyway | D47 |

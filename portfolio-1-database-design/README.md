@@ -1,6 +1,6 @@
 # Portfolio 1: Database Design and Modelling
 
-**Case study:** TerraCyber Consulting, Engagement and Assurance Database (EAD)
+**Case study:** TerraCyb Consulting, Engagement and Assurance Database (EAD)
 **DBMS:** PostgreSQL 16
 **Marks:** 7
 
@@ -48,7 +48,7 @@ The 18 tables fall into five groups:
 
 The rules in plain terms:
 
-| Rule type | What it does, with a TerraCyber example |
+| Rule type | What it does, with a TerraCyb example |
 | --- | --- |
 | Primary key | Gives every row a unique identifier, for example `finding_id` |
 | Foreign key | A row may only point at something that exists: an engagement must belong to a real client |
@@ -59,7 +59,7 @@ The rules in plain terms:
 
 ## 2. Case study in brief
 
-TerraCyber Consulting is a Nigerian cybersecurity consultancy serving NGOs, public bodies and private firms in all six geopolitical zones. It works from three sites, Lagos (headquarters), Abuja and Port Harcourt; [../docs/site-selection.md](../docs/site-selection.md) explains why. It runs three service lines: compliance and data protection, advisory and resilience, and training and security awareness. Engagements are budgeted and invoiced in naira (NGN).
+TerraCyb Consulting is a Nigerian cybersecurity consultancy serving NGOs, public bodies and private firms in all six geopolitical zones. It works from three sites, Lagos (headquarters), Abuja and Port Harcourt; [../docs/site-selection.md](../docs/site-selection.md) explains why. It runs three service lines: compliance and data protection, advisory and resilience, and training and security awareness. Engagements are budgeted and invoiced in naira (NGN).
 
 The EAD supports these operations:
 

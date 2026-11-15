@@ -3,9 +3,9 @@
 // Document model: one document per piece of audit evidence.
 // Different evidence types have different shapes, so the validator only
 // enforces the fields every type shares. Type-specific fields stay flexible.
-// Run: docker exec -it tc-mongo mongosh terracyber /scripts/01_create_collection.js
+// Run: docker exec -it tc-mongo mongosh terracyb /scripts/01_create_collection.js
 // =====================================================================
-db = db.getSiblingDB("terracyber");
+db = db.getSiblingDB("terracyb");
 db.evidence.drop();
 
 db.createCollection("evidence", {

@@ -1,6 +1,6 @@
-# Site Selection: Where TerraCyber Consulting Hosts Its Database
+# Site Selection: Where TerraCyb Consulting Hosts Its Database
 
-**Decision:** TerraCyber Consulting operates from, and hosts its distributed Engagement and Assurance Database (EAD) in, three Nigerian cities:
+**Decision:** TerraCyb Consulting operates from, and hosts its distributed Engagement and Assurance Database (EAD) in, three Nigerian cities:
 
 | Site | Office role | Database role (Portfolio 5) | Main reason |
 | --- | --- | --- | --- |
@@ -33,7 +33,7 @@ Candidates: Abuja, Port Harcourt, Kano, Enugu and Ibadan, the cities that either
 
 ### 3.1 Factors and weights
 
-| # | Factor | Weight | Why it matters to TerraCyber |
+| # | Factor | Weight | Why it matters to TerraCyb |
 | --- | --- | ---: | --- |
 | F1 | Data-centre availability and certification | 20 | A database node needs a certified facility with backup power |
 | F2 | International connectivity independent of Lagos | 15 | A DR site on the same cable route fails with Lagos |
@@ -80,7 +80,7 @@ Total = sum of (score × weight) ÷ 5.
 ### 3.4 Result and sensitivity
 
 - **Abuja (80) and Port Harcourt (68)** are selected.
-- **Kano (57)** is the strongest alternative: it has the only Tier IV facility in the country and is the furthest from Lagos. It loses on connectivity and client demand. If TerraCyber wins large northern clients, Kano is the next site to add.
+- **Kano (57)** is the strongest alternative: it has the only Tier IV facility in the country and is the furthest from Lagos. It loses on connectivity and client demand. If TerraCyb wins large northern clients, Kano is the next site to add.
 - **Enugu (57)** ties with Kano but is only 191 km from Port Harcourt, so it adds little separation once Port Harcourt is chosen.
 - **Ibadan (47)** is too close to Lagos (114 km) to be a disaster-recovery site.
 - **Robustness check:** removing the security factor (F5) entirely does not change the outcome. Abuja and Port Harcourt still rank first and second, followed by Kano, Enugu and Ibadan.
@@ -97,7 +97,7 @@ The DR copy must survive what is most likely to take Lagos down: a cut to the La
 
 - NITDA's National Cloud Computing Policy (2019) and the proposed National Cloud Technical Document emphasise sovereign hosting of higher-sensitivity government data.
 - The National Shared Services Centre in Abuja, run by Galaxy Backbone (the federal government's ICT infrastructure provider), is an Uptime Tier III facility.
-- Public-sector clients and the regulators TerraCyber works with (NDPC, NITDA, CBN) are in Abuja.
+- Public-sector clients and the regulators TerraCyb works with (NDPC, NITDA, CBN) are in Abuja.
 
 **In Portfolio 5:** findings of public-sector clients are stored on `pg-abuja`, as a foreign partition that the Lagos primary queries through `postgres_fdw`.
 

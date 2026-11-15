@@ -1,5 +1,5 @@
 -- =====================================================================
--- Q8  Open risk per TerraCyber office and geopolitical zone
+-- Q8  Open risk per TerraCyb office and geopolitical zone
 -- Business question: which office carries the heaviest remediation
 --                    workload, and in which zones are the clients?
 -- Features: 6-table join through the state lookup table, GROUP BY

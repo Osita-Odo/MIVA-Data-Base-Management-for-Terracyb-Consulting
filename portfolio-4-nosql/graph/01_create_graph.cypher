@@ -6,7 +6,7 @@
 // Why one client only (D56): network links are not in the relational data
 // and are modelled by hand; 13 assets are enough to show multi-hop paths
 // while staying readable in the Neo4j Browser.
-// Run: docker exec -i tc-neo4j cypher-shell -u neo4j -p terracyber-demo < graph/01_create_graph.cypher
+// Run: docker exec -i tc-neo4j cypher-shell -u neo4j -p terracyb-demo < graph/01_create_graph.cypher
 // =====================================================================
 
 MATCH (n) DETACH DELETE n;

@@ -7,11 +7,11 @@ Copy this into Word or Google Docs, fill every _italic_ placeholder with your ow
 ## MIT 8103 Advanced Database Systems: Portfolio Documentation
 
 **Student:** Osita Kingsley Odo
-**GitHub repository:** _https://github.com/<your-username>/terracyber-advanced-database-portfolio_ (private; assessor added as collaborator on _date_)
+**GitHub repository:** _https://github.com/<your-username>/terracyb-advanced-database-portfolio_ (private; assessor added as collaborator on _date_)
 
 ### 1. Selected organisation
 
-TerraCyber Consulting is a Nigerian cybersecurity consultancy serving NGOs, public bodies and private firms in all six geopolitical zones, in three service lines: compliance and data protection, advisory and resilience, and training and security awareness. It operates from Lagos (headquarters), Abuja and Port Harcourt, chosen through a weighted siting analysis of data centres, subsea connectivity, client demand, regulator proximity, security, disaster-recovery distance and flood risk (docs/site-selection.md). Its Engagement and Assurance Database (EAD) is used by consultants, engagement managers, trainers, finance staff and auditors. It stores clients and sites, engagements, assets, vulnerability findings, compliance assessments against ISO/IEC 27001, the NDPA 2023 and NIST CSF 2.0, audit evidence, training records, and invoices and payments in naira. Key operations: _list the 4-5 most important_.
+TerraCyb Consulting is a Nigerian cybersecurity consultancy serving NGOs, public bodies and private firms in all six geopolitical zones, in three service lines: compliance and data protection, advisory and resilience, and training and security awareness. It operates from Lagos (headquarters), Abuja and Port Harcourt, chosen through a weighted siting analysis of data centres, subsea connectivity, client demand, regulator proximity, security, disaster-recovery distance and flood risk (docs/site-selection.md). Its Engagement and Assurance Database (EAD) is used by consultants, engagement managers, trainers, finance staff and auditors. It stores clients and sites, engagements, assets, vulnerability findings, compliance assessments against ISO/IEC 27001, the NDPA 2023 and NIST CSF 2.0, audit evidence, training records, and invoices and payments in naira. Key operations: _list the 4-5 most important_.
 
 ### 2. Portfolio 1: Database design and modelling
 
@@ -50,7 +50,7 @@ _Write this yourself, in the first person, 150-250 words. Prompts:_
 - _Which design decision would you defend most strongly, and why?_
 - _What went wrong while running the scripts, and how did you fix it?_
 - _What surprised you in the execution plans?_
-- _What would you change if TerraCyber had 100 times more data or a new office in another region?_
+- _What would you change if TerraCyb had 100 times more data or a new office in another region?_
 - _How does this connect to your cybersecurity work (audit evidence, data residency, least privilege)?_
 
 ### 8. References

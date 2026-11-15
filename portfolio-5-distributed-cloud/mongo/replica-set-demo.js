@@ -1,9 +1,9 @@
 // =====================================================================
 // Portfolio 5: MongoDB replica set, consistency and availability
 // Run (connects to the whole set, so the driver follows the primary):
-//   docker exec -i mongo-portharcourt mongosh "mongodb://mongo-lagos,mongo-portharcourt,mongo-abuja/terracyber?replicaSet=rs0" /scripts/replica-set-demo.js
+//   docker exec -i mongo-portharcourt mongosh "mongodb://mongo-lagos,mongo-portharcourt,mongo-abuja/terracyb?replicaSet=rs0" /scripts/replica-set-demo.js
 // =====================================================================
-db = db.getSiblingDB("terracyber");
+db = db.getSiblingDB("terracyb");
 
 // Prints each member with its role (PRIMARY / SECONDARY) and health (1 = up)
 function members() {

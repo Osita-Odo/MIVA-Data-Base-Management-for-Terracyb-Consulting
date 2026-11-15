@@ -1,5 +1,5 @@
 -- =====================================================================
--- TerraCyber Consulting: Engagement and Assurance Database (EAD)
+-- TerraCyb Consulting: Engagement and Assurance Database (EAD)
 -- Portfolio 1: relational schema (PostgreSQL 16)
 -- Run:  psql -d ead -f schema.sql
 --
@@ -36,7 +36,7 @@ SET search_path TO ead;
 
 -- ---------------------------------------------------------------------
 -- 1. Geography and organisation: states, offices and consultants
---    TerraCyber operates from three Nigerian sites (Lagos, Abuja,
+--    TerraCyb operates from three Nigerian sites (Lagos, Abuja,
 --    Port Harcourt). See docs/site-selection.md for why these were chosen.
 -- ---------------------------------------------------------------------
 CREATE TABLE office (
@@ -82,7 +82,7 @@ CREATE TABLE client (
     client_id    SERIAL PRIMARY KEY,
     name         TEXT    NOT NULL UNIQUE,
     sector       TEXT    NOT NULL CHECK (sector IN ('ngo', 'public', 'private')),
-    -- State of the client's head office; it decides which TerraCyber office
+    -- State of the client's head office; it decides which TerraCyb office
     -- serves the client (state.serving_office_id)
     state_code   CHAR(2) NOT NULL REFERENCES state (state_code),
     created_at   DATE    NOT NULL DEFAULT CURRENT_DATE
@@ -226,7 +226,7 @@ CREATE TABLE training_session (
 
 CREATE TABLE attendance (
     session_id         INT      NOT NULL REFERENCES training_session (session_id) ON DELETE CASCADE,
-    -- Participants are client staff, not TerraCyber users, and are only
+    -- Participants are client staff, not TerraCyb users, and are only
     -- identified for attendance, so an email is stored instead of a full
     -- person table (data minimisation, NDPA section 24)
     participant_email  TEXT     NOT NULL,

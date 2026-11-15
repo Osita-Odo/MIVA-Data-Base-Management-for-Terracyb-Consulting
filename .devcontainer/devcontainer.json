@@ -2,7 +2,7 @@
 // Gives a Linux machine with Docker, the PostgreSQL 16 client and Graphviz,
 // so every portfolio can be tested in the browser. See docs/testing-guide.md.
 {
-  "name": "TerraCyber EAD test environment",
+  "name": "TerraCyb EAD test environment",
   // Ubuntu 24.04 ships the PostgreSQL 16 client used by all scripts
   "image": "mcr.microsoft.com/devcontainers/base:ubuntu-24.04",
   "features": {
@@ -16,7 +16,7 @@
     "PGHOST": "localhost",
     "PGPORT": "5432",
     "PGUSER": "postgres",
-    "PGPASSWORD": "terracyber-demo"
+    "PGPASSWORD": "terracyb-demo"
   },
   // Neo4j Browser (7474) and Bolt (7687) for Portfolio 4
   "forwardPorts": [7474, 7687],

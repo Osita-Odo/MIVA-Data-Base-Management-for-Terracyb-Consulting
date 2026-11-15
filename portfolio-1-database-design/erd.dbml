@@ -1,9 +1,9 @@
-// TerraCyber Consulting EAD: ER diagram source
+// TerraCyb Consulting EAD: ER diagram source
 // Paste into https://dbdiagram.io, arrange, then Export > PNG and save as erd.png
 
-Project terracyber_ead {
+Project terracyb_ead {
   database_type: 'PostgreSQL'
-  Note: 'Engagement and Assurance Database for TerraCyber Consulting'
+  Note: 'Engagement and Assurance Database for TerraCyb Consulting'
 }
 
 Table office {

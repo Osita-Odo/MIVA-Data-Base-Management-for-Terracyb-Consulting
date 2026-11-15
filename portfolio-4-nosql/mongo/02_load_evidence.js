@@ -6,9 +6,9 @@
 // together; engagements and clients are REFERENCED by id, because they
 // change and live in PostgreSQL (D51).
 // engagement_id and client_id match the PostgreSQL seed data.
-// Run: docker exec -it tc-mongo mongosh terracyber /scripts/02_load_evidence.js
+// Run: docker exec -it tc-mongo mongosh terracyb /scripts/02_load_evidence.js
 // =====================================================================
-db = db.getSiblingDB("terracyber");
+db = db.getSiblingDB("terracyb");
 db.evidence.deleteMany({});
 
 // ---------- 1. Hand-written examples: same collection, different shapes ----------

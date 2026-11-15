@@ -37,7 +37,7 @@ CREATE EXTENSION IF NOT EXISTS postgres_fdw;
 CREATE SERVER abuja_node FOREIGN DATA WRAPPER postgres_fdw
     OPTIONS (host :'abuja_host', port :'abuja_port', dbname 'ead_abuja');
 CREATE USER MAPPING FOR CURRENT_USER SERVER abuja_node
-    OPTIONS (user 'postgres', password 'terracyber-demo');   -- demo credentials only
+    OPTIONS (user 'postgres', password 'terracyb-demo');   -- demo credentials only
 
 -- 2. Partitioned parent table (partition key = sector)
 --    sector and office_code are copied from client and state: a deliberate

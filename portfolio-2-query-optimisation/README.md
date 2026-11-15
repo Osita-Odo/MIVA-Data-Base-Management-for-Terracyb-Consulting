@@ -1,6 +1,6 @@
 # Portfolio 2: Query Processing and Optimisation
 
-**Case study:** TerraCyber Consulting EAD
+**Case study:** TerraCyb Consulting EAD
 **DBMS:** PostgreSQL 16
 **Marks:** 7
 
@@ -21,7 +21,7 @@ Full register with alternatives: [docs/design-decisions.md](../docs/design-decis
 
 | Decision | Reason | ID |
 | --- | --- | --- |
-| Each query answers a TerraCyber business question and shows a different SQL feature | Shows the database serving its purpose and covers joins, CTEs, window functions, ROLLUP and full-text search without repetition | D34 |
+| Each query answers a TerraCyb business question and shows a different SQL feature | Shows the database serving its purpose and covers joins, CTEs, window functions, ROLLUP and full-text search without repetition | D34 |
 | One optimisation per plan problem (partial, covering, GIN, materialised view) | Each technique is matched to the specific reason the baseline plan was slow | D35 to D40 |
 | No new index for Q3, Q5, Q6a and Q8 | Demonstrates when an index does not help or when an existing one is enough; every extra index slows writes | D37, D41 |
 | Median of 5 warm runs, scripted drop and recreate | Resists outliers, is reproducible, and guarantees a fair before/after comparison | D42 |
@@ -39,7 +39,7 @@ Three kinds of fix appear in this portfolio:
 
 ## 2. The queries
 
-Each query answers a question TerraCyber managers actually ask.
+Each query answers a question TerraCyb managers actually ask.
 
 | # | Business question | SQL features shown |
 | --- | --- | --- |

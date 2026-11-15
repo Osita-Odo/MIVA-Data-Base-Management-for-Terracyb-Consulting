@@ -1,6 +1,6 @@
 # Portfolio 5: Distributed and Cloud Database Exercise
 
-**Case study:** TerraCyber Consulting EAD, distributed over three Nigerian sites: Lagos, Abuja and Port Harcourt
+**Case study:** TerraCyb Consulting EAD, distributed over three Nigerian sites: Lagos, Abuja and Port Harcourt
 **Technologies:** PostgreSQL 16 streaming replication and `postgres_fdw`, MongoDB 7 replica set, Docker Compose
 **Marks:** 6
 
@@ -20,7 +20,7 @@
 - **Replication** keeps a live copy. Every change in Lagos is written to a log (the write-ahead log, or WAL) that is streamed continuously to Port Harcourt. Port Harcourt holds a read-only copy that can answer reports and take over if Lagos fails.
 - **Sharding** splits one table across servers. The findings table is divided into three **partitions** by client sector: private and NGO findings stay in Lagos, public-sector findings are stored in Abuja. Applications still query one table, and PostgreSQL sends each query to the right place.
 - **Failover** is what happens when the primary is lost: the standby keeps answering reads, refuses writes, and is then **promoted** to become the new primary. MongoDB does this automatically: with one member in each city, losing any one city still leaves two of three, and they elect a new primary within seconds.
-- **Consistency or availability (CAP).** If the network between cities breaks, a distributed system must choose between staying **consistent** (refusing some work) and staying **available** (accepting work that may conflict). TerraCyber chooses differently for different data: consistency for money and public-sector data, availability for evidence uploads (section 5.5).
+- **Consistency or availability (CAP).** If the network between cities breaks, a distributed system must choose between staying **consistent** (refusing some work) and staying **available** (accepting work that may conflict). TerraCyb chooses differently for different data: consistency for money and public-sector data, availability for evidence uploads (section 5.5).
 
 ## 2. Why these three sites, and why each has its role
 
@@ -78,7 +78,7 @@ docker exec -i pg-lagos psql -U postgres -d ead -f /sql/geo_sharding.sql 2>&1 | 
 
 # MongoDB replica set
 docker exec -i mongo-portharcourt mongosh \
-    "mongodb://mongo-lagos,mongo-portharcourt,mongo-abuja/terracyber?replicaSet=rs0" \
+    "mongodb://mongo-lagos,mongo-portharcourt,mongo-abuja/terracyb?replicaSet=rs0" \
     /scripts/replica-set-demo.js 2>&1 | tee output/mongo_rs_before_failure.log
 ```
 
@@ -137,7 +137,7 @@ MongoDB failover test (losing Lagos):
 docker stop mongo-lagos
 sleep 15
 docker exec -i mongo-portharcourt mongosh \
-    "mongodb://mongo-portharcourt,mongo-abuja/terracyber?replicaSet=rs0" \
+    "mongodb://mongo-portharcourt,mongo-abuja/terracyb?replicaSet=rs0" \
     /scripts/replica-set-demo.js 2>&1 | tee output/mongo_rs_after_failure.log
 docker start mongo-lagos
 ```
@@ -174,7 +174,7 @@ After Ctrl+C, PostgreSQL warns that the transaction was already committed locall
 | `readConcern: "majority"` on the primary | Never returns data that could be rolled back | Slightly older view during failover |
 | `readPreference: "secondary"` | Takes load off Lagos | May be stale (eventual consistency) |
 
-**CAP in TerraCyber terms.** If the network between Lagos and the other sites breaks, the system must choose consistency or availability:
+**CAP in TerraCyb terms.** If the network between Lagos and the other sites breaks, the system must choose consistency or availability:
 
 | Data | Choice | Reason |
 | --- | --- | --- |

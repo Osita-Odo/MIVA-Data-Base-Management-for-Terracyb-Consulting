@@ -1,5 +1,5 @@
 -- =====================================================================
--- TerraCyber Consulting EAD: synthetic seed data
+-- TerraCyb Consulting EAD: synthetic seed data
 -- All people, clients, hosts and IP addresses are fictitious.
 -- Volumes are large enough for Portfolio 2 (about 66,000 findings).
 -- Run after schema.sql:  psql -d ead -f seed.sql
@@ -16,9 +16,9 @@ BEGIN;
 --   PHC  Port Harcourt  disaster-recovery standby (second subsea route)
 -- ---------------------------------------------------------------------
 INSERT INTO office (office_code, office_name, city, site_role, db_role) VALUES
-    ('LOS', 'TerraCyber Lagos',         'Lagos',         'headquarters', 'primary'),
-    ('ABV', 'TerraCyber Abuja',         'Abuja',         'regional',     'public_sector_shard'),
-    ('PHC', 'TerraCyber Port Harcourt', 'Port Harcourt', 'regional',     'standby');
+    ('LOS', 'TerraCyb Lagos',         'Lagos',         'headquarters', 'primary'),
+    ('ABV', 'TerraCyb Abuja',         'Abuja',         'regional',     'public_sector_shard'),
+    ('PHC', 'TerraCyb Port Harcourt', 'Port Harcourt', 'regional',     'standby');
 
 -- ---------------------------------------------------------------------
 -- States: 36 states and the FCT with their geopolitical zones.

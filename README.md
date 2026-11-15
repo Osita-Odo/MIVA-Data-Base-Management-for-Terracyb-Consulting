@@ -1,11 +1,11 @@
-# Advanced Database Systems Portfolio: TerraCyber Consulting
+# Advanced Database Systems Portfolio: TerraCyb Consulting
 
 **Course:** MIT 8103 Advanced Database Systems, MIVA Open University, 2026/2027 First Semester
 **Student:** Osita Kingsley Odo
 
 ## 1. The project Summary
 
-This project designs, builds and tests a database for **TerraCyber Consulting**, a Nigerian cybersecurity consultancy. The database is called the **Engagement and Assurance Database (EAD)**. It records the consultancy's clients, the security assessments it carries out for them, the vulnerabilities it finds, the compliance controls it checks, the training it delivers and the money it bills.
+This project designs, builds and tests a database for **TerraCyb Consulting**, a Nigerian cybersecurity consultancy. The database is called the **Engagement and Assurance Database (EAD)**. It records the consultancy's clients, the security assessments it carries out for them, the vulnerabilities it finds, the compliance controls it checks, the training it delivers and the money it bills.
 
 The assessment brief asks for five practical portfolios, all built on the same organisation. Each portfolio tests a different area of advanced database work. Together they show one realistic system, from design through to running across three cities.
 
@@ -16,8 +16,8 @@ The assessment brief asks for five practical portfolios, all built on the same o
 
 | Item | Description |
 | --- | --- |
-| **Organisation** | TerraCyber Consulting ([terracybconsulting.com](https://terracybconsulting.com)), a Nigerian cybersecurity consultancy delivering grounded, human-centred cybersecurity |
-| **Locations** | Three sites: **Lagos** (headquarters, primary database), **Abuja** (northern office, public-sector data shard) and **Port Harcourt** (South South and South East office, disaster-recovery standby). See [section 3](#3-where-terracyber-operates-and-why). |
+| **Organisation** | TerraCyb Consulting ([terracybconsulting.com](https://terracybconsulting.com)), a Nigerian cybersecurity consultancy delivering grounded, human-centred cybersecurity |
+| **Locations** | Three sites: **Lagos** (headquarters, primary database), **Abuja** (northern office, public-sector data shard) and **Port Harcourt** (South South and South East office, disaster-recovery standby). See [section 3](#3-where-terracyb-operates-and-why). |
 | **Nature of the business** | Consultancy for NGOs, public sector bodies and private firms in all six geopolitical zones of Nigeria |
 | **Database** | Engagement and Assurance Database (EAD) |
 | **Major data** | Offices, the 36 states and FCT with their serving office, consultants, clients and their sites, engagements and staffing, client assets, vulnerability findings, compliance frameworks and controls, control assessments, audit evidence, training sessions and attendance, invoices and payments, audit trail |
@@ -44,7 +44,7 @@ The assessment brief asks for five practical portfolios, all built on the same o
 
 The brief asks for an organisation "with enough data and processes" for all five portfolios. 
 
-| Portfolio need | Where TerraCyber provides it |
+| Portfolio need | Where TerraCyb provides it |
 | --- | --- |
 | Many related entities (Portfolio 1) | Clients, sites, assets, engagements, findings, controls, invoices |
 | Enough data to optimise (Portfolio 2) | Vulnerability scans produce tens of thousands of findings |
@@ -57,9 +57,9 @@ It is also a field the student works in, which makes every design choice explain
 
 **About the data:** all clients, people, hostnames and IP addresses are fictitious. Real client data would breach confidentiality and the NDPA. The vulnerability identifiers (for example CVE-2021-44228, known as Log4Shell) are real public CVEs, used to make the findings realistic.
 
-## 3. Where TerraCyber operates, and why
+## 3. Where TerraCyb operates, and why
 
-TerraCyber works from three Nigerian cities. They were not picked by assumption: each candidate city was scored against evidence. The full analysis, with sources, is in [docs/site-selection.md](docs/site-selection.md).
+TerraCyb works from three Nigerian cities. They were not picked by assumption: each candidate city was scored against evidence. The full analysis, with sources, is in [docs/site-selection.md](docs/site-selection.md).
 
 | Site | Office role | Database role | Main reason |
 | --- | --- | --- | --- |
@@ -84,7 +84,7 @@ Lagos was fixed as the primary first, because it leads on every infrastructure m
 
 **Why the data is split by sector, not by region.** All three sites are inside Nigeria. The NDPA regulates transfers of personal data **outside** Nigeria (sections 41 to 43), so it does not force data into one region or another. The rules that do care where data is hosted are **sector** rules: NITDA's cloud policy for government data, and the Central Bank of Nigeria's requirement that payment data be hosted locally from 1 January 2027.
 
-![TerraCyber architecture: Lagos primary, Port Harcourt standby, Abuja public-sector shard, MongoDB across all three sites](docs/images/architecture.png)
+![TerraCyb architecture: Lagos primary, Port Harcourt standby, Abuja public-sector shard, MongoDB across all three sites](docs/images/architecture.png)
 
 *Blue: PostgreSQL. Green: MongoDB. Amber, red and blue boxes: the Lagos, Port Harcourt and Abuja sites. Diagram source: [docs/images/architecture.mmd](docs/images/architecture.mmd).*
 
@@ -103,7 +103,7 @@ MIVA-Data-Base-Management-for-Terracyb-Consulting/
 
 | Folder or file | Contents |
 | --- | --- |
-| [docs/TerraCyber_Database_Project_Explainer.docx](docs/TerraCyber_Database_Project_Explainer.docx) | Plain-language explainer of the whole project (Word) |
+| [docs/TerraCyb_Database_Project_Explainer.docx](docs/TerraCyb_Database_Project_Explainer.docx) | Plain-language explainer of the whole project (Word) |
 | [docs/design-decisions.md](docs/design-decisions.md) | Register of 71 decisions (D01 to D71), each with alternatives considered and the reason |
 | [docs/site-selection.md](docs/site-selection.md) | Evidence and scoring behind Lagos, Abuja and Port Harcourt |
 | [docs/lms-documentation-template.md](docs/lms-documentation-template.md) | Template for the 2-3 page LMS document |
@@ -128,7 +128,7 @@ Every significant choice, from the three sites to individual column types and in
 
 | ID | Decision | Reason |
 | --- | --- | --- |
-| D01 | TerraCyber as the case study | Supplies every ingredient the five portfolios need, in a field the student works in |
+| D01 | TerraCyb as the case study | Supplies every ingredient the five portfolios need, in a field the student works in |
 | D02 | Lagos, Abuja and Port Harcourt | Highest evidence-based scores; each site has a distinct, justified role |
 | D06 | PostgreSQL 16 | One free DBMS covers Portfolios 1, 2, 3 and 5: partial indexes, true SERIALIZABLE, partitioning, replication |
 | D13 | TEXT with CHECK instead of ENUM | Allowed values are easy to change and visible next to the column |

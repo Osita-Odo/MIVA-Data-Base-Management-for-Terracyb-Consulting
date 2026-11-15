@@ -1,6 +1,6 @@
 // =====================================================================
 // Portfolio 4 / Neo4j step 2: attack-path queries
-// Run: docker exec -i tc-neo4j cypher-shell -u neo4j -p terracyber-demo < graph/02_attack_paths.cypher
+// Run: docker exec -i tc-neo4j cypher-shell -u neo4j -p terracyb-demo < graph/02_attack_paths.cypher
 // =====================================================================
 
 // G1. Attack paths: from an internet-facing asset with a vulnerability of

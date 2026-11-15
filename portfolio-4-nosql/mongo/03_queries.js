@@ -1,9 +1,9 @@
 // =====================================================================
 // Portfolio 4 / MongoDB step 3: queries, aggregation, update, indexes
-// Run: docker exec -it tc-mongo mongosh terracyber /scripts/03_queries.js
+// Run: docker exec -it tc-mongo mongosh terracyb /scripts/03_queries.js
 // Save output: ... /scripts/03_queries.js > ../evidence-samples/mongo-output.txt
 // =====================================================================
-db = db.getSiblingDB("terracyber");
+db = db.getSiblingDB("terracyb");
 
 function title(t) { print("\n=== " + t + " ==="); }
 function show(cursorOrArray) { (Array.isArray(cursorOrArray) ? cursorOrArray : cursorOrArray.toArray()).forEach(d => printjson(d)); }

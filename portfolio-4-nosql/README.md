@@ -1,6 +1,6 @@
 # Portfolio 4: NoSQL and Advanced Data Models
 
-**Case study:** TerraCyber Consulting EAD
+**Case study:** TerraCyb Consulting EAD
 **Technologies:** MongoDB 7 (document model), Neo4j 5 (graph model)
 **Marks:** 7
 
@@ -47,7 +47,7 @@ A relational database is excellent at data that fits neat tables and must stay c
 
 ## 2. Why NoSQL here: polyglot persistence
 
-PostgreSQL stays the **system of record** for engagements, findings, controls and money. Two kinds of TerraCyber data fit it badly:
+PostgreSQL stays the **system of record** for engagements, findings, controls and money. Two kinds of TerraCyb data fit it badly:
 
 1. **Audit evidence.** A vulnerability scan, a policy PDF's metadata, a firewall configuration and an interview note have completely different structures. In SQL this needs many sparse tables or an untyped blob.
 2. **Network exposure.** "Can an attacker get from this internet-facing server to the finance database?" is a path question over many hops.
@@ -121,13 +121,13 @@ docker compose up -d
 
 # MongoDB
 ./mongo/export_assets.sh                       # needs the Portfolio 1 database; assets.json is already committed
-docker exec -it tc-mongo mongosh terracyber /scripts/01_create_collection.js
-docker exec -it tc-mongo mongosh terracyber /scripts/02_load_evidence.js
-docker exec -it tc-mongo mongosh terracyber /scripts/03_queries.js > evidence-samples/mongo-output.txt
+docker exec -it tc-mongo mongosh terracyb /scripts/01_create_collection.js
+docker exec -it tc-mongo mongosh terracyb /scripts/02_load_evidence.js
+docker exec -it tc-mongo mongosh terracyb /scripts/03_queries.js > evidence-samples/mongo-output.txt
 
 # Neo4j
-docker exec tc-neo4j cypher-shell -u neo4j -p terracyber-demo -f /scripts/01_create_graph.cypher
-docker exec tc-neo4j cypher-shell -u neo4j -p terracyber-demo -f /scripts/02_attack_paths.cypher > evidence-samples/neo4j-output.txt
+docker exec tc-neo4j cypher-shell -u neo4j -p terracyb-demo -f /scripts/01_create_graph.cypher
+docker exec tc-neo4j cypher-shell -u neo4j -p terracyb-demo -f /scripts/02_attack_paths.cypher > evidence-samples/neo4j-output.txt
 ```
 
 Open http://localhost:7474 and run `MATCH (n) RETURN n` to see the graph. Screenshot it for the LMS.

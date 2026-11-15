@@ -1,5 +1,5 @@
 # =====================================================================
-# Portfolio 5: TerraCyber EAD distributed over three Nigerian sites
+# Portfolio 5: TerraCyb EAD distributed over three Nigerian sites
 # (simulated on one laptop; see ../docs/site-selection.md for the siting)
 #
 #   pg-lagos          Lagos (headquarters): read/write PRIMARY; loads the
@@ -19,7 +19,7 @@
 x-pg-common: &pg-common
   image: postgres:16
   environment: &pg-env
-    POSTGRES_PASSWORD: terracyber-demo        # demo only; never commit real passwords
+    POSTGRES_PASSWORD: terracyb-demo        # demo only; never commit real passwords
   healthcheck:
     test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U postgres"]
     interval: 5s
