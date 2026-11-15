@@ -258,6 +258,10 @@ All names, organisations, hostnames and IP addresses in the seed data are fictit
 
 The screenshots below are screen captures from my own run in GitHub Codespaces on 15 November 2026 (PostgreSQL 16 in Docker, `psql` 16.15). Each one shows the command that was run and its unedited output.
 
+**PostgreSQL 16 container started.** The connection settings are exported, a PostgreSQL 16 server is started in Docker, and the checks show psql 16.15 and "localhost:5432 - accepting connections".
+
+![PostgreSQL 16 container started](screenshots/00a-postgres-container-ready.png)
+
 **Database created and schema built.** The `NOTICE` is expected: `schema.sql` starts with `DROP SCHEMA IF EXISTS ead CASCADE` so it can be re-run safely, and on the first run there is nothing to drop:
 
 ![createdb and schema.sql](screenshots/00-createdb-and-schema.png)
@@ -286,10 +290,9 @@ Tests T5 to T12, ending with the summary line:
 | T9, T10 | Trigger | Asset belonging to another client; payment of NGN 5,250,001 exceeding the invoice |
 | T11 | Generated column | Writing `severity` directly |
 
-**Additional screenshots** (also in [`docs/TerraCyb_Screenshot_Evidence.docx`](../docs/TerraCyb_Screenshot_Evidence.docx)):
+**Output saved to GitHub.** The seed row counts and constraint-test output from my run are committed and pushed to GitHub from the codespace.
 
-- [`00a-postgres-container-ready.png`](screenshots/00a-postgres-container-ready.png): PostgreSQL 16 container started and accepting connections
-- [`04-pushed-output.png`](screenshots/04-pushed-output.png): output committed and pushed from the codespace
+![Portfolio 1 output committed and pushed](screenshots/04-pushed-output.png)
 
 ## 8. Evidence checklist
 
@@ -297,4 +300,4 @@ Tests T5 to T12, ending with the summary line:
 - [x] Screenshot of `\dt ead.*` listing the 18 tables ([screenshots/01-tables.png](screenshots/01-tables.png))
 - [x] Screenshot of the seed row counts ([screenshots/02-seed-row-counts.png](screenshots/02-seed-row-counts.png))
 - [x] `constraint-test-output.txt` showing the 12 expected errors (screenshots [03a](screenshots/03a-constraint-tests-t1-t9.png) and [03b](screenshots/03b-constraint-tests-t5-t12.png))
-- [x] Run on my own codespace and captured as screenshots (15 November 2026)
+- [x] Run on my own codespace and captured as screenshots (15 November 2026); output committed and pushed (screenshot 04)

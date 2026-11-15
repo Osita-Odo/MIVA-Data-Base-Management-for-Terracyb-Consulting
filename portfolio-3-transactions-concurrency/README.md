@@ -141,6 +141,10 @@ This is the brief's "two terminals side by side" evidence. It was run live with 
 3. While A holds the lock, in terminal B, start `psql -d ead -a -f session_b.sql`. Manager B asks for the same row and **waits**.
 4. When A commits, B continues immediately and reads A's new value, so neither change is lost.
 
+**Two terminals prepared side by side.** The terminal is split in two, the connection settings are exported in the new terminal, and a copy of session A that holds the lock for 20 seconds is created, so there is time to start session B by hand.
+
+![Two terminals prepared side by side](screenshots/00-two-terminals-setup.png)
+
 **While B is waiting.** A (left) started at 18:56:37 and is inside `pg_sleep`; B (right) started at 18:56:38 and its `SELECT ... FOR UPDATE` has no result yet:
 
 ![B waits for A's row lock](screenshots/02-lock-wait-in-progress.png)
@@ -148,6 +152,10 @@ This is the brief's "two terminals side by side" evidence. It was run live with 
 **After A commits.** The complete run in both terminals:
 
 ![Two terminals: B waits for A's row lock, then continues](screenshots/01-lock-wait-two-terminals.png)
+
+**Two terminals: the complete run (narrow view).** The same successful run in the narrower split view: A committed at 18:56:57 and B got the row lock at 18:56:57, then the final value 65.0.
+
+![Two terminals: the complete run (narrow view)](screenshots/01c-lock-wait-completed-narrow.png)
 
 | Time (UTC) | Manager A (left) | Manager B (right) |
 | --- | --- | --- |
@@ -159,6 +167,11 @@ This is the brief's "two terminals side by side" evidence. It was run live with 
 B waited 19 seconds and was released the moment A's transaction ended, which shows the row lock serialising the two managers.
 
 A first attempt is worth noting: when B was started after A had already committed, B got the row at once and no wait occurred. The lock only matters while both transactions overlap, which is exactly the situation a lost update needs.
+
+**First attempt: B started too late, so no wait.** In the first attempt A committed at 18:50:13 and B only started at 18:50:16, so B got the row at once and no lock wait happened. The result was still correct (65.0) because the two transactions did not overlap. This is why the demo was repeated with B ready in advance.
+
+![First attempt: B started too late, so no wait](screenshots/08-first-attempt-no-wait.png)
+
 
 ### 5.2 The scripted scenarios
 
@@ -184,12 +197,9 @@ A first attempt is worth noting: when B was started after A had already committe
 
 ![Deadlock detected and resolved](screenshots/06-deadlock.png)
 
-**Additional screenshots** (also in [`docs/TerraCyb_Screenshot_Evidence.docx`](../docs/TerraCyb_Screenshot_Evidence.docx)):
+**Output saved to GitHub.** The five scenario logs from my run are committed and pushed to GitHub.
 
-- [`00-two-terminals-setup.png`](screenshots/00-two-terminals-setup.png): the two split terminals being prepared
-- [`08-first-attempt-no-wait.png`](screenshots/08-first-attempt-no-wait.png): the first attempt, in which B started after A had committed, so no wait occurred
-- [`01c-lock-wait-completed-narrow.png`](screenshots/01c-lock-wait-completed-narrow.png): the successful run in the narrower split view
-- [`09-pushed-output.png`](screenshots/09-pushed-output.png): output committed and pushed from the codespace
+![Portfolio 3 output committed and pushed](screenshots/09-pushed-output.png)
 
 ## 6. Evidence checklist
 

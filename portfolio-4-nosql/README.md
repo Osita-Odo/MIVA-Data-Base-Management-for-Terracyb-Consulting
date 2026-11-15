@@ -224,40 +224,103 @@ The graph holds 20 nodes (1 client, 2 sites, 13 assets, 4 vulnerabilities) and 3
 
 ### 6.3 Screenshots
 
-| # | Shows |
-| --- | --- |
-| 1 | [Both containers running](screenshots/01-docker-compose-ps.png) |
-| 2 | [Collection created; invalid document rejected by the validator](screenshots/02-create-collection-validator.png) |
-| 3 | [3,006 documents loaded](screenshots/03-load-evidence-3006.png) |
-| 4 | [Index test before: `COLLSCAN`, 3,006 documents examined](screenshots/04-index-before-collscan.png) |
-| 5 | [Index test after: `IXSCAN`, 21 documents examined](screenshots/05-index-after-ixscan.png) |
-| 6 | [Aggregation (Q4) and the `arrayFilters` update (Q5)](screenshots/06-aggregation-and-arrayfilters-update.png) |
-| 7 | [Text search and the list of indexes](screenshots/07-text-search-and-index-list.png) |
-| 8 | [Neo4j G1 to G4 results in cypher-shell](screenshots/08-neo4j-attack-path-queries.png) |
-| 9 | [Codespaces ports 7474 and 7687 made public for Neo4j Browser](screenshots/09-codespaces-ports-public.png) |
-| 10 | [Neo4j Browser connected: 20 nodes](screenshots/10-neo4j-browser-connected.png) |
-| 11 | [Full graph: 20 nodes, 31 relationships](screenshots/11-neo4j-full-graph.png) |
-| 12 | [G1 attack paths with the CVEs that open them](screenshots/12-neo4j-g1-attack-paths.png) |
+All screenshots are screen captures from my run in GitHub Codespaces on 15 November 2026, in the order they were taken.
 
-![Full attack-surface graph in Neo4j Browser](screenshots/11-neo4j-full-graph.png)
+#### Set-up
 
-*Figure: the full graph for Lagoon Community Food Network in Neo4j Browser (screenshot 11).*
+**MongoDB and Neo4j containers running.** docker compose ps shows tc-mongo (MongoDB 7.0) and tc-neo4j (Neo4j 5) up, with ports 27017, 7474 and 7687.
 
-![G1 attack paths](screenshots/12-neo4j-g1-attack-paths.png)
+![MongoDB and Neo4j containers running](screenshots/01-docker-compose-ps.png)
 
-*Figure: G1, the routes from the three exploitable internet-facing assets (each linked to its CVE) to the critical assets (screenshot 12).*
+**Restart after correcting the company name.** After the company name was corrected to TerraCyb in the scripts, git pull brought in the changes and the containers were recreated (docker compose down -v, then up -d) so Neo4j used the new password. Nothing had been loaded yet, so no data was lost.
 
-**Additional screenshots** (also in [`docs/TerraCyb_Screenshot_Evidence.docx`](../docs/TerraCyb_Screenshot_Evidence.docx)):
+![Restart after correcting the company name](screenshots/01b-restart-after-name-change.png)
 
-- [`01b-restart-after-name-change.png`](screenshots/01b-restart-after-name-change.png): git pull and container restart after the company name was corrected
-- [`09a-ports-private.png`](screenshots/09a-ports-private.png): the forwarded ports, private at first
-- [`09b-port-7687-public.png`](screenshots/09b-port-7687-public.png): port 7687 set to public
-- [`09c-neo4j-connection-form.png`](screenshots/09c-neo4j-connection-form.png): the Neo4j Browser connection form (neo4j+s://, 7687 address on port 443)
-- [`10b-neo4j-browser-node-table.png`](screenshots/10b-neo4j-browser-node-table.png): the 20 nodes in table view
-- [`10c-neo4j-browser-connection-info.png`](screenshots/10c-neo4j-browser-connection-info.png): server details: Neo4j 5.26.33
-- [`12a-neo4j-g1-query.png`](screenshots/12a-neo4j-g1-query.png): the G1 query typed into Neo4j Browser
-- [`12b-neo4j-g1-paths-without-cves.png`](screenshots/12b-neo4j-g1-paths-without-cves.png): the first G1 picture, before the AFFECTED_BY links were returned
-- [`13-pushed-output.png`](screenshots/13-pushed-output.png): output committed and pushed from the codespace
+#### MongoDB
+
+**Collection with a $jsonSchema validator.** The evidence collection is created with its validator, and a deliberately invalid document is refused with "Document failed validation".
+
+![Collection with a $jsonSchema validator](screenshots/02-create-collection-validator.png)
+
+**Evidence loaded.** 6 hand-written documents (one of each evidence type) and 3,000 generated scan documents are inserted: 3,006 in total. The scans use the same hostnames and IP addresses as the PostgreSQL asset table.
+
+![Evidence loaded](screenshots/03-load-evidence-3006.png)
+
+**Index test: before.** Without indexes, both queries use COLLSCAN and examine all 3,006 documents: 21 are returned for one engagement and control, and 2,387 for the nested CVE search.
+
+![Index test: before](screenshots/04-index-before-collscan.png)
+
+**Index test: after.** With the compound index, the engagement and control query uses IXSCAN and examines only the 21 matching documents. The multikey CVE index also uses IXSCAN but still examines 2,387 documents, because 79% of documents contain that CVE: an index helps only selective queries.
+
+![Index test: after](screenshots/05-index-after-ixscan.png)
+
+**Aggregation and arrayFilters update.** Q4 groups evidence for engagement 1 by control and type. Q5 uses updateMany with arrayFilters to mark every Log4Shell result in engagement 1 as fixed: 55 documents matched and modified, changing only the matching array elements.
+
+![Aggregation and arrayFilters update](screenshots/06-aggregation-and-arrayfilters-update.png)
+
+**Text search and index list.** The text index finds the Information Security Policy for "security policy". The index list shows the four indexes: _id, the compound index, the multikey CVE index and the text index.
+
+![Text search and index list](screenshots/07-text-search-and-index-list.png)
+
+#### Neo4j in cypher-shell
+
+**Neo4j attack-path queries G1 to G4.** G1 finds 7 paths from exploitable internet-facing assets to critical assets, the shortest 2 hops. G2 gives the shortest route to the cloud asset (4 hops). G3 shows each entry point's blast radius. G4 finds the choke points lagoon-1-009 and lagoon-2-014, each on 5 attack paths.
+
+![Neo4j attack-path queries G1 to G4](screenshots/08-neo4j-attack-path-queries.png)
+
+#### Connecting Neo4j Browser through Codespaces
+
+**Codespaces forwarded ports.** The Ports tab lists the forwarded ports 7474 and 7687 (Neo4j) and 27017 (MongoDB), all private at first.
+
+![Codespaces forwarded ports](screenshots/09a-ports-private.png)
+
+**Port 7687 set to public.** Port 7687, which Neo4j Browser uses for its database connection, is switched to Public.
+
+![Port 7687 set to public](screenshots/09b-port-7687-public.png)
+
+**Codespaces ports made public.** Ports 7474 and 7687 were set to Public so that Neo4j Browser could connect through the Codespaces proxy, only while the demo ran (synthetic data only).
+
+![Codespaces ports made public](screenshots/09-codespaces-ports-public.png)
+
+**Neo4j Browser connection form.** Protocol neo4j+s://, the forwarded 7687 address on port 443, user neo4j. The address Neo4j suggests by default (the 7474 address with port 7687) does not work through the Codespaces proxy.
+
+![Neo4j Browser connection form](screenshots/09c-neo4j-connection-form.png)
+
+#### Neo4j Browser
+
+**Neo4j Browser connected.** Neo4j Browser connected with neo4j+s:// to the 7687 address on port 443. MATCH (n) RETURN n returns 20 nodes: 13 assets, 1 client, 2 sites and 4 vulnerabilities.
+
+![Neo4j Browser connected](screenshots/10-neo4j-browser-connected.png)
+
+**Neo4j Browser: node table.** The same 20 nodes in table view: the client Lagoon Community Food Network, its two sites and the assets.
+
+![Neo4j Browser: node table](screenshots/10b-neo4j-browser-node-table.png)
+
+**Neo4j Browser: server details.** The raw view confirms the server version, Neo4j 5.26.33, and the address used.
+
+![Neo4j Browser: server details](screenshots/10c-neo4j-browser-connection-info.png)
+
+**The full attack-surface graph.** MATCH (a)-[r]->(b) RETURN a, r, b draws the 20 nodes and 31 relationships: 13 HOSTS, 12 CONNECTS_TO, 4 AFFECTED_BY and 2 HAS_SITE.
+
+![The full attack-surface graph](screenshots/11-neo4j-full-graph.png)
+
+**G1 query in Neo4j Browser.** The G1 Cypher query: internet-facing assets with a vulnerability of CVSS 9 or more, and paths of 1 to 4 hops to critical assets.
+
+![G1 query in Neo4j Browser](screenshots/12a-neo4j-g1-query.png)
+
+**G1 paths before linking the CVEs.** The first version of the G1 picture: 11 assets and 10 CONNECTS_TO links. The 3 vulnerabilities float on their own because the query did not return the AFFECTED_BY relationship; the next figure fixes this.
+
+![G1 paths before linking the CVEs](screenshots/12b-neo4j-g1-paths-without-cves.png)
+
+**G1 attack paths in the browser.** The routes from the three exploitable internet-facing assets, each linked to the CVE that opens it, to the critical assets: 11 assets and 13 relationships.
+
+![G1 attack paths in the browser](screenshots/12-neo4j-g1-attack-paths.png)
+
+#### Output saved to GitHub
+
+**Portfolio 4 output committed and pushed.** The MongoDB and Neo4j output files from my run are committed and pushed to GitHub.
+
+![Portfolio 4 output committed and pushed](screenshots/13-pushed-output.png)
 
 ## 7. Evidence checklist
 
@@ -266,3 +329,4 @@ The graph holds 20 nodes (1 client, 2 sites, 13 assets, 4 vulnerabilities) and 3
 - [x] Screenshot of the validator rejecting an invalid document (screenshot 2)
 - [x] Screenshots of mongosh output: queries, aggregation, update and indexes (screenshots 4 to 7)
 - [x] Screenshot of the Neo4j Browser graph, with the G1 paths (screenshots 11 and 12)
+- [x] Output committed and pushed from the codespace (screenshot 13)

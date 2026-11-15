@@ -130,9 +130,9 @@ Screen captures from my own run in GitHub Codespaces on 15 November 2026.
 
 ![Result of Q8](screenshots/03-q8-result.png)
 
-**Additional screenshots** (also in [`docs/TerraCyb_Screenshot_Evidence.docx`](../docs/TerraCyb_Screenshot_Evidence.docx)):
+**Output saved to GitHub.** The benchmark timings, before and after plans, query results and join-strategy plans (22 files) are committed and pushed to GitHub.
 
-- [`04-pushed-output.png`](screenshots/04-pushed-output.png): output committed and pushed from the codespace
+![Portfolio 2 output committed and pushed](screenshots/04-pushed-output.png)
 
 ## 6. Evidence checklist
 
